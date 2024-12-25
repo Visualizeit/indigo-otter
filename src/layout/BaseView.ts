@@ -1,89 +1,91 @@
-import type { Node } from "./Node";
-import type {
-  ExactDecorativeProps,
-  ExactLayoutProps,
-  ViewStyleProps,
-  LayoutNodeState,
-} from "./styling";
-import { normalizeLayoutProps, normalizeDecorativeProps, defaultLayoutNodeState } from "./styling";
+import  { type Node } from './Node'
+import  {
+	type ExactDecorativeProps,
+	type ExactLayoutProps,
+	type ViewStyleProps,
+	type LayoutNodeState,
+	normalizeLayoutProps,
+	normalizeDecorativeProps,
+	defaultLayoutNodeState
+} from './styling'
 
 /**
  * Basic building block of the UI. A node in a tree which is mutated by the layout algorithm.
  */
 export class BaseView implements Node {
-  testID: string | null;
-  next: Node | null = null;
-  prev: Node | null = null;
-  firstChild: Node | null = null;
-  lastChild: Node | null = null;
-  parent: Node | null = null;
+	testID: string | null
+	next: Node | null = null
+	prev: Node | null = null
+	firstChild: Node | null = null
+	lastChild: Node | null = null
+	parent: Node | null = null
 
-  /**
-   * Internal state of the node. It's public so that you can use it if you need to, but it's ugly
-   * so that you don't forget it might break at any time.
-   */
-  _state: LayoutNodeState = { ...defaultLayoutNodeState };
-  /**
-   * Should always be normalized.
-   */
-  _style: ExactDecorativeProps & ExactLayoutProps;
+	/**
+	 * Internal state of the node. It's public so that you can use it if you need to, but it's ugly
+	 * so that you don't forget it might break at any time.
+	 */
+	_state: LayoutNodeState = { ...defaultLayoutNodeState }
+	/**
+	 * Should always be normalized.
+	 */
+	_style: ExactDecorativeProps & ExactLayoutProps
 
-  constructor(
-    readonly props: {
-      onClick?(): void;
-      style?: ViewStyleProps;
-      testID?: string;
-    },
-  ) {
-    this.testID = props.testID ?? null;
-    this._style = normalizeDecorativeProps(
-      normalizeLayoutProps(props.style ?? {}) as ViewStyleProps,
-    );
-  }
+	constructor(
+		readonly props: {
+			onClick?(): void
+			style?: ViewStyleProps
+			testID?: string
+		},
+	) {
+		this.testID = props.testID ?? null
+		this._style = normalizeDecorativeProps(
+			normalizeLayoutProps(props.style ?? {}) as ViewStyleProps,
+		)
+	}
 
-  add(node: Node): Node {
-    node.parent = this;
+	add(node: Node): Node {
+		node.parent = this
 
-    if (this.firstChild === null) {
-      this.firstChild = node;
-      this.lastChild = node;
-    } else {
-      if (this.lastChild === null) {
-        throw new Error("Last child must be set.");
-      }
+		if (this.firstChild === null) {
+			this.firstChild = node
+			this.lastChild = node
+		} else {
+			if (this.lastChild === null) {
+				throw new Error('Last child must be set.')
+			}
 
-      node.prev = this.lastChild;
-      this.lastChild.next = node;
-      this.lastChild = node;
-    }
+			node.prev = this.lastChild
+			this.lastChild.next = node
+			this.lastChild = node
+		}
 
-    return node;
-  }
+		return node
+	}
 
-  remove(node: Node): void {
-    // Check if node is a child of this node.
-    if (node.parent !== this) {
-      console.warn("Node is not a child of this node.");
-    }
+	remove(node: Node): void {
+		// Check if node is a child of this node.
+		if (node.parent !== this) {
+			console.warn('Node is not a child of this node.')
+		}
 
-    if (node.prev !== null) {
-      node.prev.next = node.next;
-    }
+		if (node.prev !== null) {
+			node.prev.next = node.next
+		}
 
-    if (node.next !== null) {
-      node.next.prev = node.prev;
-    }
+		if (node.next !== null) {
+			node.next.prev = node.prev
+		}
 
-    if (this.firstChild === node) {
-      this.firstChild = node.next;
-    }
+		if (this.firstChild === node) {
+			this.firstChild = node.next
+		}
 
-    if (this.lastChild === node) {
-      this.lastChild = node.prev;
-    }
+		if (this.lastChild === node) {
+			this.lastChild = node.prev
+		}
 
-    node.prev = null;
-    node.next = null;
-    node.parent = null;
-  }
+		node.prev = null
+		node.next = null
+		node.parent = null
+	}
 }

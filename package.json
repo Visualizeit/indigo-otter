@@ -1,85 +1,29 @@
 {
-  "name": "red-otter",
+  "name": "indigo-otter",
   "description": "Self-contained UI rendering library for 3D graphics APIs.",
   "version": "0.1.15",
-  "main": "dist/src/index.js",
   "type": "module",
-  "sideEffects": false,
-  "module": "dist/src/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/src/index.js",
-      "require": "./dist/src/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://red-otter.dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tchayen/red-otter"
-  },
   "license": "MIT",
   "scripts": {
-    "ci": "bun run lint && bun run tsc && bun run vitest run && bun run build",
     "coverage": "vitest --coverage",
-    "dev": "cd examples && vite --port 5005",
-    "build": "bun run tsc -p tsconfig.build.json",
-    "prepare": "bun run build",
+    "dev": "cd examples && vite",
+    "format": "prettier --write .",
     "lint": "eslint src",
-    "loc": "find src -name \"*.ts\" ! -path \"*/node_modules/*\" -exec cat {} + | wc -l",
-    "prepare-sandpack": "vite build",
-    "preview": "vite preview",
     "test": "vitest"
   },
-  "dependencies": {
-    "@petamoriken/float16": "^3.8.4"
-  },
   "devDependencies": {
-    "@release-it/conventional-changelog": "^8.0.1",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "@total-typescript/ts-reset": "^0.5.1",
+    "@epic-web/config": "^1.16.4",
     "@types/node": "^20.11.5",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
     "@vitest/coverage-istanbul": "^1.2.1",
     "@vitest/coverage-v8": "^1.2.1",
     "@vitest/ui": "^1.2.1",
     "@webgpu/types": "^0.1.40",
-    "eslint": "^8.56.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-comment-length": "^1.7.3",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-sort-keys-fix": "^1.1.2",
-    "eslint-plugin-typescript-sort-keys": "^3.1.0",
-    "eslint-plugin-unicorn": "^50.0.1",
-    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "prettier": "^3.2.4",
-    "release-it": "^17.0.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
-    "vite-plugin-dts": "^3.7.1",
     "vitest": "^1.2.1"
   },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": {
-          "name": "conventionalcommits"
-        },
-        "infile": "CHANGELOG.md"
-      }
-    }
-  }
+  "prettier": "@epic-web/config/prettier"
 }

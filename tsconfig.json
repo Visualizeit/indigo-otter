@@ -1,21 +1,27 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "incremental": true,
-    "isolatedModules": true,
-    "lib": ["es2022", "dom", "dom.iterable"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "noEmit": true,
-    "noUncheckedIndexedAccess": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "es2022",
-    "typeRoots": ["./node_modules/@webgpu/types"]
-  },
-  "include": ["src", "examples", ".eslintrc.cjs", "vite.config.ts", "vitest.config.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"allowJs": true,
+		"downlevelIteration": true,
+		"esModuleInterop": true,
+		"incremental": true,
+		"isolatedModules": true,
+		"lib": ["es2022", "dom", "dom.iterable"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"noEmit": true,
+		"noUncheckedIndexedAccess": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es2022",
+		"typeRoots": ["./node_modules/@webgpu/types"]
+	},
+	"include": [
+		"src",
+		"examples",
+		".eslintrc.cjs",
+		"vite.config.ts",
+		"vitest.config.ts"
+	],
+	"exclude": ["node_modules"]
 }
