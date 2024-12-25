@@ -10,7 +10,7 @@ import { Display } from './styling'
  * while handling clipping rectangles for each node.
  */
 export function compose(
-	ui: Renderer,
+	renderer: Renderer,
 	node: Node,
 	clipStart = new Vec2(0, 0),
 	clipSize = new Vec2(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY),
@@ -34,7 +34,7 @@ export function compose(
 
 	let c = node.firstChild
 	while (c) {
-		compose(ui, c, clipped.xy(), clipped.zw())
+		compose(renderer, c, clipped.xy(), clipped.zw())
 		c = c.next
 	}
 }

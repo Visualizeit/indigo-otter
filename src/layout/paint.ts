@@ -15,20 +15,20 @@ import { View } from './View'
 /**
  * Takes a renderer and a root of a tree and commands the renderer to paint it. Used every frame.
  *
- * @param ui renderer instance that will get commands issued to it.
+ * @param renderer renderer instance that will get commands issued to it.
  * @param node root of the tree to paint.
  * @returns
  */
-export function paint(ui: Renderer, node: Node) {
+export function paint(renderer: Renderer, node: Node) {
 	if (node._style.display === Display.None) {
 		return
 	}
 
-	paintNode(ui, node, node._state.clipStart, node._state.clipSize)
+	paintNode(renderer, node, node._state.clipStart, node._state.clipSize)
 
 	let c = node.firstChild
 	while (c) {
-		paint(ui, c)
+		paint(renderer, c)
 		c = c.next
 	}
 }
@@ -38,7 +38,7 @@ export function paint(ui: Renderer, node: Node) {
  * be renderered to for this node.
  */
 function paintNode(
-	ui: Renderer,
+	renderer: Renderer,
 	node: Node,
 	clipStart: Vec2,
 	clipSize: Vec2,
@@ -46,7 +46,7 @@ function paintNode(
 	const position = new Vec2(node._state.x, node._state.y)
 
 	if (node instanceof Text) {
-		ui.text(
+		renderer.text(
 			node.text,
 			position,
 			node._style.fontName,
@@ -65,7 +65,7 @@ function paintNode(
 		const size = new Vec2(node._state.clientWidth, node._state.clientHeight)
 
 		// Actual rendering.
-		ui.rectangle(
+		renderer.rectangle(
 			parseColor(node._style.backgroundColor),
 			position,
 			size,

@@ -365,26 +365,6 @@ export type DecorativeProps = {
 	borderRadius?: number
 	borderTopLeftRadius?: number
 	borderTopRightRadius?: number
-	/**
-	 * Not implemented yet.
-	 */
-	boxShadowColor?: string
-	/**
-	 * Not implemented yet.
-	 */
-	boxShadowOffsetX?: number
-	/**
-	 * Not implemented yet.
-	 */
-	boxShadowOffsetY?: number
-	/**
-	 * Not implemented yet.
-	 */
-	boxShadowRadius?: number
-	/**
-	 * Not implemented yet.
-	 */
-	opacity?: number
 }
 
 export type ExactDecorativeProps = Required<
@@ -492,11 +472,6 @@ const defaultDecorativeProps: ExactDecorativeProps = {
 	borderColor: 'transparent',
 	borderTopLeftRadius: 0,
 	borderTopRightRadius: 0,
-	boxShadowColor: '#000',
-	boxShadowOffsetX: 0,
-	boxShadowOffsetY: 0,
-	boxShadowRadius: 0,
-	opacity: 1,
 }
 
 export const defaultTextStyleProps: Required<TextStyleProps> = {
