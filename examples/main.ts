@@ -1,44 +1,48 @@
 import invariant from 'tiny-invariant'
-import { isWindowDefined, settings } from '../src/consts'
-import { EventManager } from '../src/EventManager'
-import { parseTTF } from '../src/font/parseTTF'
-import { prepareLookups } from '../src/font/prepareLookups'
-import { renderFontAtlas } from '../src/font/renderFontAtlas'
-import { compose } from '../src/layout/compose'
-import { UserEventType } from '../src/layout/eventTypes'
-import { paint } from '../src/layout/paint'
-import { WebGPURenderer } from '../src/renderer/WebGPURenderer'
-import { ui } from './ui'
+import {
+	renderFontAtlas,
+	Vec2,
+	layout,
+	compose,
+	paint,
+	View,
+	parseTTF,
+	prepareLookups,
+	WebGPURenderer,
+	Text,
+} from '../src'
 
-const eventManager = new EventManager()
+const initialize = async () => {
+	const canvas = document.createElement('canvas')
 
-async function initialize() {
+	document.querySelector('#app')?.appendChild(canvas)
+
+	const parent = canvas.parentElement
+
+	invariant(parent, 'No parent element found.')
+
+	const WIDTH = parent.clientWidth
+	const HEIGHT = parent.clientHeight
+
+	const settings = {
+		sampleCount: 4,
+		windowHeight: HEIGHT,
+		windowWidth: WIDTH,
+		rectangleBufferSize: 16 * 4096,
+		textBufferSize: 16 * 100_000,
+	}
+
+	canvas.width = WIDTH * window.devicePixelRatio
+	canvas.height = HEIGHT * window.devicePixelRatio
+	canvas.setAttribute('style', 'width: 100%; height: 100%;')
+
+	const interTTF = await fetch('./Inter.ttf').then((response) =>
+		response.arrayBuffer(),
+	)
+
 	const alphabet =
 		'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890 ,.:•-–()[]{}!?@#$%^&*+=/\\|<>`~’\'";_▶'
-	const [interTTF, interBoldTTF, comicNeueTTF, jetBrainsMonoTTF] =
-		await Promise.all(
-			[
-				'/Inter.ttf',
-				'/Inter-SemiBold.ttf',
-				'/ComicNeue-Bold.ttf',
-				'JetBrainsMono-Regular.ttf',
-			].map((url) => fetch(url).then((response) => response.arrayBuffer())),
-		)
-	invariant(interTTF, 'Inter.ttf not found.')
-	invariant(interBoldTTF, 'Inter-SemiBold.ttf not found.')
-	invariant(comicNeueTTF, 'ComicNeue-Bold.ttf not found.')
-	invariant(jetBrainsMonoTTF, 'JetBrainsMono-Regular.ttf not found.')
 
-	document.body.setAttribute('style', 'margin: 0')
-
-	const canvas = document.createElement('canvas')
-	canvas.width = settings.windowWidth * window.devicePixelRatio
-	canvas.height = settings.windowHeight * window.devicePixelRatio
-	canvas.setAttribute(
-		'style',
-		`width: ${settings.windowWidth}px; height: ${settings.windowHeight}px; display: flex; position: fixed`,
-	)
-	document.body.append(canvas)
 	const entry = navigator.gpu
 	invariant(entry, 'WebGPU is not supported in this browser.')
 
@@ -57,17 +61,11 @@ async function initialize() {
 	})
 
 	const lookups = prepareLookups(
-		[
-			{ buffer: interTTF, name: 'Inter', ttf: parseTTF(interTTF) },
-			{ buffer: interBoldTTF, name: 'InterBold', ttf: parseTTF(interBoldTTF) },
-			{ buffer: comicNeueTTF, name: 'ComicNeue', ttf: parseTTF(comicNeueTTF) },
-			{
-				buffer: jetBrainsMonoTTF,
-				name: 'JetBrainsMono',
-				ttf: parseTTF(jetBrainsMonoTTF),
-			},
-		],
-		{ alphabet, fontSize: 150 },
+		[{ buffer: interTTF, name: 'Inter', ttf: parseTTF(interTTF) }],
+		{
+			alphabet,
+			fontSize: 150,
+		},
 	)
 
 	const fontAtlas = await renderFontAtlas(lookups, { useSDF: true })
@@ -90,34 +88,45 @@ async function initialize() {
 		fontAtlas,
 	)
 
-	const root = ui(renderer)
-
-	// Notify nodes that layout is ready.
-	eventManager.dispatchEvent({
-		bubbles: false,
-		capturable: false,
-		type: UserEventType.Layout,
+	const root = new View({
+		style: {
+			backgroundColor: '#3b82f6',
+			padding: 20,
+		},
 	})
-	eventManager.deliverEvents(root)
 
-	function render(): void {
-		invariant(context, 'WebGPU is not supported in this browser.')
+	const view1 = new View({
+		style: {
+			width: 200,
+			height: 200,
+			backgroundColor: '#ef4444',
+		},
+	})
 
-		const commandEncoder = device.createCommandEncoder()
+	const view2 = new View({
+		style: {
+			width: 200,
+			height: 200,
+			backgroundColor: '#f59e0b',
+		},
+	})
 
-		eventManager.deliverEvents(root)
-		compose(renderer, root)
-		paint(renderer, root)
+	const text = new Text('Hello World', {
+		lookups,
+		style: { fontName: 'Inter', fontSize: 24, color: '#fff' },
+	})
 
-		renderer.render(commandEncoder)
-		device.queue.submit([commandEncoder.finish()])
+	root.add(view1)
+	root.add(view2)
+	root.add(text)
 
-		requestAnimationFrame(render)
-	}
+	layout(root, lookups, new Vec2(canvas.width, canvas.height))
+	compose(renderer, root)
+	paint(renderer, root)
 
-	render()
+	const commandEncoder = device.createCommandEncoder()
+	renderer.render(commandEncoder)
+	device.queue.submit([commandEncoder.finish()])
 }
 
-if (isWindowDefined) {
-	await initialize()
-}
+await initialize()
