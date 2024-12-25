@@ -1,18 +1,19 @@
-import { Text } from '../src/layout/Text'
-import type { WebGPURenderer } from '../src/renderer/WebGPURenderer'
-import { View } from '../src/layout/View'
-import type { Lookups } from '../src/font/types'
+import invariant from 'tiny-invariant'
+import * as fixtures from '../src/fixtures'
+import { type Lookups } from '../src/font/types'
 import { layout } from '../src/layout/layout'
-import { Vec2 } from '../src/math/Vec2'
-import type { TextStyleProps, ViewStyleProps } from '../src/layout/styling'
 import {
+	type TextStyleProps,
+	type ViewStyleProps,
 	AlignSelf,
 	FlexDirection,
 	JustifyContent,
 	Overflow,
 } from '../src/layout/styling'
-import { invariant } from '../src/utils/invariant'
-import * as fixtures from '../src/fixtures'
+import { Text } from '../src/layout/Text'
+import { View } from '../src/layout/View'
+import { Vec2 } from '../src/math/Vec2'
+import { type WebGPURenderer } from '../src/renderer/WebGPURenderer'
 import { measure } from './measure'
 
 export let lookups: Lookups
@@ -167,7 +168,6 @@ function exampleGrid() {
 	column6.add(tooTall)
 
 	// const longText = new Text(
-	// eslint-disable-next-line comment-length/limit-single-line-comments
 	//   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ultrices auctor lectus accumsan tincidunt. Etiam ut augue in turpis accumsan ornare. Maecenas viverra vitae mauris nec pretium. Suspendisse dignissim eleifend lorem, nec luctus magna sollicitudin ac. Sed velit velit, porta non mattis et, ullamcorper ac erat. Vestibulum ultrices nisl metus, varius auctor magna feugiat id. Fusce dapibus metus non nibh ornare ultricies. Aliquam pharetra quis nunc sed vestibulum. Curabitur ut dignissim urna. Quisque vitae hendrerit lacus. Aliquam sollicitudin, orci a mollis luctus, massa ligula vulputate mi, et volutpat metus ex ac turpis. Nullam elementum congue euismod. Mauris vestibulum lectus risus, at dignissim enim facilisis commodo. Etiam tincidunt malesuada leo eget efficitur. Praesent eleifend neque ac tellus dictum sodales. Nam sed imperdiet nibh. Nunc sagittis, felis et dapibus molestie, quam neque venenatis odio, sit amet cursus justo arcu at metus. Cras pharetra risus blandit, efficitur lacus eu, sollicitudin nunc. Cras in tellus nisl. Integer vitae est pellentesque, imperdiet nunc sit amet, condimentum lacus. Suspendisse a dolor sed tellus vulputate ultricies non sed turpis. Curabitur ullamcorper massa risus, vitae fringilla mi volutpat id. Curabitur cursus pellentesque elit, at tincidunt ipsum vehicula eget. Maecenas pulvinar eu mauris non commodo. Etiam a fermentum lorem, eget venenatis elit. Quisque convallis, ligula eget sagittis venenatis, velit metus dignissim enim, id cursus risus ligula vitae mauris. Proin congue ornare ligula at hendrerit. Nam id ipsum mattis, consectetur ante quis, placerat lacus. Sed lacinia, sem at sollicitudin pulvinar, augue felis faucibus odio, vitae sodales justo libero vitae arcu. Sed finibus felis quis dictum finibus. Aliquam mattis interdum fringilla. Mauris nisl nunc, dignissim eget porta sed, vestibulum ac neque. Nunc vehicula tempor lectus, sit amet pretium tortor. Aliquam arcu ligula, viverra in sapien non, consequat luctus nisi. Proin suscipit metus eget magna rutrum imperdiet sit amet eget dui.",
 	//   { lookups, style: { color: "#999", fontName: "Inter", fontSize: 13 } }
 	// );

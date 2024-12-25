@@ -1,4 +1,4 @@
-import { invariant } from '../utils/invariant'
+import invariant from 'tiny-invariant'
 import  { type TTF } from './parseTTF'
 import  { type Glyph } from './types'
 

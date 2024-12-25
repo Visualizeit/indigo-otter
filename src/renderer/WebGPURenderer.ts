@@ -1,3 +1,4 @@
+import invariant from 'tiny-invariant'
 import  { type Settings } from '../consts'
 import { MISSING_GLYPH } from '../font/calculateGlyphQuads'
 import  { type Shape, shapeText  } from '../font/shapeText'
@@ -6,7 +7,6 @@ import { defaultTextStyleProps, type TextAlign } from '../layout/styling'
 import  { type Vec2 } from '../math/Vec2'
 import  { type Vec4 } from '../math/Vec4'
 import { createTextureFromImageBitmap } from '../utils/createTextureFromBitmap'
-import { invariant } from '../utils/invariant'
 import  { type Renderer } from './Renderer'
 
 const enum DrawingMode {

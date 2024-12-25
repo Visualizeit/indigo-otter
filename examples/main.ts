@@ -1,14 +1,14 @@
-import { EventManager } from '../src/EventManager'
-import { WebGPURenderer } from '../src/renderer/WebGPURenderer'
+import invariant from 'tiny-invariant'
 import { isWindowDefined, settings } from '../src/consts'
-import { paint } from '../src/layout/paint'
+import { EventManager } from '../src/EventManager'
 import { parseTTF } from '../src/font/parseTTF'
 import { prepareLookups } from '../src/font/prepareLookups'
 import { renderFontAtlas } from '../src/font/renderFontAtlas'
-import { ui } from './ui'
-import { invariant } from '../src/utils/invariant'
 import { compose } from '../src/layout/compose'
 import { UserEventType } from '../src/layout/eventTypes'
+import { paint } from '../src/layout/paint'
+import { WebGPURenderer } from '../src/renderer/WebGPURenderer'
+import { ui } from './ui'
 
 const eventManager = new EventManager()
 

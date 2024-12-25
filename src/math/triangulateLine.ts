@@ -1,4 +1,4 @@
-import { invariant } from '../utils/invariant'
+import invariant from 'tiny-invariant'
 import { Vec2 } from './Vec2'
 
 /**

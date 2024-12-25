@@ -29,7 +29,6 @@ export {
 	Whitespace,
 } from './layout/styling'
 
-export { invariant } from './utils/invariant'
 export { LRUCache } from './utils/LRUCache'
 export { Queue } from './utils/Queue'
 

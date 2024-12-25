@@ -1,4 +1,4 @@
-import { invariant } from '../utils/invariant'
+import invariant from 'tiny-invariant'
 import { toSDF } from './toSDF'
 import  { type Lookups } from './types'
 

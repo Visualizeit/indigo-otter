@@ -1,3 +1,4 @@
+import invariant from 'tiny-invariant'
 import { shapeText } from '..'
 import { MISSING_GLYPH } from '../font/calculateGlyphQuads'
 import  { type Shape } from '../font/shapeText'
@@ -8,7 +9,6 @@ import { triangulateLine } from '../math/triangulateLine'
 import { triangulatePolygon } from '../math/triangulatePolygon'
 import { Vec2 } from '../math/Vec2'
 import { Vec4 } from '../math/Vec4'
-import { invariant } from '../utils/invariant'
 import  { type Renderer } from './Renderer'
 
 const vertex = `#version 300 es

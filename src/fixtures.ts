@@ -1,6 +1,6 @@
- 
-import  { type Lookups } from './font/types'
-import  {
+import invariant from 'tiny-invariant'
+import { type Lookups } from './font/types'
+import {
 	type LayoutProps,
 	type TextStyleProps,
 	type ViewStyleProps,
@@ -12,11 +12,10 @@ import  {
 	JustifyContent,
 	Overflow,
 	Position,
-	TextAlign
+	TextAlign,
 } from './layout/styling'
 import { Text } from './layout/Text'
 import { View } from './layout/View'
-import { invariant } from './utils/invariant'
 import { Button } from './widgets/Button'
 import { Input } from './widgets/Input'
 

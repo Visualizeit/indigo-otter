@@ -1,19 +1,20 @@
-import { Text } from '../src/layout/Text'
-import { View } from '../src/layout/View'
+import invariant from 'tiny-invariant'
 import { layout } from '../src/layout/layout'
-import { Vec2 } from '../src/math/Vec2'
-import type { TextStyleProps, ViewStyleProps } from '../src/layout/styling'
+import { type Node } from '../src/layout/Node'
 import {
+	type TextStyleProps,
+	type ViewStyleProps,
 	AlignSelf,
 	FlexDirection,
 	JustifyContent,
 	Overflow,
 } from '../src/layout/styling'
-import { invariant } from '../src/utils/invariant'
+import { Text } from '../src/layout/Text'
+import { View } from '../src/layout/View'
+import { Vec2 } from '../src/math/Vec2'
+import { Button } from '../src/widgets/Button'
 import { colors } from '../src/widgets/colors'
 import { Input } from '../src/widgets/Input'
-import { Button } from '../src/widgets/Button'
-import type { Node } from '../src/layout/Node'
 import { lookups } from './ui'
 
 export function gamePicker(parent: Node) {

@@ -1,14 +1,16 @@
+import invariant from 'tiny-invariant'
 import { isWindowDefined } from './consts'
 import { hitTest } from './hitTest'
 import {
 	UserEventType,
 	isKeyboardEvent,
-	isMouseEvent, type MouseEvent, type UserEvent 
+	isMouseEvent,
+	type MouseEvent,
+	type UserEvent,
 } from './layout/eventTypes'
 import { Display } from './layout/styling'
 import { View } from './layout/View'
 import { Vec2 } from './math/Vec2'
-import { invariant } from './utils/invariant'
 import { Input } from './widgets/Input'
 
 /**

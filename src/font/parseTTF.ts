@@ -1,4 +1,4 @@
-import { invariant } from '../utils/invariant'
+import invariant from 'tiny-invariant'
 import  { type Fixed, type FWord, type Int16, type Uint16, type Uint32, BinaryReader  } from './BinaryReader'
 
 /**

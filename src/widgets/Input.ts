@@ -1,3 +1,4 @@
+import invariant from 'tiny-invariant'
 import  { type EventManager } from '../EventManager'
 import { fontSizeToGap } from '../font/renderFontAtlas'
 import  { type Shape, shapeText  } from '../font/shapeText'
@@ -17,10 +18,9 @@ import {
 	JustifyContent, type TextStyleProps, type ViewStyleProps 
 } from '../layout/styling'
 import { Text } from '../layout/Text'
+import { View } from '../layout/View'
 import { Vec2 } from '../math/Vec2'
 import { Vec4 } from '../math/Vec4'
-import { View } from '../layout/View'
-import { invariant } from '../utils/invariant'
 import { updateSelection } from './updateSelection'
 import { updateText } from './updateText'
 

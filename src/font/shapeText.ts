@@ -1,6 +1,6 @@
+import invariant from 'tiny-invariant'
 import { TextAlign } from '../layout/styling'
 import { Vec2 } from '../math/Vec2'
-import { invariant } from '../utils/invariant'
 import { LRUCache } from '../utils/LRUCache'
 import { MISSING_GLYPH } from './calculateGlyphQuads'
 import { fontSizeToGap } from './renderFontAtlas'

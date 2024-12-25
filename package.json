@@ -5,11 +5,14 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "coverage": "vitest --coverage",
     "dev": "cd examples && vite",
+    "coverage": "vitest --coverage",
     "format": "prettier --write .",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "test": "vitest"
+  },
+  "dependencies": {
+    "tiny-invariant": "^1.3.3"
   },
   "devDependencies": {
     "@epic-web/config": "^1.16.4",

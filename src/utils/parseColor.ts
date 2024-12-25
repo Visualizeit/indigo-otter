@@ -1,5 +1,5 @@
+import invariant from 'tiny-invariant'
 import { Vec4 } from '../math/Vec4'
-import { invariant } from './invariant'
 
 /**
  * https://stackoverflow.com/a/54014428
