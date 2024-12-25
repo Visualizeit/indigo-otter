@@ -1,4 +1,4 @@
-import  { type ClassDefFormat1, type ClassDefFormat2 } from './parseTTF'
+import { type ClassDefFormat1, type ClassDefFormat2 } from './parseTTF'
 
 /**
  * @param classDef class definition table.

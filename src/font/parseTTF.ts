@@ -1,5 +1,12 @@
 import invariant from 'tiny-invariant'
-import  { type Fixed, type FWord, type Int16, type Uint16, type Uint32, BinaryReader  } from './BinaryReader'
+import {
+	type Fixed,
+	type FWord,
+	type Int16,
+	type Uint16,
+	type Uint32,
+	BinaryReader,
+} from './BinaryReader'
 
 /**
  * Main function for parsing TTF files.

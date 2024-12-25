@@ -1,6 +1,6 @@
 import invariant from 'tiny-invariant'
 import { toSDF } from './toSDF'
-import  { type Lookups } from './types'
+import { type Lookups } from './types'
 
 const DEBUG_SKIP_SDF = false
 const DEBUG_FONT_ATLAS_SHOW_GLYPH_BACKGROUNDS = false

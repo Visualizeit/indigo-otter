@@ -1,11 +1,9 @@
 import invariant from 'tiny-invariant'
-import { CROSS_AXIS_SIZE } from '../consts'
 import { shapeText } from '../font/shapeText'
-import  { type Lookups } from '../font/types'
-import  { type Vec2 } from '../math/Vec2'
+import { type Lookups } from '../font/types'
+import { type Vec2 } from '../math/Vec2'
 import { Queue } from '../utils/Queue'
-import { BaseView } from './BaseView'
-import  { type Node } from './Node'
+import { type Node } from './Node'
 import {
 	AlignContent,
 	AlignItems,
@@ -14,13 +12,13 @@ import {
 	FlexDirection,
 	FlexWrap,
 	JustifyContent,
-	Overflow,
 	Position,
 	TextAlign,
 	Whitespace,
 	defaultTextStyleProps,
 } from './styling'
 import { Text } from './Text'
+import { View } from './View'
 
 /**
  * This function traverses the tree and calculates layout information - `width`, `height`, `x`, `y`
@@ -40,9 +38,8 @@ export function layout(
 ): void {
 	const traversalQueue = new Queue<Node>()
 
-	const root = new BaseView({
+	const root = new View({
 		style: { height: rootSize.y, width: rootSize.x },
-		testID: 'layout#root',
 	})
 	root.add(tree)
 
@@ -73,12 +70,6 @@ export function layout(
 		e._state.y = 0
 		e._state.clientWidth = 0
 		e._state.clientHeight = 0
-		e._state.scrollWidth = 0
-		e._state.scrollHeight = 0
-		e._state.scrollX = 0
-		e._state.scrollY = 0
-		e._state.hasHorizontalScrollbar = e._style.overflowX === Overflow.Scroll
-		e._state.hasVerticalScrollbar = e._style.overflowY === Overflow.Scroll
 
 		// If element has defined width or height, set it.
 		if (typeof e._style.width === 'number') {
@@ -451,14 +442,6 @@ export function layout(
 			}
 		}
 
-		// Keep in mind scrollbars.
-		if (e._state.hasHorizontalScrollbar) {
-			e._state.clientHeight -= CROSS_AXIS_SIZE
-		}
-		if (e._state.hasVerticalScrollbar) {
-			e._state.clientWidth -= CROSS_AXIS_SIZE
-		}
-
 		if (e._style.flexWrap === FlexWrap.WrapReverse) {
 			e._state.children.reverse()
 		}
@@ -543,27 +526,6 @@ export function layout(
 				availableCross -= maxCrossChildren[i]!
 				if (i !== maxCrossChildren.length - 1 && !isContentSpace) {
 					availableCross -= crossGap
-				}
-			}
-
-			if (
-				e._state.hasHorizontalScrollbar &&
-				e._state.scrollWidth > e._state.clientWidth
-			) {
-				if (isHorizontal) {
-					availableMain -= CROSS_AXIS_SIZE
-				} else {
-					availableCross -= CROSS_AXIS_SIZE
-				}
-			}
-			if (
-				e._state.hasVerticalScrollbar &&
-				e._state.scrollHeight > e._state.clientHeight
-			) {
-				if (isVertical) {
-					availableMain -= CROSS_AXIS_SIZE
-				} else {
-					availableCross -= CROSS_AXIS_SIZE
 				}
 			}
 
@@ -822,77 +784,6 @@ export function layout(
 		e._state.y = Math.round(e._state.y)
 		e._state.clientWidth = Math.round(e._state.clientWidth)
 		e._state.clientHeight = Math.round(e._state.clientHeight)
-	}
-
-	/*
-	 * Fourth tree pass: calculate scroll sizes. It is only possible after sizes and positions are
-	 * set. Going top-down, level order.
-	 */
-	for (let i = 0; i < nodesInLevelOrder.length; i++) {
-		const e = nodesInLevelOrder[i]!
-		invariant(e, 'Empty queue.')
-
-		if (
-			e._style.overflowX === Overflow.Auto ||
-			e._style.overflowX === Overflow.Scroll ||
-			e._style.overflowY === Overflow.Auto ||
-			e._style.overflowY === Overflow.Scroll
-		) {
-			let farthestX = 0
-			let farthestY = 0
-			let c = e.firstChild
-			while (c) {
-				const potentialHorizontalScroll = c._state.hasHorizontalScrollbar
-					? CROSS_AXIS_SIZE
-					: 0
-				const potentialVerticalScroll = c._state.hasVerticalScrollbar
-					? CROSS_AXIS_SIZE
-					: 0
-				farthestX = Math.max(
-					farthestX,
-					c._state.x +
-						c._style.marginLeft +
-						c._state.clientWidth +
-						potentialHorizontalScroll +
-						c._style.marginRight -
-						e._state.x,
-				)
-				farthestY = Math.max(
-					farthestY,
-					c._state.y +
-						c._style.marginTop +
-						c._state.clientHeight +
-						potentialVerticalScroll +
-						c._style.marginBottom -
-						e._state.y,
-				)
-				c = c.next
-			}
-
-			farthestX += e._style.paddingRight + e._style.borderRightWidth
-			farthestY += e._style.paddingBottom + e._style.borderBottomWidth
-
-			e._state.scrollWidth = Math.max(farthestX, e._state.clientWidth)
-			e._state.scrollHeight = Math.max(farthestY, e._state.clientHeight)
-
-			if (
-				e._style.overflowX === Overflow.Auto &&
-				e._state.scrollWidth > e._state.clientWidth
-			) {
-				e._state.clientHeight -= CROSS_AXIS_SIZE
-				e._state.hasHorizontalScrollbar = true
-			}
-			if (
-				e._style.overflowY === Overflow.Auto &&
-				e._state.scrollHeight > e._state.clientHeight
-			) {
-				e._state.clientWidth -= CROSS_AXIS_SIZE
-				e._state.hasVerticalScrollbar = true
-			}
-		} else {
-			e._state.scrollWidth = e._state.clientWidth
-			e._state.scrollHeight = e._state.clientHeight
-		}
 	}
 }
 

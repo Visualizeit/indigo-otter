@@ -1,18 +1,25 @@
 import invariant from 'tiny-invariant'
-import  { type Settings } from '../consts'
 import { MISSING_GLYPH } from '../font/calculateGlyphQuads'
-import  { type Shape, shapeText  } from '../font/shapeText'
-import  { type Lookups } from '../font/types'
+import { type Shape, shapeText } from '../font/shapeText'
+import { type Lookups } from '../font/types'
 import { defaultTextStyleProps, type TextAlign } from '../layout/styling'
-import  { type Vec2 } from '../math/Vec2'
-import  { type Vec4 } from '../math/Vec4'
+import { type Vec2 } from '../math/Vec2'
+import { type Vec4 } from '../math/Vec4'
 import { createTextureFromImageBitmap } from '../utils/createTextureFromBitmap'
-import  { type Renderer } from './Renderer'
+import { type Renderer } from './Renderer'
 
 const enum DrawingMode {
 	Rectangles,
 	Text,
 	None,
+}
+
+type Settings = {
+	rectangleBufferSize: number
+	sampleCount: number
+	textBufferSize: number
+	windowHeight: number
+	windowWidth: number
 }
 
 export class WebGPURenderer implements Renderer {

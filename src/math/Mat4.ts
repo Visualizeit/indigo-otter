@@ -1,6 +1,5 @@
- 
 // @ts-nocheck
-import  { type Vec3 } from './Vec3'
+import { type Vec3 } from './Vec3'
 import { Vec4 } from './Vec4'
 
 export class Mat4 {

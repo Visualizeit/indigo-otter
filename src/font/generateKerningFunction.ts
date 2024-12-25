@@ -1,7 +1,7 @@
 import invariant from 'tiny-invariant'
 import { generateGlyphToClassMap } from './generateGlyphToClassMap'
-import  { type TTF, type ValueRecord } from './parseTTF'
-import  { type KerningFunction } from './types'
+import { type TTF, type ValueRecord } from './parseTTF'
+import { type KerningFunction } from './types'
 
 /**
  * Generates a kerning function used by `shapeText()`.

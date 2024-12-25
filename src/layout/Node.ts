@@ -1,4 +1,4 @@
-import  { type ExactLayoutProps, type LayoutNodeState } from './styling'
+import { type ExactLayoutProps, type LayoutNodeState } from './styling'
 
 /**
  * Basic node in the layout tree. Containing its state and style information as well as pointers to
@@ -15,5 +15,4 @@ export interface Node {
 	next: Node | null
 	parent: Node | null
 	prev: Node | null
-	testID: string | null
 }

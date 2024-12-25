@@ -1,17 +1,18 @@
-import  { type Lookups } from '../font/types'
-import  { type Node } from './Node'
-import  {
+import { type Lookups } from '../font/types'
+import { type Node } from './Node'
+import {
 	type ExactLayoutProps,
 	type LayoutNodeState,
 	type LayoutProps,
-	type TextStyleProps, defaultLayoutNodeState, normalizeLayoutProps 
+	type TextStyleProps,
+	defaultLayoutNodeState,
+	normalizeLayoutProps,
 } from './styling'
 
 /**
  * Basic text node. The only way to create text. It cannot have children.
  */
 export class Text implements Node {
-	testID: string | null
 	next: Node | null = null
 	prev: Node | null = null
 	firstChild: Node | null = null
@@ -28,10 +29,8 @@ export class Text implements Node {
 		readonly props: {
 			lookups: Lookups
 			style: TextStyleProps
-			testID?: string
 		},
 	) {
-		this.testID = props.testID ?? null
 		this._style = normalizeLayoutProps(props.style as LayoutProps)
 	}
 }

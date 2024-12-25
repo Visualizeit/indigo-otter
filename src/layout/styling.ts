@@ -1,5 +1,5 @@
 import { Vec2 } from '../math/Vec2'
-import  { type Node } from './Node'
+import { type Node } from './Node'
 
 /**
  * Internal state of the node. Might be useful for debugging or hacking around but it is subject
@@ -11,11 +11,11 @@ export type LayoutNodeState = {
 	 */
 	children: Array<Array<Node>>
 	/**
-	 * Height of the element excluding scrollbar.
+	 * Height of the element.
 	 */
 	clientHeight: number
 	/**
-	 * Width of the element excluding scrollbar.
+	 * Width of the element.
 	 */
 	clientWidth: number
 	/**
@@ -27,47 +27,15 @@ export type LayoutNodeState = {
 	 */
 	clipStart: Vec2
 	/**
-	 *
-	 */
-	hasHorizontalScrollbar: boolean
-	/**
-	 *
-	 */
-	hasVerticalScrollbar: boolean
-	/**
-	 * Height of the element including (potential) scrollbar and scrollable content.
-	 */
-	scrollHeight: number
-	/**
-	 * Width of the element including (potential) scrollbar and scrollable content.
-	 */
-	scrollWidth: number
-	/**
-	 * Current scroll position relative to parent.
-	 */
-	scrollX: number
-	/**
-	 * Current scroll position relative to parent.
-	 */
-	scrollY: number
-	/**
 	 * Read by `paint()`, written by `layout()`.
 	 */
 	textWidthLimit?: number
 	/**
-	 * Sum of all scroll positions inside the parent chain.
-	 */
-	totalScrollX: number
-	/**
-	 * Sum of all scroll positions inside the parent chain.
-	 */
-	totalScrollY: number
-	/**
-	 * Screen-space position of element after layout (pre-scroll).
+	 * Screen-space position of element after layout.
 	 */
 	x: number
 	/**
-	 * Screen-space position of element after layout (pre-scroll).
+	 * Screen-space position of element after layout.
 	 */
 	y: number
 }
@@ -78,14 +46,6 @@ export const defaultLayoutNodeState = {
 	clientWidth: 0,
 	clipSize: new Vec2(0, 0),
 	clipStart: new Vec2(0, 0),
-	hasHorizontalScrollbar: false,
-	hasVerticalScrollbar: false,
-	scrollHeight: 0,
-	scrollWidth: 0,
-	scrollX: 0,
-	scrollY: 0,
-	totalScrollX: 0,
-	totalScrollY: 0,
 	x: 0,
 	y: 0,
 }
@@ -211,17 +171,9 @@ export const enum FlexWrap {
  */
 export const enum Overflow {
 	/**
-	 * Shows scrollbars if needed.
-	 */
-	Auto,
-	/**
-	 * Clips content but doesn't show scrollbars.
+	 * Clips content.
 	 */
 	Hidden,
-	/**
-	 * Shows scrollbars always.
-	 */
-	Scroll,
 	/**
 	 * Lets content overflow the parent.
 	 */

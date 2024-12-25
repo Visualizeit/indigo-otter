@@ -4,9 +4,9 @@ import { Vec2 } from '../math/Vec2'
 import { Vec4 } from '../math/Vec4'
 import { calculateGlyphQuads } from './calculateGlyphQuads'
 import { generateKerningFunction } from './generateKerningFunction'
-import  { type TTF } from './parseTTF'
+import { type TTF } from './parseTTF'
 import { fontSizeToGap } from './renderFontAtlas'
-import  { type Glyph, type Lookups } from './types'
+import { type Glyph, type Lookups } from './types'
 
 /**
  * This is generally extension of the font parsing process.

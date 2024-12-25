@@ -4,7 +4,7 @@ import { Vec2 } from '../math/Vec2'
 import { LRUCache } from '../utils/LRUCache'
 import { MISSING_GLYPH } from './calculateGlyphQuads'
 import { fontSizeToGap } from './renderFontAtlas'
-import  { type Lookups } from './types'
+import { type Lookups } from './types'
 
 export const ENABLE_KERNING = true
 
