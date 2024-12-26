@@ -8,23 +8,15 @@ import {
 	prepareLookups,
 	Text,
 } from '../src'
-import { renderToCanvas } from './renderToCanvas'
+import { renderToSVG } from './renderToSVG'
 
 const initialize = async () => {
-	const canvas = document.createElement('canvas')
-
-	document.querySelector('#app')?.appendChild(canvas)
-
-	const parent = canvas.parentElement
+	const parent = document.querySelector<HTMLElement>('#app')
 
 	invariant(parent, 'No parent element found.')
 
 	const WIDTH = parent.clientWidth
 	const HEIGHT = parent.clientHeight
-
-	canvas.width = WIDTH * window.devicePixelRatio
-	canvas.height = HEIGHT * window.devicePixelRatio
-	canvas.setAttribute('style', 'width: 100%; height: 100%;')
 
 	const interTTF = await fetch('./Inter.ttf').then((response) =>
 		response.arrayBuffer(),
@@ -69,10 +61,10 @@ const initialize = async () => {
 		],
 	})
 
-	layout(root, lookups, new Vec2(canvas.width, canvas.height))
+	layout(root, lookups, new Vec2(WIDTH, HEIGHT))
 	compose(root)
 
-	renderToCanvas(canvas, root)
+	renderToSVG(parent, root)
 }
 
 await initialize()

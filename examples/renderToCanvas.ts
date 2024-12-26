@@ -1,13 +1,23 @@
 import invariant from 'tiny-invariant'
 import { type Node, Queue, View, Text } from '../src'
 
-export function renderToCanvas(canvas: HTMLCanvasElement, node: Node) {
-	const ctx = canvas.getContext('2d')
+export function renderToCanvas(parent: HTMLElement, node: Node) {
+	const WIDTH = parent.clientWidth
+	const HEIGHT = parent.clientHeight
 
-	invariant(ctx, 'Canvas context not found.')
+	const canvas = document.createElement('canvas')
 
-	ctx.fillStyle = '#000000'
-	ctx.fillRect(0, 0, canvas.width, canvas.height)
+	const context = canvas.getContext('2d')
+
+	canvas.width = WIDTH * window.devicePixelRatio
+	canvas.height = HEIGHT * window.devicePixelRatio
+
+	parent.appendChild(canvas)
+
+	invariant(context, 'Canvas context not found.')
+
+	context.fillStyle = '#000000'
+	context.fillRect(0, 0, canvas.width, canvas.height)
 
 	const list: Array<Node> = []
 
@@ -31,10 +41,10 @@ export function renderToCanvas(canvas: HTMLCanvasElement, node: Node) {
 
 	for (const node of list) {
 		if (node instanceof Text) {
-			ctx.font = `${node._style.fontSize}px ${node._style.fontName}`
-			ctx.fillStyle = node._style.color
+			context.font = `${node._style.fontSize}px ${node._style.fontName}`
+			context.fillStyle = node._style.color
 
-			ctx.fillText(
+			context.fillText(
 				node.text,
 				node._state.x,
 				node._state.y + node._state.clientHeight,
@@ -42,9 +52,9 @@ export function renderToCanvas(canvas: HTMLCanvasElement, node: Node) {
 		}
 
 		if (node instanceof View) {
-			ctx.fillStyle = node._style.backgroundColor
+			context.fillStyle = node._style.backgroundColor
 
-			ctx.fillRect(
+			context.fillRect(
 				node._state.x,
 				node._state.y,
 				node._state.clientWidth,
