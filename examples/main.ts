@@ -93,32 +93,27 @@ const initialize = async () => {
 			backgroundColor: '#3b82f6',
 			padding: 20,
 		},
+		children: [
+			new View({
+				style: {
+					width: 200,
+					height: 200,
+					backgroundColor: '#ef4444',
+				},
+			}),
+			new View({
+				style: {
+					width: 200,
+					height: 200,
+					backgroundColor: '#f59e0b',
+				},
+			}),
+			new Text('Hello World', {
+				lookups,
+				style: { fontName: 'Inter', fontSize: 24, color: '#fff' },
+			}),
+		],
 	})
-
-	const view1 = new View({
-		style: {
-			width: 200,
-			height: 200,
-			backgroundColor: '#ef4444',
-		},
-	})
-
-	const view2 = new View({
-		style: {
-			width: 200,
-			height: 200,
-			backgroundColor: '#f59e0b',
-		},
-	})
-
-	const text = new Text('Hello World', {
-		lookups,
-		style: { fontName: 'Inter', fontSize: 24, color: '#fff' },
-	})
-
-	root.add(view1)
-	root.add(view2)
-	root.add(text)
 
 	layout(root, lookups, new Vec2(canvas.width, canvas.height))
 	compose(renderer, root)

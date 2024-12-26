@@ -31,13 +31,19 @@ export class View implements Node {
 
 	constructor(
 		readonly props: {
-			onClick?(): void
 			style?: ViewStyleProps
+			children?: Node[]
 		},
 	) {
 		this._style = normalizeDecorativeProps(
 			normalizeLayoutProps(props.style ?? {}) as ViewStyleProps,
 		)
+
+		if (Array.isArray(props.children)) {
+			for (const child of props.children) {
+				this.add(child)
+			}
+		}
 	}
 
 	add(node: Node): Node {
@@ -57,32 +63,5 @@ export class View implements Node {
 		}
 
 		return node
-	}
-
-	remove(node: Node): void {
-		// Check if node is a child of this node.
-		if (node.parent !== this) {
-			console.warn('Node is not a child of this node.')
-		}
-
-		if (node.prev !== null) {
-			node.prev.next = node.next
-		}
-
-		if (node.next !== null) {
-			node.next.prev = node.prev
-		}
-
-		if (this.firstChild === node) {
-			this.firstChild = node.next
-		}
-
-		if (this.lastChild === node) {
-			this.lastChild = node.prev
-		}
-
-		node.prev = null
-		node.next = null
-		node.parent = null
 	}
 }
