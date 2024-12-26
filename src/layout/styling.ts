@@ -345,16 +345,6 @@ export type ExactDecorativeProps = Required<
 >
 
 /**
- * Corresponds to CSS `text-transform`.
- */
-export const enum TextTransform {
-	None,
-	Capitalize,
-	Lowercase,
-	Uppercase,
-}
-
-/**
  * Corresponds to CSS `text-align`.
  */
 export const enum TextAlign {
@@ -387,7 +377,6 @@ export type TextStyleProps = {
 	fontSize?: number
 	lineHeight?: number
 	textAlign?: TextAlign
-	textTransform?: TextTransform
 	whitespace?: Whitespace
 }
 
@@ -452,7 +441,6 @@ export const defaultTextStyleProps: Required<TextStyleProps> = {
 	fontSize: 16,
 	lineHeight: 20,
 	textAlign: TextAlign.Left,
-	textTransform: TextTransform.None,
 	whitespace: Whitespace.Normal,
 }
 

@@ -19,7 +19,6 @@ export {
 	FlexWrap,
 	Overflow,
 	Position,
-	TextTransform,
 	TextAlign,
 	Whitespace,
 } from './layout/styling'
