@@ -56,9 +56,7 @@ export function layout(
 		invariant(e, 'Empty queue.')
 		nodesInLevelOrder.push(e)
 
-		const isHorizontal =
-			e.parent?._style.flexDirection === FlexDirection.Row ||
-			e.parent?._style.flexDirection === FlexDirection.RowReverse
+		const isHorizontal = e.parent?._style.flexDirection === FlexDirection.Row
 
 		let c = e.firstChild
 		while (c !== null) {
@@ -170,15 +168,9 @@ export function layout(
 		const e = nodesInLevelOrder[i]!
 		invariant(e, 'Empty queue.')
 
-		const isWrap =
-			e._style.flexWrap === FlexWrap.Wrap ||
-			e._style.flexWrap === FlexWrap.WrapReverse
-		const isHorizontal =
-			e._style.flexDirection === FlexDirection.Row ||
-			e._style.flexDirection === FlexDirection.RowReverse
-		const isVertical =
-			e._style.flexDirection === FlexDirection.Column ||
-			e._style.flexDirection === FlexDirection.ColumnReverse
+		const isWrap = e._style.flexWrap === FlexWrap.Wrap
+		const isHorizontal = e._style.flexDirection === FlexDirection.Row
+		const isVertical = e._style.flexDirection === FlexDirection.Column
 		const isJustifySpace =
 			e._style.justifyContent === JustifyContent.SpaceBetween ||
 			e._style.justifyContent === JustifyContent.SpaceAround ||
@@ -369,14 +361,9 @@ export function layout(
 		const parentHeight = p?._state.clientHeight ?? 0
 
 		const direction = e._style.flexDirection
-		const isHorizontal =
-			direction === FlexDirection.Row || direction === FlexDirection.RowReverse
-		const isVertical =
-			direction === FlexDirection.Column ||
-			direction === FlexDirection.ColumnReverse
-		const isReversed =
-			direction === FlexDirection.RowReverse ||
-			direction === FlexDirection.ColumnReverse
+		const isHorizontal = direction === FlexDirection.Row
+		const isVertical = direction === FlexDirection.Column
+
 		const isJustifySpace =
 			e._style.justifyContent === JustifyContent.SpaceBetween ||
 			e._style.justifyContent === JustifyContent.SpaceAround ||
@@ -436,14 +423,6 @@ export function layout(
 					e._state.clientHeight -
 					e._style.bottom
 			}
-		}
-
-		if (e._style.flexWrap === FlexWrap.WrapReverse) {
-			e._state.children.reverse()
-		}
-
-		if (isReversed) {
-			e._state.children.forEach((row) => row.reverse())
 		}
 
 		const resetMain = isHorizontal
@@ -551,10 +530,7 @@ export function layout(
 				// ignore border or padding here (and we don't).
 				main += availableMain / 2
 			}
-			if (
-				(isReversed && e._style.justifyContent === JustifyContent.Start) ||
-				(!isReversed && e._style.justifyContent === JustifyContent.End)
-			) {
+			if (e._style.justifyContent === JustifyContent.End) {
 				main += availableMain
 			}
 			if (e._style.justifyContent === JustifyContent.SpaceAround) {
@@ -827,9 +803,7 @@ function applyMinMaxAndAspectRatio(e: Node): void {
 		maxHeight,
 	)
 
-	const isHorizontal =
-		e.parent?._style.flexDirection === FlexDirection.Row ||
-		e.parent?._style.flexDirection === FlexDirection.RowReverse
+	const isHorizontal = e.parent?._style.flexDirection === FlexDirection.Row
 
 	if (e._style.aspectRatio !== undefined) {
 		const aspectRatio = e._style.aspectRatio

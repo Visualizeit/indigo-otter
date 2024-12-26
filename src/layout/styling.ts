@@ -135,17 +135,9 @@ export const enum FlexDirection {
 	 */
 	Column,
 	/**
-	 * Reverses the order of elements.
-	 */
-	ColumnReverse,
-	/**
 	 * Main axis is the horizontal one.
 	 */
 	Row,
-	/**
-	 * Reverses the order of elements.
-	 */
-	RowReverse,
 }
 
 /**
@@ -160,10 +152,6 @@ export const enum FlexWrap {
 	 * Wraps lines of elements if they exceed available space in the main axis.
 	 */
 	Wrap,
-	/**
-	 * Reverses the order of lines.
-	 */
-	WrapReverse,
 }
 
 /**
