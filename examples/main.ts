@@ -116,7 +116,7 @@ const initialize = async () => {
 	})
 
 	layout(root, lookups, new Vec2(canvas.width, canvas.height))
-	compose(renderer, root)
+	compose(root)
 	paint(renderer, root)
 
 	const commandEncoder = device.createCommandEncoder()

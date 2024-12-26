@@ -1,7 +1,6 @@
 import { intersection } from '../math/utils'
 import { Vec2 } from '../math/Vec2'
 import { Vec4 } from '../math/Vec4'
-import { type Renderer } from '../renderer/Renderer'
 import { type Node } from './Node'
 import { Display } from './styling'
 
@@ -10,7 +9,6 @@ import { Display } from './styling'
  * while handling clipping rectangles for each node.
  */
 export function compose(
-	renderer: Renderer,
 	node: Node,
 	clipStart = new Vec2(0, 0),
 	clipSize = new Vec2(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY),
@@ -34,7 +32,7 @@ export function compose(
 
 	let c = node.firstChild
 	while (c) {
-		compose(renderer, c, clipped.xy(), clipped.zw())
+		compose(c, clipped.xy(), clipped.zw())
 		c = c.next
 	}
 }
