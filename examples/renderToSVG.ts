@@ -4,6 +4,11 @@ export function renderToSVG(parent: HTMLElement, node: Node) {
 	const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 	svg.setAttribute('width', node._state.clientWidth + 'px')
 	svg.setAttribute('height', node._state.clientHeight + 'px')
+	svg.setAttribute(
+		'viewBox',
+		`0 0 ${node._state.clientWidth} ${node._state.clientHeight}`,
+	)
+	svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 
 	parent.appendChild(svg)
 
