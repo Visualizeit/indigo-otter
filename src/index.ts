@@ -1,5 +1,4 @@
 export { layout } from './layout/layout'
-export { paint } from './layout/paint'
 export { compose } from './layout/compose'
 export type { Node } from './layout/Node'
 export { View } from './layout/View'
@@ -19,7 +18,6 @@ export {
 	FlexDirection,
 	FlexWrap,
 	Overflow,
-	Display,
 	Position,
 	TextTransform,
 	TextAlign,
@@ -39,10 +37,6 @@ export { renderFontAtlas, fontSizeToGap } from './font/renderFontAtlas'
 export { generateGlyphToClassMap } from './font/generateGlyphToClassMap'
 export { generateKerningFunction } from './font/generateKerningFunction'
 export { calculateGlyphQuads } from './font/calculateGlyphQuads'
-
-export type { Renderer } from './renderer/Renderer'
-export { WebGPURenderer } from './renderer/WebGPURenderer'
-
 export { Vec2 } from './math/Vec2'
 export { Vec3 } from './math/Vec3'
 export { Vec4 } from './math/Vec4'

@@ -181,20 +181,6 @@ export const enum Overflow {
 }
 
 /**
- * Corresponds to CSS display.
- */
-export const enum Display {
-	/**
-	 * Behaves similarly to `flex` in CSS.
-	 */
-	Flex,
-	/**
-	 * Hides element from layout and prevents it from participating in layout calculations.
-	 */
-	None,
-}
-
-/**
  * Corresponds to CSS position.
  */
 export const enum Position {
@@ -242,7 +228,6 @@ export type LayoutProps = {
 	 * Overrides `gap` for columns.
 	 */
 	columnGap?: number
-	display?: Display
 	flex?: number
 	/**
 	 * In row does the same as `width` and in column does the same as `height`.
@@ -432,7 +417,6 @@ const defaultLayoutProps: ExactLayoutProps = {
 	borderWidth: 0,
 	bottom: undefined,
 	columnGap: 0,
-	display: Display.Flex,
 	flex: 0,
 	flexBasis: undefined,
 	flexDirection: FlexDirection.Column,

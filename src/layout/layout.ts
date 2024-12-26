@@ -8,7 +8,6 @@ import {
 	AlignContent,
 	AlignItems,
 	AlignSelf,
-	Display,
 	FlexDirection,
 	FlexWrap,
 	JustifyContent,
@@ -283,10 +282,7 @@ export function layout(
 		let longestChildSize = 0
 		let c = e.firstChild
 		while (c) {
-			if (
-				c._style.position !== Position.Relative ||
-				c._style.display === Display.None
-			) {
+			if (c._style.position !== Position.Relative) {
 				c = c.next
 				continue
 			}
@@ -468,10 +464,7 @@ export function layout(
 			let childrenCount = 0
 
 			for (const c of line) {
-				if (
-					c._style.position !== Position.Relative ||
-					c._style.display === Display.None
-				) {
+				if (c._style.position !== Position.Relative) {
 					continue
 				}
 
@@ -530,10 +523,7 @@ export function layout(
 			}
 
 			for (const c of line) {
-				if (
-					c._style.position !== Position.Relative ||
-					c._style.display === Display.None
-				) {
+				if (c._style.position !== Position.Relative) {
 					continue
 				}
 
@@ -610,10 +600,7 @@ export function layout(
 			let usedMain = 0
 			for (let j = 0; j < line.length; j++) {
 				const c = line[j]!
-				if (
-					c._style.position !== Position.Relative ||
-					c._style.display === Display.None
-				) {
+				if (c._style.position !== Position.Relative) {
 					continue
 				}
 

@@ -1,16 +1,14 @@
 import invariant from 'tiny-invariant'
 import {
-	renderFontAtlas,
 	Vec2,
 	layout,
 	compose,
-	paint,
 	View,
 	parseTTF,
 	prepareLookups,
-	WebGPURenderer,
 	Text,
 } from '../src'
+import { renderToCanvas } from './renderToCanvas'
 
 const initialize = async () => {
 	const canvas = document.createElement('canvas')
@@ -24,14 +22,6 @@ const initialize = async () => {
 	const WIDTH = parent.clientWidth
 	const HEIGHT = parent.clientHeight
 
-	const settings = {
-		sampleCount: 4,
-		windowHeight: HEIGHT,
-		windowWidth: WIDTH,
-		rectangleBufferSize: 16 * 4096,
-		textBufferSize: 16 * 100_000,
-	}
-
 	canvas.width = WIDTH * window.devicePixelRatio
 	canvas.height = HEIGHT * window.devicePixelRatio
 	canvas.setAttribute('style', 'width: 100%; height: 100%;')
@@ -43,23 +33,6 @@ const initialize = async () => {
 	const alphabet =
 		'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890 ,.:•-–()[]{}!?@#$%^&*+=/\\|<>`~’\'";_▶'
 
-	const entry = navigator.gpu
-	invariant(entry, 'WebGPU is not supported in this browser.')
-
-	const context = canvas.getContext('webgpu')
-	invariant(context, 'WebGPU is not supported in this browser.')
-
-	const adapter = await entry.requestAdapter()
-	invariant(adapter, 'No GPU found on this system.')
-
-	const device = await adapter.requestDevice()
-
-	context.configure({
-		alphaMode: 'opaque',
-		device: device,
-		format: navigator.gpu.getPreferredCanvasFormat(),
-	})
-
 	const lookups = prepareLookups(
 		[{ buffer: interTTF, name: 'Inter', ttf: parseTTF(interTTF) }],
 		{
@@ -68,30 +41,11 @@ const initialize = async () => {
 		},
 	)
 
-	const fontAtlas = await renderFontAtlas(lookups, { useSDF: true })
-
-	const colorTexture = device.createTexture({
-		format: 'bgra8unorm',
-		label: 'color',
-		sampleCount: settings.sampleCount,
-		size: { height: canvas.height, width: canvas.width },
-		usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC,
-	})
-	const colorTextureView = colorTexture.createView({ label: 'color' })
-
-	const renderer = new WebGPURenderer(
-		device,
-		context,
-		colorTextureView,
-		settings,
-		lookups,
-		fontAtlas,
-	)
-
 	const root = new View({
 		style: {
 			backgroundColor: '#3b82f6',
 			padding: 20,
+			gap: 20,
 		},
 		children: [
 			new View({
@@ -117,11 +71,8 @@ const initialize = async () => {
 
 	layout(root, lookups, new Vec2(canvas.width, canvas.height))
 	compose(root)
-	paint(renderer, root)
 
-	const commandEncoder = device.createCommandEncoder()
-	renderer.render(commandEncoder)
-	device.queue.submit([commandEncoder.finish()])
+	renderToCanvas(canvas, root)
 }
 
 await initialize()
