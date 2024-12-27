@@ -1,4 +1,3 @@
-import { type Lookups } from '../font/types'
 import { type Node } from './Node'
 import {
 	type ExactLayoutProps,
@@ -27,7 +26,7 @@ export class Text implements Node {
 	constructor(
 		public text: string,
 		readonly props: {
-			lookups: Lookups
+			font: Uint8Array
 			style: TextStyleProps
 		},
 	) {

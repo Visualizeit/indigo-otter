@@ -1,13 +1,5 @@
 import invariant from 'tiny-invariant'
-import {
-	Vec2,
-	layout,
-	compose,
-	View,
-	parseTTF,
-	prepareLookups,
-	Text,
-} from '../src'
+import { Vec2, layout, compose, View, Text } from '../src'
 import { renderToSVG } from './renderToSVG'
 
 const initialize = async () => {
@@ -18,50 +10,35 @@ const initialize = async () => {
 	const WIDTH = parent.clientWidth
 	const HEIGHT = parent.clientHeight
 
-	const interTTF = await fetch('./Inter.ttf').then((response) =>
-		response.arrayBuffer(),
-	)
-
-	const alphabet =
-		'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890 ,.:•-–()[]{}!?@#$%^&*+=/\\|<>`~’\'";_▶'
-
-	const lookups = prepareLookups(
-		[{ buffer: interTTF, name: 'Inter', ttf: parseTTF(interTTF) }],
-		{
-			alphabet,
-			fontSize: 150,
-		},
-	)
+	const font = await fetch('./Inter.ttf')
+		.then((response) => response.arrayBuffer())
+		.then((buffer) => new Uint8Array(buffer))
 
 	const root = new View({
 		style: {
-			backgroundColor: '#3b82f6',
+			backgroundColor: '#f8f9fa',
 			padding: 20,
 			gap: 20,
 		},
 		children: [
-			new View({
+			new Text('Hello', {
+				font,
 				style: {
-					width: 200,
-					height: 200,
-					backgroundColor: '#ef4444',
+					fontSize: 64,
+					color: '#000',
 				},
 			}),
-			new View({
+			new Text('World', {
+				font,
 				style: {
-					width: 200,
-					height: 200,
-					backgroundColor: '#f59e0b',
+					fontSize: 128,
+					color: '#000',
 				},
-			}),
-			new Text('Hello World', {
-				lookups,
-				style: { fontName: 'Inter', fontSize: 24, color: '#fff' },
 			}),
 		],
 	})
 
-	layout(root, lookups, new Vec2(WIDTH, HEIGHT))
+	layout(root, new Vec2(WIDTH, HEIGHT))
 	compose(root)
 
 	renderToSVG(parent, root)

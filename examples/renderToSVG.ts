@@ -1,4 +1,5 @@
 import { type Node, Queue, View, Text } from '../src'
+import textToSVGPath from './textToSVGPath'
 
 export function renderToSVG(parent: HTMLElement, node: Node) {
 	const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
@@ -34,21 +35,24 @@ export function renderToSVG(parent: HTMLElement, node: Node) {
 
 	for (const node of list) {
 		if (node instanceof Text) {
-			const text = document.createElementNS(
+			const path = document.createElementNS(
 				'http://www.w3.org/2000/svg',
-				'text',
+				'path',
 			)
-			text.setAttribute('x', node._state.x.toString())
-			text.setAttribute(
-				'y',
-				(node._state.y + node._state.clientHeight).toString(),
-			)
-			text.setAttribute('fill', node._style.color)
-			text.setAttribute('font-size', `${node._style.fontSize}px`)
-			text.setAttribute('font-family', node._style.fontName)
-			text.textContent = node.text
 
-			svg.appendChild(text)
+			path.setAttribute(
+				'd',
+				textToSVGPath(
+					node.text,
+					node._style.fontSize,
+					node._state.x,
+					node._state.y + node._state.clientHeight,
+					node.props.font as Buffer,
+				),
+			)
+			path.setAttribute('fill', node._style.color)
+
+			svg.appendChild(path)
 		}
 
 		if (node instanceof View) {

@@ -1,8 +1,7 @@
 import invariant from 'tiny-invariant'
-import { shapeText } from '../font/shapeText'
-import { type Lookups } from '../font/types'
 import { type Vec2 } from '../math/Vec2'
 import { Queue } from '../utils/Queue'
+import measureText from './measureText'
 import { type Node } from './Node'
 import {
 	AlignContent,
@@ -14,7 +13,6 @@ import {
 	Position,
 	TextAlign,
 	Whitespace,
-	defaultTextStyleProps,
 } from './styling'
 import { Text } from './Text'
 import { View } from './View'
@@ -27,14 +25,9 @@ import { View } from './View'
  * relative to the parent.
  *
  * @param tree tree of views to layout.
- * @param fontLookups used for calculating text shapes for text wrapping. Can be `null` if not needed.
  * @param rootSize size of the root element.
  */
-export function layout(
-	tree: Node,
-	fontLookups: Lookups | null,
-	rootSize: Vec2,
-): void {
+export function layout(tree: Node, rootSize: Vec2): void {
 	const traversalQueue = new Queue<Node>()
 
 	const root = new View({
@@ -131,7 +124,7 @@ export function layout(
 		}
 
 		const p = e.parent
-		if (fontLookups && p && e instanceof Text) {
+		if (p && e instanceof Text) {
 			let maxWidth = Number.POSITIVE_INFINITY
 
 			if ((p?._state.clientWidth ?? 0) > 0) {
@@ -144,19 +137,14 @@ export function layout(
 				e._state.textWidthLimit = maxWidth
 			}
 
-			const shape = shapeText(
-				fontLookups,
-				e._style.fontName,
-				e._style.fontSize ?? defaultTextStyleProps.fontSize,
-				e._style.lineHeight ?? defaultTextStyleProps.lineHeight,
+			const textSize = measureText(
 				e.text,
-				e._style.textAlign ?? TextAlign.Left,
-				maxWidth,
-				(e._style.whitespace ?? Whitespace.NoWrap) === Whitespace.NoWrap,
+				e._style.fontSize,
+				e.props.font as Buffer,
 			)
 
-			e._state.clientWidth = shape.boundingRectangle.width
-			e._state.clientHeight = shape.boundingRectangle.height
+			e._state.clientWidth = textSize.x
+			e._state.clientHeight = textSize.y
 		}
 	}
 

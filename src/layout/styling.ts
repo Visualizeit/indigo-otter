@@ -373,8 +373,7 @@ export type TextStyleProps = {
 	/**
 	 * As defined in the lookups object.
 	 */
-	fontName: string
-	fontSize?: number
+	fontSize: number
 	lineHeight?: number
 	textAlign?: TextAlign
 	whitespace?: Whitespace
@@ -433,15 +432,6 @@ const defaultDecorativeProps: ExactDecorativeProps = {
 	borderColor: 'transparent',
 	borderTopLeftRadius: 0,
 	borderTopRightRadius: 0,
-}
-
-export const defaultTextStyleProps: Required<TextStyleProps> = {
-	color: '#000',
-	fontName: 'Inter',
-	fontSize: 16,
-	lineHeight: 20,
-	textAlign: TextAlign.Left,
-	whitespace: Whitespace.Normal,
 }
 
 export function normalizeLayoutProps<

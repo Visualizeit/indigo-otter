@@ -1,4 +1,4 @@
-import { intersection } from '../math/utils'
+import { intersection } from '../math/intersection'
 import { Vec2 } from '../math/Vec2'
 import { Vec4 } from '../math/Vec4'
 import { type Node } from './Node'
