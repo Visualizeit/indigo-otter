@@ -143,6 +143,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 				e.props.font as Buffer,
 			)
 
+			e._state.y = e._state.y + textSize.y
 			e._state.clientWidth = textSize.x
 			e._state.clientHeight = textSize.y
 		}

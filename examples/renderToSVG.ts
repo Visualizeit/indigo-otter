@@ -46,7 +46,7 @@ export function renderToSVG(parent: HTMLElement, node: Node) {
 					node.text,
 					node._style.fontSize,
 					node._state.x,
-					node._state.y + node._state.clientHeight,
+					node._state.y,
 					node.props.font as Buffer,
 				),
 			)

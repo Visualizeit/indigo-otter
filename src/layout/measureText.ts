@@ -9,7 +9,9 @@ const measureText = (text: string, fontSize: number, fontBuffer: Buffer) => {
 	const scale = fontSize / font.unitsPerEm
 	const glyphRun = font.layout(text)
 
-	const width = glyphRun.bbox.width * scale
+	const width =
+		glyphRun.glyphs.reduce((total, glyph) => total + glyph.advanceWidth, 0) *
+		scale
 	const height = glyphRun.bbox.height * scale
 
 	return new Vec2(width, height)
