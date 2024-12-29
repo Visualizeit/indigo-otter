@@ -374,7 +374,6 @@ export type TextStyleProps = {
 	 * As defined in the lookups object.
 	 */
 	fontSize: number
-	lineHeight?: number
 	textAlign?: TextAlign
 	whitespace?: Whitespace
 }

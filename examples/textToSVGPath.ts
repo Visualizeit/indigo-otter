@@ -18,6 +18,8 @@ const textToSVGPath = (
 
 	const glyphRun = font.layout(text)
 
+	y += font.ascent * scale
+
 	let pathData = ''
 
 	glyphRun.glyphs.forEach((glyph, index) => {

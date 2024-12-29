@@ -10,7 +10,7 @@ const initialize = async () => {
 	const WIDTH = parent.clientWidth
 	const HEIGHT = parent.clientHeight
 
-	const font = await fetch('./Inter.ttf')
+	const font = await fetch('./LXGWWenKaiMonoLite-Light.ttf')
 		.then((response) => response.arrayBuffer())
 		.then((buffer) => new Uint8Array(buffer))
 
@@ -21,20 +21,31 @@ const initialize = async () => {
 			gap: 20,
 		},
 		children: [
-			new Text('Hello', {
+			new Text('”', {
 				font,
 				style: {
-					fontSize: 64,
+					fontSize: 72,
 					color: '#000',
 				},
 			}),
-			new Text('World', {
+			new Text(
+				'阅读一本书有两个动机：一是你喜欢这本书；二是你可以夸耀这本书。',
+				{
+					font,
+					style: {
+						fontSize: 24,
+						color: '#000',
+					},
+				},
+			),
+			new Text('- 伯特兰·罗素', {
 				font,
 				style: {
-					fontSize: 128,
-					color: '#000',
+					fontSize: 18,
+					color: '#6c757d',
 				},
 			}),
+			new View({ style: { height: 80 } }),
 		],
 	})
 
