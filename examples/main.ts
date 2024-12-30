@@ -52,7 +52,9 @@ const initialize = async () => {
 	layout(root, new Vec2(WIDTH, HEIGHT))
 	compose(root)
 
-	renderToSVG(parent, root)
+	const svg = renderToSVG(root)
+
+	parent.innerHTML = svg
 }
 
 await initialize()
