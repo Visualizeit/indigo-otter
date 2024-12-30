@@ -59,22 +59,20 @@ const renderToSVG = (node: Node) => {
 				node.props.font,
 			).y
 
-			return h(
-				'g',
-				{},
-				lines.map((line, index) =>
-					h('path', {
-						d: textToSVGPath(
+			return h('path', {
+				d: lines
+					.map((line, index) =>
+						textToSVGPath(
 							line,
 							node._style.fontSize,
 							node._state.x,
 							node._state.y + index * lineHeight,
 							node.props.font,
 						),
-						fill: node._style.color,
-					}),
-				),
-			)
+					)
+					.join(' '),
+				fill: node._style.color,
+			})
 		}
 
 		if (node instanceof View) {
