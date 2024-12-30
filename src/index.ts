@@ -23,6 +23,5 @@ export {
 
 export { Queue } from './utils/Queue'
 export { Vec2 } from './math/Vec2'
-export { Vec3 } from './math/Vec3'
 export { Vec4 } from './math/Vec4'
 export { intersection } from './math/intersection'
