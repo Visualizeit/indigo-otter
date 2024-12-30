@@ -44,23 +44,6 @@ export class Queue<T> {
 		return node.data
 	}
 
-	dequeueFront(): T | null {
-		const node = this.end
-		if (node === null) {
-			return null
-		}
-
-		if (node.prev) {
-			this.end = node.prev
-		} else {
-			this.start = null
-			this.end = null
-		}
-
-		this.size -= 1
-		return node.data
-	}
-
 	isEmpty(): boolean {
 		return this.size === 0
 	}

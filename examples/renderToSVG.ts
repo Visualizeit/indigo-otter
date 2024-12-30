@@ -1,4 +1,4 @@
-import { type Node, Queue, View, Text } from '../src'
+import { type Node, View, Text } from '../src'
 import breakTextIntoWords from '../src/layout/text/breakTextIntoWords'
 import breakWordsIntoLines from '../src/layout/text/breakWordsIntoLines'
 import measureWord from '../src/layout/text/measureWord'
@@ -12,23 +12,16 @@ const h = (tag: string, props: Record<string, string>, children?: string[]) =>
 const renderToSVG = (node: Node) => {
 	const list: Array<Node> = []
 
-	const queue = new Queue<Node>()
-	queue.enqueue(node)
-
-	while (!queue.isEmpty()) {
-		const node = queue.dequeueFront()
-		if (node === null) {
-			throw new Error('Node should not be null.')
-		}
-
+	const traverse = (node: Node) => {
 		list.push(node)
-
-		let p = node.lastChild
-		while (p) {
-			queue.enqueue(p)
-			p = p.prev
+		let child = node.lastChild
+		while (child) {
+			traverse(child)
+			child = child.prev
 		}
 	}
+
+	traverse(node)
 
 	const children = list.map((node) => {
 		if (node instanceof Text) {

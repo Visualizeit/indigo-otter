@@ -25,21 +25,6 @@ describe('Queue<T>', () => {
 		})
 	})
 
-	describe('dequeueFront', () => {
-		it('should remove and return the last item in the queue', () => {
-			const queue = new Queue<number>()
-			queue.enqueue(1)
-			queue.enqueue(2)
-			expect(queue.dequeueFront()).toBe(2)
-			expect(queue.dequeueFront()).toBe(1)
-		})
-
-		it('should return null if the queue is empty', () => {
-			const queue = new Queue<number>()
-			expect(queue.dequeueFront()).toBe(null)
-		})
-	})
-
 	describe('isEmpty', () => {
 		it('should return true if the queue is empty', () => {
 			const queue = new Queue<number>()
