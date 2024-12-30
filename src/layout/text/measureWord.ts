@@ -1,12 +1,13 @@
 import * as fontkit from 'fontkit'
-import invariant from 'tiny-invariant'
-import { Vec2 } from '../math/Vec2'
+import { Vec2 } from '../../'
 
-const measureText = (text: string, fontSize: number, fontBuffer: Buffer) => {
-	invariant(text.length > 0, 'Text must not be empty')
-
-	const font = fontkit.create(fontBuffer) as fontkit.Font
-	const glyphRun = font.layout(text)
+const measureWord = (
+	word: string,
+	fontSize: number,
+	fontBuffer: Uint8Array,
+) => {
+	const font = fontkit.create(fontBuffer as Buffer) as fontkit.Font
+	const glyphRun = font.layout(word)
 
 	const scale = fontSize / font.unitsPerEm,
 		fontHeight = font.ascent - font.descent,
@@ -22,4 +23,4 @@ const measureText = (text: string, fontSize: number, fontBuffer: Buffer) => {
 	return new Vec2(width, height)
 }
 
-export default measureText
+export default measureWord

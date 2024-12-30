@@ -27,9 +27,9 @@ export type LayoutNodeState = {
 	 */
 	clipStart: Vec2
 	/**
-	 * Read by `paint()`, written by `layout()`.
+	 * Maximum width of the text before wrapping.
 	 */
-	textWidthLimit?: number
+	textWidthLimit: number
 	/**
 	 * Screen-space position of element after layout.
 	 */
@@ -40,12 +40,13 @@ export type LayoutNodeState = {
 	y: number
 }
 
-export const defaultLayoutNodeState = {
+export const defaultLayoutNodeState: LayoutNodeState = {
 	children: [],
 	clientHeight: 0,
 	clientWidth: 0,
 	clipSize: new Vec2(0, 0),
 	clipStart: new Vec2(0, 0),
+	textWidthLimit: Number.POSITIVE_INFINITY,
 	x: 0,
 	y: 0,
 }
@@ -345,37 +346,12 @@ export type ExactDecorativeProps = Required<
 >
 
 /**
- * Corresponds to CSS `text-align`.
- */
-export const enum TextAlign {
-	Center,
-	Left,
-	Right,
-}
-
-export const enum Whitespace {
-	/**
-	 * Text will wrap to the next line if it exceeds the width of the parent (if defined).
-	 */
-	Normal,
-	/**
-	 * Text will never wrap to the next line.
-	 */
-	NoWrap,
-}
-
-/**
  * Controls how text is rendered. Note that due to a custom text renderer, there might be some
  * differences in how text is rendered compared to a browser.
  */
 export type TextStyleProps = {
 	color: string
-	/**
-	 * As defined in the lookups object.
-	 */
 	fontSize: number
-	textAlign?: TextAlign
-	whitespace?: Whitespace
 }
 
 export type ViewStyleProps = LayoutProps & DecorativeProps

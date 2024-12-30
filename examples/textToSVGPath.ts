@@ -10,9 +10,9 @@ const textToSVGPath = (
 	fontSize: number,
 	x: number,
 	y: number,
-	fontBuffer: Buffer,
+	fontBuffer: Uint8Array,
 ): string => {
-	const font = fontkit.create(fontBuffer) as fontkit.Font
+	const font = fontkit.create(fontBuffer as Buffer) as fontkit.Font
 
 	const scale = fontSize / font.unitsPerEm
 

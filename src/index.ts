@@ -19,8 +19,6 @@ export {
 	FlexWrap,
 	Overflow,
 	Position,
-	TextAlign,
-	Whitespace,
 } from './layout/styling'
 
 export { Queue } from './utils/Queue'

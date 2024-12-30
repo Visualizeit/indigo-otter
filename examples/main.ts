@@ -1,6 +1,6 @@
 import invariant from 'tiny-invariant'
 import { Vec2, layout, compose, View, Text } from '../src'
-import { renderToSVG } from './renderToSVG'
+import renderToSVG from './renderToSVG'
 
 const initialize = async () => {
 	const parent = document.querySelector<HTMLElement>('#app')
@@ -19,6 +19,7 @@ const initialize = async () => {
 			backgroundColor: '#f8f9fa',
 			padding: 20,
 			gap: 20,
+			width: 600,
 		},
 		children: [
 			new Text('”', {

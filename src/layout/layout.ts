@@ -1,7 +1,6 @@
 import invariant from 'tiny-invariant'
 import { type Vec2 } from '../math/Vec2'
 import { Queue } from '../utils/Queue'
-import measureText from './measureText'
 import { type Node } from './Node'
 import {
 	AlignContent,
@@ -11,10 +10,9 @@ import {
 	FlexWrap,
 	JustifyContent,
 	Position,
-	TextAlign,
-	Whitespace,
 } from './styling'
 import { Text } from './Text'
+import measureText from './text/measureText'
 import { View } from './View'
 
 /**
@@ -127,7 +125,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 		if (p && e instanceof Text) {
 			let maxWidth = Number.POSITIVE_INFINITY
 
-			if ((p?._state.clientWidth ?? 0) > 0) {
+			if ((p._state.clientWidth ?? 0) > 0) {
 				maxWidth =
 					p._state.clientWidth -
 					p._style.paddingLeft -
@@ -140,7 +138,8 @@ export function layout(tree: Node, rootSize: Vec2): void {
 			const textSize = measureText(
 				e.text,
 				e._style.fontSize,
-				e.props.font as Buffer,
+				e._state.textWidthLimit,
+				e.props.font,
 			)
 
 			e._state.clientWidth = textSize.x

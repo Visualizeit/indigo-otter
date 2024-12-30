@@ -1,4 +1,7 @@
 import { type Node, Queue, View, Text } from '../src'
+import breakTextIntoWords from '../src/layout/text/breakTextIntoWords'
+import breakWordsIntoLines from '../src/layout/text/breakWordsIntoLines'
+import measureWord from '../src/layout/text/measureWord'
 import textToSVGPath from './textToSVGPath'
 
 const h = (tag: string, props: Record<string, string>, children?: string[]) =>
@@ -6,7 +9,7 @@ const h = (tag: string, props: Record<string, string>, children?: string[]) =>
 		.map(([key, value]) => `${key}="${value}"`)
 		.join(' ')}${children ? `>${children.join('')}</${tag}>` : '/>'}`
 
-export const renderToSVG = (node: Node) => {
+const renderToSVG = (node: Node) => {
 	const list: Array<Node> = []
 
 	const queue = new Queue<Node>()
@@ -29,16 +32,49 @@ export const renderToSVG = (node: Node) => {
 
 	const children = list.map((node) => {
 		if (node instanceof Text) {
-			return h('path', {
-				d: textToSVGPath(
-					node.text,
-					node._style.fontSize,
-					node._state.x,
-					node._state.y,
-					node.props.font as Buffer,
+			if (node._state.textWidthLimit === Number.POSITIVE_INFINITY) {
+				return h('path', {
+					d: textToSVGPath(
+						node.text,
+						node._style.fontSize,
+						node._state.x,
+						node._state.y,
+						node.props.font,
+					),
+					fill: node._style.color,
+				})
+			}
+
+			const words = breakTextIntoWords(node.text)
+
+			const lines = breakWordsIntoLines(
+				words,
+				node._state.textWidthLimit,
+				(word) => measureWord(word, node._style.fontSize, node.props.font).x,
+			)
+
+			const lineHeight = measureWord(
+				'X',
+				node._style.fontSize,
+				node.props.font,
+			).y
+
+			return h(
+				'g',
+				{},
+				lines.map((line, index) =>
+					h('path', {
+						d: textToSVGPath(
+							line,
+							node._style.fontSize,
+							node._state.x,
+							node._state.y + index * lineHeight,
+							node.props.font,
+						),
+						fill: node._style.color,
+					}),
 				),
-				fill: node._style.color,
-			})
+			)
 		}
 
 		if (node instanceof View) {
@@ -65,3 +101,5 @@ export const renderToSVG = (node: Node) => {
 		children,
 	)
 }
+
+export default renderToSVG
