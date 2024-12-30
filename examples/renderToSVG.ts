@@ -1,6 +1,11 @@
 import { type Node, Queue, View, Text } from '../src'
 import textToSVGPath from './textToSVGPath'
 
+const h = (tag: string, props: Record<string, string>, children?: string[]) =>
+	`<${tag} ${Object.entries(props)
+		.map(([key, value]) => `${key}="${value}"`)
+		.join(' ')}${children ? `>${children.join('')}</${tag}>` : '/>'}`
+
 export const renderToSVG = (node: Node) => {
 	const list: Array<Node> = []
 
@@ -22,32 +27,41 @@ export const renderToSVG = (node: Node) => {
 		}
 	}
 
-	return `<svg 
-	width="${node._state.clientWidth}px" 
-	height="${node._state.clientHeight}px" 
-	viewBox="0 0 ${node._state.clientWidth} ${node._state.clientHeight}" 
-	xmlns="http://www.w3.org/2000/svg">${list.reduce((content, node) => {
+	const children = list.map((node) => {
 		if (node instanceof Text) {
-			return `${content}<path
-			d="${textToSVGPath(
-				node.text,
-				node._style.fontSize,
-				node._state.x,
-				node._state.y,
-				node.props.font as Buffer,
-			)}"
-			fill="${node._style.color}"/>`
+			return h('path', {
+				d: textToSVGPath(
+					node.text,
+					node._style.fontSize,
+					node._state.x,
+					node._state.y,
+					node.props.font as Buffer,
+				),
+				fill: node._style.color,
+			})
 		}
 
 		if (node instanceof View) {
-			return `${content}<rect
-			x="${node._state.x}"
-			y="${node._state.y}"
-			width="${node._state.clientWidth}"
-			height="${node._state.clientHeight}"
-			fill="${node._style.backgroundColor}"/>`
+			return h('rect', {
+				x: String(node._state.x),
+				y: String(node._state.y),
+				width: String(node._state.clientWidth),
+				height: String(node._state.clientHeight),
+				fill: node._style.backgroundColor,
+			})
 		}
 
 		throw new Error('Unknown node type.')
-	}, '')}</svg>`
+	})
+
+	return h(
+		'svg',
+		{
+			width: `${node._state.clientWidth}px`,
+			height: `${node._state.clientHeight}px`,
+			viewBox: `0 0 ${node._state.clientWidth} ${node._state.clientHeight}`,
+			xmlns: 'http://www.w3.org/2000/svg',
+		},
+		children,
+	)
 }
