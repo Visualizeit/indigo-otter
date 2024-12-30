@@ -171,15 +171,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 				if (c._state.clientWidth) {
 					if (isHorizontal && c._style.position === Position.Relative) {
 						// Padding is inside the width.
-						e._state.clientWidth +=
-							c._state.clientWidth + c._style.marginLeft + c._style.marginRight
-					}
-					if (isVertical && c._style.position === Position.Relative) {
-						// For column layout only wraps the widest child.
-						e._state.clientWidth = Math.max(
-							e._state.clientWidth,
-							c._state.clientWidth + c._style.marginLeft + c._style.marginRight,
-						)
+						e._state.clientWidth += c._state.clientWidth
 					}
 				}
 				if (c._style.position === Position.Relative) {
@@ -205,16 +197,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 			while (c) {
 				if (c._state.clientHeight) {
 					if (isVertical && c._style.position === Position.Relative) {
-						e._state.clientHeight +=
-							c._state.clientHeight + c._style.marginTop + c._style.marginBottom
-					}
-					if (isHorizontal && c._style.position === Position.Relative) {
-						e._state.clientHeight = Math.max(
-							e._state.clientHeight,
-							c._state.clientHeight +
-								c._style.marginTop +
-								c._style.marginBottom,
-						)
+						e._state.clientHeight += c._state.clientHeight
 					}
 				}
 				if (c._style.position === Position.Relative) {
@@ -267,14 +250,8 @@ export function layout(tree: Node, rootSize: Vec2): void {
 			}
 
 			const deltaMain = isHorizontal
-				? c._state.clientWidth +
-					c._style.marginLeft +
-					c._style.marginRight +
-					(!isJustifySpace ? e._style.rowGap : 0)
-				: c._state.clientHeight +
-					c._style.marginTop +
-					c._style.marginBottom +
-					(!isJustifySpace ? e._style.columnGap : 0)
+				? c._state.clientWidth + (isJustifySpace ? 0 : e._style.rowGap)
+				: c._state.clientHeight + (isJustifySpace ? 0 : e._style.columnGap)
 			const parentMain = isHorizontal
 				? e._state.clientWidth -
 					e._style.paddingLeft -
@@ -494,10 +471,8 @@ export function layout(tree: Node, rootSize: Vec2): void {
 				}
 
 				availableMain -= isHorizontal
-					? c._state.clientWidth +
-						(!isJustifySpace ? c._style.marginLeft + c._style.marginRight : 0)
-					: c._state.clientHeight +
-						(!isJustifySpace ? c._style.marginTop + c._style.marginBottom : 0)
+					? c._state.clientWidth
+					: c._state.clientHeight
 
 				if (c._style.flex > 0 || c._style.flexGrow > 0) {
 					if (c._style.flex > 0) {
@@ -616,16 +591,10 @@ export function layout(tree: Node, rootSize: Vec2): void {
 						main += availableMain / (childrenCount + 1)
 					}
 				} else {
-					c._state.x += isHorizontal
-						? main + c._style.marginLeft
-						: cross + c._style.marginLeft
-					c._state.y += isHorizontal
-						? cross + c._style.marginTop
-						: main + c._style.marginTop
+					c._state.x += isHorizontal ? main : cross
+					c._state.y += isHorizontal ? cross : main
 
-					main += isHorizontal
-						? c._state.clientWidth + c._style.marginLeft + c._style.marginRight
-						: c._state.clientHeight + c._style.marginTop + c._style.marginBottom
+					main += isHorizontal ? c._state.clientWidth : c._state.clientHeight
 					main += mainGap
 				}
 

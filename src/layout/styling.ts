@@ -233,31 +233,6 @@ export type LayoutProps = {
 	 */
 	justifyContent?: JustifyContent
 	left?: number
-	margin?: number
-	/**
-	 * Overrides `marginVertical` on the bottom.
-	 */
-	marginBottom?: number
-	/**
-	 * Overrides `margin` on horizontal directions.
-	 */
-	marginHorizontal?: number
-	/**
-	 * Overrides `marginHorizontal` on the left.
-	 */
-	marginLeft?: number
-	/**
-	 * Overrides `marginHorizontal` on the right.
-	 */
-	marginRight?: number
-	/**
-	 * Overrides `marginVertical` on the top.
-	 */
-	marginTop?: number
-	/**
-	 * Overrides `margin` on vertical directions.
-	 */
-	marginVertical?: number
 	maxHeight?: number | `${number}%`
 	maxWidth?: number | `${number}%`
 	minHeight?: number | `${number}%`
@@ -295,9 +270,6 @@ export type ExactLayoutProps = Required<
 		| 'flexBasis'
 		| 'height'
 		| 'left'
-		| 'margin'
-		| 'marginHorizontal'
-		| 'marginVertical'
 		| 'maxHeight'
 		| 'maxWidth'
 		| 'minHeight'
@@ -378,10 +350,6 @@ const defaultLayoutProps: ExactLayoutProps = {
 	height: undefined,
 	justifyContent: JustifyContent.Start,
 	left: undefined,
-	marginBottom: 0,
-	marginLeft: 0,
-	marginRight: 0,
-	marginTop: 0,
 	maxHeight: undefined,
 	maxWidth: undefined,
 	minHeight: undefined,
@@ -423,15 +391,6 @@ export function normalizeLayoutProps<
 		input.paddingLeft ?? input.paddingHorizontal ?? input.padding ?? 0
 	result.paddingRight =
 		input.paddingRight ?? input.paddingHorizontal ?? input.padding ?? 0
-
-	result.marginTop =
-		input.marginTop ?? input.marginVertical ?? input.margin ?? 0
-	result.marginBottom =
-		input.marginBottom ?? input.marginVertical ?? input.margin ?? 0
-	result.marginLeft =
-		input.marginLeft ?? input.marginHorizontal ?? input.margin ?? 0
-	result.marginRight =
-		input.marginRight ?? input.marginHorizontal ?? input.margin ?? 0
 
 	result.borderBottomWidth = input.borderBottomWidth ?? input.borderWidth ?? 0
 	result.borderTopWidth = input.borderTopWidth ?? input.borderWidth ?? 0
