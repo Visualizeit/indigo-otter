@@ -309,9 +309,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 	 * Third tree pass: resolve flex.
 	 * Going top-down, level order.
 	 */
-	for (let i = 0; i < nodesInLevelOrder.length; i++) {
-		const e = nodesInLevelOrder[i]!
-		invariant(e, 'Empty queue.')
+	for (const e of nodesInLevelOrder) {
 		const p = e.parent
 
 		if (e._style.flex < 0) {
@@ -706,8 +704,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 	}
 }
 
-function toPercentage(value: string): number {
-	invariant(value.endsWith('%'), 'Value must be a percentage.')
+function toPercentage(value: `${string}%`): number {
 	const result = Number(value.replace('%', '')) / 100
 	invariant(Number.isFinite(result), 'Value must be a real fraction.')
 	return result
