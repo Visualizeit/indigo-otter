@@ -1,4 +1,4 @@
-import { type Node, View, Text } from '../src'
+import { type Node, View, Text, Image } from '../src'
 import breakTextIntoWords from '../src/layout/text/breakTextIntoWords'
 import breakWordsIntoLines from '../src/layout/text/breakWordsIntoLines'
 import getFontLineHeight from '../src/layout/text/getTextLineHeight'
@@ -67,6 +67,16 @@ const renderToSVG = (node: Node) => {
 				width: String(node._state.clientWidth),
 				height: String(node._state.clientHeight),
 				fill: node._style.backgroundColor,
+			})
+		}
+
+		if (node instanceof Image) {
+			return h('image', {
+				x: String(node._state.x),
+				y: String(node._state.y),
+				width: String(node._state.clientWidth),
+				height: String(node._state.clientHeight),
+				href: node.href,
 			})
 		}
 

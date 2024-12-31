@@ -1,6 +1,6 @@
 import * as fontkit from 'fontkit'
 import invariant from 'tiny-invariant'
-import { layout, View, Text } from '../src'
+import { layout, View, Text, Image } from '../src'
 import renderToSVG from './renderToSVG'
 
 const initialize = async () => {
@@ -28,6 +28,12 @@ const initialize = async () => {
 				style: {
 					fontSize: 72,
 					color: '#000',
+				},
+			}),
+			new Image('/image.png', {
+				style: {
+					width: 200,
+					height: 200,
 				},
 			}),
 			new Text(
