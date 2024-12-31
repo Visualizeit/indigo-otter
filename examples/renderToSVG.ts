@@ -26,19 +26,6 @@ const renderToSVG = (node: Node) => {
 
 	const children = list.map((node) => {
 		if (node instanceof Text) {
-			if (node._state.textWidthLimit === Number.POSITIVE_INFINITY) {
-				return h('path', {
-					d: textToSVGPath(
-						node.text,
-						node._style.fontSize,
-						node._state.x,
-						node._state.y,
-						node.props.font,
-					),
-					fill: node._style.color,
-				})
-			}
-
 			const words = breakTextIntoWords(node.text)
 
 			const lines = breakWordsIntoLines(

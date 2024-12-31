@@ -10,10 +10,6 @@ const measureText = (
 	maxWidth: number,
 	fontBuffer: Uint8Array,
 ) => {
-	if (maxWidth === Number.POSITIVE_INFINITY) {
-		return measureWord(text, fontSize, fontBuffer)
-	}
-
 	const words = breakTextIntoWords(text)
 
 	const lines = breakWordsIntoLines(
@@ -24,7 +20,10 @@ const measureText = (
 
 	const lineHeight = measureWord('X', fontSize, fontBuffer).y
 
-	const width = maxWidth,
+	const width = lines.reduce(
+			(maxWidth, line) => Math.max(maxWidth, (stringWidth(line) * fontSize) / 2),
+			0,
+		),
 		height = lines.length * lineHeight
 
 	return new Vec2(width, height)
