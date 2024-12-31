@@ -1,5 +1,4 @@
 import invariant from 'tiny-invariant'
-import { Queue } from '../utils/Queue'
 import { type Node } from './Node'
 import {
 	AlignContent,
@@ -23,10 +22,23 @@ import measureText from './text/measureText'
  * @param root tree of views to layout.
  * @param rootSize size of the root element.
  */
-export function layout(root: Node): void {
-	const traversalQueue = new Queue<Node>()
+export function layout(root: Node) {
+	const nodesInLevelOrder: Node[] = []
 
-	const nodesInLevelOrder: Array<Node> = []
+	{
+		const queue: Node[] = [root]
+
+		while (queue.length > 0) {
+			const e = queue.shift() as Node
+			nodesInLevelOrder.push(e)
+
+			let c = e.firstChild
+			while (c) {
+				queue.push(c)
+				c = c.next
+			}
+		}
+	}
 
 	/*
 	 * NOTE:
@@ -34,19 +46,8 @@ export function layout(root: Node): void {
 	 */
 
 	// Traverse tree in level order and generate the reverse queue.
-	traversalQueue.enqueue(root)
-	while (!traversalQueue.isEmpty()) {
-		const e = traversalQueue.dequeue()
-		invariant(e, 'Empty queue.')
-		nodesInLevelOrder.push(e)
-
+	for (const e of nodesInLevelOrder) {
 		const isHorizontal = e.parent?._style.flexDirection === FlexDirection.Row
-
-		let c = e.firstChild
-		while (c !== null) {
-			traversalQueue.enqueue(c)
-			c = c.next
-		}
 
 		// If element has defined width or height, set it.
 		if (typeof e._style.width === 'number') {
@@ -142,7 +143,6 @@ export function layout(root: Node): void {
 	 */
 	for (let i = nodesInLevelOrder.length - 1; i >= 0; i--) {
 		const e = nodesInLevelOrder[i]
-		invariant(e, 'Empty queue.')
 
 		const isWrap = e._style.flexWrap === FlexWrap.Wrap
 		const isHorizontal = e._style.flexDirection === FlexDirection.Row

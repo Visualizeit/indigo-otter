@@ -19,8 +19,5 @@ export {
 	Overflow,
 	Position,
 } from './layout/styling'
-
-export { Queue } from './utils/Queue'
 export { Vec2 } from './math/Vec2'
 export { Vec4 } from './math/Vec4'
-export { intersection } from './math/intersection'
