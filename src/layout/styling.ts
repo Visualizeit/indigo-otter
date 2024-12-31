@@ -41,155 +41,28 @@ export const defaultLayoutNodeState: LayoutNodeState = {
 }
 
 /**
- * Corresponds to CSS `align-items`. Controls positioning of children on the cross axis.
- */
-export const enum AlignItems {
-	Center,
-	End,
-	Start,
-	/**
-	 * Stretches the element to fill the parent's cross axis.
-	 */
-	Stretch,
-}
-
-/**
- *  Corresponds to CSS `justify-content`. Controls positioning of children on the main axis.
- */
-export const enum JustifyContent {
-	Center,
-	End,
-	/**
-	 * Uses equal gaps between all elements and half of that gap before the first element and after
-	 * the last element.
-	 */
-	SpaceAround,
-	/**
-	 * Does not leave any gap before the first element or after the last element.
-	 */
-	SpaceBetween,
-	/**
-	 * Uses equal gaps between all elements and before the first element and after the last element.
-	 */
-	SpaceEvenly,
-	Start,
-}
-
-/**
- * Corresponds to CSS `align-content`, which controls positions and sizes of lines in the flex
- * wrap. Does not have any effect if `FlexWrap` is `NoWrap`.
- */
-export const enum AlignContent {
-	Center,
-	End,
-	/**
-	 * Uses equal gaps between all elements and half of that gap before the first element and after
-	 * the last element.
-	 */
-	SpaceAround,
-	/**
-	 * Does not leave any gap before the first element or after the last element.
-	 */
-	SpaceBetween,
-	/**
-	 * Uses equal gaps between all elements and before the first element and after the last element.
-	 */
-	SpaceEvenly,
-	Start,
-	Stretch,
-}
-
-/**
- * Corresponds to CSS `align-self`.
- */
-export const enum AlignSelf {
-	/**
-	 * Does not override the value of parent's `AlignItems`.
-	 */
-	Auto,
-	Center,
-	End,
-	Start,
-	/**
-	 * Stretches the element to fill the parent's cross axis.
-	 */
-	Stretch,
-}
-
-/**
- * Corresponds to CSS `flex-direction`.
- */
-export const enum FlexDirection {
-	/**
-	 * Main axis is the vertical one.
-	 */
-	Column,
-	/**
-	 * Main axis is the horizontal one.
-	 */
-	Row,
-}
-
-/**
- * Corresponds to CSS flex-wrap.
- */
-export const enum FlexWrap {
-	/**
-	 * Does not wrap lines, making them potentially overflow the parent.
-	 */
-	NoWrap,
-	/**
-	 * Wraps lines of elements if they exceed available space in the main axis.
-	 */
-	Wrap,
-}
-
-/**
- * Determines how the element is clipped. Corresponds to CSS overflow.
- */
-export const enum Overflow {
-	/**
-	 * Clips content.
-	 */
-	Hidden,
-	/**
-	 * Lets content overflow the parent.
-	 */
-	Visible,
-}
-
-/**
- * Corresponds to CSS position.
- */
-export const enum Position {
-	/**
-	 * The element will not participate in layout of other elements within the same parent.
-	 * Coordinates are relative to the parent (since every node is either absolute or relative).
-	 */
-	Absolute,
-	/**
-	 * The name originates from CSS where it means that the offset modifiers (`top`, `left`, etc.)
-	 * will move the element around but it will not influence the layout of other elements.
-	 */
-	Relative,
-}
-
-/**
  * All layout properties.
  */
-export type LayoutProps = {
+export interface LayoutProps {
 	/**
 	 * Controls positioning of rows (or columns) when wrapping.
 	 */
-	alignContent?: AlignContent
+	alignContent?:
+		| 'start'
+		| 'end'
+		| 'center'
+		| 'space-between'
+		| 'space-around'
+		| 'space-evenly'
+		| 'stretch'
 	/**
 	 * Controls positioning of children on the cross axis.
 	 */
-	alignItems?: AlignItems
+	alignItems?: 'start' | 'end' | 'center' | 'stretch'
 	/**
 	 * Controls positioning of the item itself on the cross axis.
 	 */
-	alignSelf?: AlignSelf
+	alignSelf?: 'auto' | 'start' | 'end' | 'center' | 'stretch'
 	/**
 	 * Enforces a specific aspect ratio on the size of the element. Uses the specified size
 	 * (either `width` or `height`) for calculating the other dimension. Respects `minWidth` and
@@ -211,24 +84,27 @@ export type LayoutProps = {
 	 * In row does the same as `width` and in column does the same as `height`.
 	 */
 	flexBasis?: number | `${number}%`
-	flexDirection?: FlexDirection
+	flexDirection?: 'row' | 'column'
 	flexGrow?: number
 	flexShrink?: number
-	flexWrap?: FlexWrap
+	flexWrap?: 'nowrap' | 'wrap'
 	gap?: number
 	height?: number | `${number}%`
 	/**
 	 * Controls positioning of children on the main axis.
 	 */
-	justifyContent?: JustifyContent
+	justifyContent?:
+		| 'start'
+		| 'end'
+		| 'center'
+		| 'space-between'
+		| 'space-around'
+		| 'space-evenly'
 	left?: number
 	maxHeight?: number | `${number}%`
 	maxWidth?: number | `${number}%`
 	minHeight?: number | `${number}%`
 	minWidth?: number | `${number}%`
-	overflow?: Overflow
-	overflowX?: Overflow
-	overflowY?: Overflow
 	padding?: number
 	paddingBottom?: number
 	paddingHorizontal?: number
@@ -236,7 +112,7 @@ export type LayoutProps = {
 	paddingRight?: number
 	paddingTop?: number
 	paddingVertical?: number
-	position?: Position
+	position?: 'relative' | 'absolute'
 	right?: number
 	/**
 	 * Overrides `gap` for rows.
@@ -263,9 +139,6 @@ export type ExactLayoutProps = Required<
 		| 'maxWidth'
 		| 'minHeight'
 		| 'minWidth'
-		| 'overflow'
-		| 'overflowX'
-		| 'overflowY'
 		| 'padding'
 		| 'paddingHorizontal'
 		| 'paddingVertical'
@@ -284,8 +157,6 @@ export type ExactLayoutProps = Required<
 	maxWidth: LayoutProps['maxWidth']
 	minHeight: LayoutProps['minHeight']
 	minWidth: LayoutProps['minWidth']
-	overflowX: LayoutProps['overflowX']
-	overflowY: LayoutProps['overflowY']
 	right: LayoutProps['right']
 	top: LayoutProps['top']
 	width: LayoutProps['width']
@@ -318,9 +189,9 @@ export type TextStyleProps = {
 export type ViewStyleProps = LayoutProps & DecorativeProps
 
 const defaultLayoutProps: ExactLayoutProps = {
-	alignContent: AlignContent.Start,
-	alignItems: AlignItems.Start,
-	alignSelf: AlignSelf.Auto,
+	alignContent: 'start',
+	alignItems: 'start',
+	alignSelf: 'auto',
 	aspectRatio: undefined,
 	borderBottomWidth: 0,
 	borderLeftWidth: 0,
@@ -331,25 +202,23 @@ const defaultLayoutProps: ExactLayoutProps = {
 	columnGap: 0,
 	flex: 0,
 	flexBasis: undefined,
-	flexDirection: FlexDirection.Column,
+	flexDirection: 'column',
 	flexGrow: 0,
 	flexShrink: 0,
-	flexWrap: FlexWrap.NoWrap,
+	flexWrap: 'nowrap',
 	gap: 0,
 	height: undefined,
-	justifyContent: JustifyContent.Start,
+	justifyContent: 'start',
 	left: undefined,
 	maxHeight: undefined,
 	maxWidth: undefined,
 	minHeight: undefined,
 	minWidth: undefined,
-	overflowX: Overflow.Visible,
-	overflowY: Overflow.Visible,
 	paddingBottom: 0,
 	paddingLeft: 0,
 	paddingRight: 0,
 	paddingTop: 0,
-	position: Position.Relative,
+	position: 'relative',
 	right: undefined,
 	rowGap: 0,
 	top: undefined,
@@ -388,9 +257,6 @@ export function normalizeLayoutProps<
 
 	result.columnGap = input.columnGap ?? input.gap ?? 0
 	result.rowGap = input.rowGap ?? input.gap ?? 0
-
-	result.overflowX = input.overflowX ?? input.overflow ?? Overflow.Visible
-	result.overflowY = input.overflowY ?? input.overflow ?? Overflow.Visible
 
 	return result as S
 }

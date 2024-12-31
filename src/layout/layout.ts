@@ -1,14 +1,5 @@
 import invariant from 'tiny-invariant'
 import { type Node } from './Node'
-import {
-	AlignContent,
-	AlignItems,
-	AlignSelf,
-	FlexDirection,
-	FlexWrap,
-	JustifyContent,
-	Position,
-} from './styling'
 import { Text } from './Text'
 import measureText from './text/measureText'
 
@@ -47,7 +38,7 @@ export function layout(root: Node) {
 
 	// Traverse tree in level order and generate the reverse queue.
 	for (const e of nodesInLevelOrder) {
-		const isHorizontal = e.parent?._style.flexDirection === FlexDirection.Row
+		const isHorizontal = e.parent?._style.flexDirection === 'row'
 
 		// If element has defined width or height, set it.
 		if (typeof e._style.width === 'number') {
@@ -144,13 +135,13 @@ export function layout(root: Node) {
 	for (let i = nodesInLevelOrder.length - 1; i >= 0; i--) {
 		const e = nodesInLevelOrder[i]
 
-		const isWrap = e._style.flexWrap === FlexWrap.Wrap
-		const isHorizontal = e._style.flexDirection === FlexDirection.Row
-		const isVertical = e._style.flexDirection === FlexDirection.Column
+		const isWrap = e._style.flexWrap === 'wrap'
+		const isHorizontal = e._style.flexDirection === 'row'
+		const isVertical = e._style.flexDirection === 'column'
 		const isJustifySpace =
-			e._style.justifyContent === JustifyContent.SpaceBetween ||
-			e._style.justifyContent === JustifyContent.SpaceAround ||
-			e._style.justifyContent === JustifyContent.SpaceEvenly
+			e._style.justifyContent === 'space-between' ||
+			e._style.justifyContent === 'space-around' ||
+			e._style.justifyContent === 'space-evenly'
 
 		// Width is at least the sum of children with defined widths.
 		if (e._style.width === undefined) {
@@ -158,12 +149,12 @@ export function layout(root: Node) {
 			let c = e.firstChild
 			while (c) {
 				if (c._state.clientWidth) {
-					if (isHorizontal && c._style.position === Position.Relative) {
+					if (isHorizontal && c._style.position === 'relative') {
 						// Padding is inside the width.
 						e._state.clientWidth += c._state.clientWidth
 					}
 				}
-				if (c._style.position === Position.Relative) {
+				if (c._style.position === 'relative') {
 					childrenCount += 1
 				}
 				c = c.next
@@ -185,11 +176,11 @@ export function layout(root: Node) {
 			let c = e.firstChild
 			while (c) {
 				if (c._state.clientHeight) {
-					if (isVertical && c._style.position === Position.Relative) {
+					if (isVertical && c._style.position === 'relative') {
 						e._state.clientHeight += c._state.clientHeight
 					}
 				}
-				if (c._style.position === Position.Relative) {
+				if (c._style.position === 'relative') {
 					childrenCount += 1
 				}
 				c = c.next
@@ -233,7 +224,7 @@ export function layout(root: Node) {
 		let longestChildSize = 0
 		let c = e.firstChild
 		while (c) {
-			if (c._style.position !== Position.Relative) {
+			if (c._style.position !== 'relative') {
 				c = c.next
 				continue
 			}
@@ -312,17 +303,17 @@ export function layout(root: Node) {
 		const parentHeight = p?._state.clientHeight ?? 0
 
 		const direction = e._style.flexDirection
-		const isHorizontal = direction === FlexDirection.Row
-		const isVertical = direction === FlexDirection.Column
+		const isHorizontal = direction === 'row'
+		const isVertical = direction === 'column'
 
 		const isJustifySpace =
-			e._style.justifyContent === JustifyContent.SpaceBetween ||
-			e._style.justifyContent === JustifyContent.SpaceAround ||
-			e._style.justifyContent === JustifyContent.SpaceEvenly
+			e._style.justifyContent === 'space-between' ||
+			e._style.justifyContent === 'space-around' ||
+			e._style.justifyContent === 'space-evenly'
 		const isContentSpace =
-			e._style.alignContent === AlignContent.SpaceBetween ||
-			e._style.alignContent === AlignContent.SpaceAround ||
-			e._style.alignContent === AlignContent.SpaceEvenly
+			e._style.alignContent === 'space-between' ||
+			e._style.alignContent === 'space-around' ||
+			e._style.alignContent === 'space-evenly'
 
 		// If parent had undefined width or height and its size was only calculated once children sizes
 		// were added, then percentage sizing should happen now.
@@ -352,7 +343,7 @@ export function layout(root: Node) {
 		}
 
 		// Handle absolute positioning.
-		if (e._style.position === Position.Absolute) {
+		if (e._style.position === 'absolute') {
 			e._state.x = p?._state.x ?? 0
 			e._state.y = p?._state.y ?? 0
 
@@ -394,7 +385,7 @@ export function layout(root: Node) {
 			let childrenCount = 0
 
 			for (const c of line) {
-				if (c._style.position !== Position.Relative) {
+				if (c._style.position !== 'relative') {
 					continue
 				}
 
@@ -453,7 +444,7 @@ export function layout(root: Node) {
 			}
 
 			for (const c of line) {
-				if (c._style.position !== Position.Relative) {
+				if (c._style.position !== 'relative') {
 					continue
 				}
 
@@ -474,48 +465,48 @@ export function layout(root: Node) {
 			}
 
 			// Adjust positions for justify content.
-			if (e._style.justifyContent === JustifyContent.Center) {
+			if (e._style.justifyContent === 'center') {
 				// TODO release: availableMain/cross is useful here for skipping own size, but we should
 				// ignore border or padding here (and we don't).
 				main += availableMain / 2
 			}
-			if (e._style.justifyContent === JustifyContent.End) {
+			if (e._style.justifyContent === 'end') {
 				main += availableMain
 			}
-			if (e._style.justifyContent === JustifyContent.SpaceAround) {
+			if (e._style.justifyContent === 'space-around') {
 				main += availableMain / childrenCount / 2
 			}
-			if (e._style.justifyContent === JustifyContent.SpaceEvenly) {
+			if (e._style.justifyContent === 'space-evenly') {
 				main += availableMain / (childrenCount + 1)
 			}
 
 			// Align content.
-			if (e._style.alignContent === AlignContent.Center) {
+			if (e._style.alignContent === 'center') {
 				// TODO release: availableMain/cross is useful here for skipping own size, but we should
 				// ignore border or padding here (and we don't).
 				if (i === 0) {
 					cross += availableCross / 2
 				}
 			}
-			if (e._style.alignContent === AlignContent.End) {
+			if (e._style.alignContent === 'end') {
 				if (i === 0) {
 					cross += availableCross
 				}
 			}
-			if (e._style.alignContent === AlignContent.SpaceBetween) {
+			if (e._style.alignContent === 'space-between') {
 				if (i > 0) {
 					cross += availableCross / (maxCrossChildren.length - 1)
 				}
 			}
-			if (e._style.alignContent === AlignContent.SpaceAround) {
+			if (e._style.alignContent === 'space-around') {
 				const gap = availableCross / maxCrossChildren.length
 				cross += i === 0 ? gap / 2 : gap
 			}
-			if (e._style.alignContent === AlignContent.SpaceEvenly) {
+			if (e._style.alignContent === 'space-evenly') {
 				const gap = availableCross / (maxCrossChildren.length + 1)
 				cross += gap
 			}
-			if (e._style.alignContent === AlignContent.Stretch) {
+			if (e._style.alignContent === 'stretch') {
 				if (i > 0) {
 					cross += availableCross / maxCrossChildren.length
 				}
@@ -525,7 +516,7 @@ export function layout(root: Node) {
 			let usedMain = 0
 			for (let j = 0; j < line.length; j++) {
 				const c = line[j]!
-				if (c._style.position !== Position.Relative) {
+				if (c._style.position !== 'relative') {
 					continue
 				}
 
@@ -568,13 +559,13 @@ export function layout(root: Node) {
 					c._state.y += isHorizontal ? cross : main
 					main += isHorizontal ? c._state.clientWidth : c._state.clientHeight
 
-					if (e._style.justifyContent === JustifyContent.SpaceBetween) {
+					if (e._style.justifyContent === 'space-between') {
 						main += availableMain / (childrenCount - 1)
 					}
-					if (e._style.justifyContent === JustifyContent.SpaceAround) {
+					if (e._style.justifyContent === 'space-around') {
 						main += availableMain / childrenCount
 					}
-					if (e._style.justifyContent === JustifyContent.SpaceEvenly) {
+					if (e._style.justifyContent === 'space-evenly') {
 						main += availableMain / (childrenCount + 1)
 					}
 				} else {
@@ -603,15 +594,15 @@ export function layout(root: Node) {
 				}
 
 				// Apply align items.
-				if (c._style.alignSelf === AlignSelf.Auto) {
-					if (e._style.alignItems === AlignItems.Center) {
+				if (c._style.alignSelf === 'auto') {
+					if (e._style.alignItems === 'center') {
 						if (isHorizontal) {
 							c._state.y += (lineCrossSize - c._state.clientHeight) / 2
 						} else {
 							c._state.x += (lineCrossSize - c._state.clientWidth) / 2
 						}
 					}
-					if (e._style.alignItems === AlignItems.End) {
+					if (e._style.alignItems === 'end') {
 						if (isHorizontal) {
 							c._state.y += lineCrossSize - c._state.clientHeight
 						} else {
@@ -619,7 +610,7 @@ export function layout(root: Node) {
 						}
 					}
 					if (
-						e._style.alignItems === AlignItems.Stretch &&
+						e._style.alignItems === 'stretch' &&
 						((isHorizontal && c._style.height === undefined) ||
 							(isVertical && c._style.width === undefined))
 					) {
@@ -632,21 +623,21 @@ export function layout(root: Node) {
 				}
 
 				// Apply align self.
-				if (c._style.alignSelf === AlignSelf.Start) {
+				if (c._style.alignSelf === 'start') {
 					if (isHorizontal) {
 						c._state.y = resetCross
 					} else {
 						c._state.x = resetCross
 					}
 				}
-				if (c._style.alignSelf === AlignSelf.Center) {
+				if (c._style.alignSelf === 'center') {
 					if (isHorizontal) {
 						c._state.y += (lineCrossSize - c._state.clientHeight) / 2
 					} else {
 						c._state.x += (lineCrossSize - c._state.clientWidth) / 2
 					}
 				}
-				if (c._style.alignSelf === AlignSelf.End) {
+				if (c._style.alignSelf === 'end') {
 					if (isHorizontal) {
 						c._state.y += lineCrossSize - c._state.clientHeight
 					} else {
@@ -654,7 +645,7 @@ export function layout(root: Node) {
 					}
 				}
 				if (
-					c._style.alignSelf === AlignSelf.Stretch &&
+					c._style.alignSelf === 'stretch' &&
 					((isHorizontal && c._style.height === undefined) ||
 						(isVertical && c._style.width === undefined))
 				) {
@@ -745,7 +736,7 @@ function applyMinMaxAndAspectRatio(e: Node): void {
 		maxHeight,
 	)
 
-	const isHorizontal = e.parent?._style.flexDirection === FlexDirection.Row
+	const isHorizontal = e.parent?._style.flexDirection === 'row'
 
 	if (e._style.aspectRatio !== undefined) {
 		const aspectRatio = e._style.aspectRatio
