@@ -1,5 +1,4 @@
 import invariant from 'tiny-invariant'
-import { type Vec2 } from '../math/Vec2'
 import { Queue } from '../utils/Queue'
 import { type Node } from './Node'
 import {
@@ -13,7 +12,6 @@ import {
 } from './styling'
 import { Text } from './Text'
 import measureText from './text/measureText'
-import { View } from './View'
 
 /**
  * This function traverses the tree and calculates layout information - `width`, `height`, `x`, `y`
@@ -22,18 +20,13 @@ import { View } from './View'
  * passed to this function. What this means in practice is that all coordinates are global and not
  * relative to the parent.
  *
- * @param tree tree of views to layout.
+ * @param root tree of views to layout.
  * @param rootSize size of the root element.
  */
-export function layout(tree: Node, rootSize: Vec2): void {
+export function layout(root: Node): void {
 	const traversalQueue = new Queue<Node>()
 
-	const root = new View({
-		style: { height: rootSize.y, width: rootSize.x },
-	})
-	root.add(tree)
-
-	const nodesInLevelOrder: Array<Node> = [root]
+	const nodesInLevelOrder: Array<Node> = []
 
 	/*
 	 * NOTE:
@@ -152,7 +145,7 @@ export function layout(tree: Node, rootSize: Vec2): void {
 	 * Going bottom-up, level order.
 	 */
 	for (let i = nodesInLevelOrder.length - 1; i >= 0; i--) {
-		const e = nodesInLevelOrder[i]!
+		const e = nodesInLevelOrder[i]
 		invariant(e, 'Empty queue.')
 
 		const isWrap = e._style.flexWrap === FlexWrap.Wrap

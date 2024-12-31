@@ -1,15 +1,12 @@
 import * as fontkit from 'fontkit'
 import invariant from 'tiny-invariant'
-import { Vec2, layout, View, Text } from '../src'
+import { layout, View, Text } from '../src'
 import renderToSVG from './renderToSVG'
 
 const initialize = async () => {
 	const parent = document.querySelector<HTMLElement>('#app')
 
 	invariant(parent, 'No parent element found.')
-
-	const WIDTH = parent.clientWidth
-	const HEIGHT = parent.clientHeight
 
 	const font = await fetch('./LXGWWenKaiMonoLite-Light.ttf')
 		.then((response) => response.arrayBuffer())
@@ -54,7 +51,7 @@ const initialize = async () => {
 		],
 	})
 
-	layout(root, new Vec2(WIDTH, HEIGHT))
+	layout(root)
 
 	const svg = renderToSVG(root)
 
