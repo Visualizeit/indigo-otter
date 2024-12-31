@@ -5,8 +5,13 @@ import getFontLineHeight from '../src/layout/text/getTextLineHeight'
 import getTextWidth from '../src/layout/text/getTextWidth'
 import textToSVGPath from './textToSVGPath'
 
-const h = (tag: string, props: Record<string, string>, children?: string[]) =>
+const h = (
+	tag: string,
+	props: Record<string, string | undefined>,
+	children?: string[],
+) =>
 	`<${tag} ${Object.entries(props)
+		.filter(([, value]) => value !== undefined)
 		.map(([key, value]) => `${key}="${value}"`)
 		.join(' ')}${children ? `>${children.join('')}</${tag}>` : '/>'}`
 

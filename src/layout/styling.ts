@@ -54,11 +54,6 @@ export interface LayoutProps {
 	 * `minHeight`.
 	 */
 	aspectRatio?: number
-	borderBottomWidth?: number
-	borderLeftWidth?: number
-	borderRightWidth?: number
-	borderTopWidth?: number
-	borderWidth?: number
 	bottom?: number
 	/**
 	 * Overrides `gap` for columns.
@@ -150,17 +145,8 @@ export type ExactLayoutProps = Required<
 
 export interface DecorativeProps {
 	backgroundColor?: string
-	borderBottomLeftRadius?: number
-	borderBottomRightRadius?: number
-	borderColor?: string
 	borderRadius?: number
-	borderTopLeftRadius?: number
-	borderTopRightRadius?: number
 }
-
-export type ExactDecorativeProps = Required<
-	Omit<DecorativeProps, 'borderRadius'>
->
 
 /**
  * Controls how text is rendered. Note that due to a custom text renderer, there might be some
@@ -176,11 +162,6 @@ export type ViewStyleProps = LayoutProps & DecorativeProps
 const defaultLayoutProps: ExactLayoutProps = {
 	alignItems: 'start',
 	aspectRatio: undefined,
-	borderBottomWidth: 0,
-	borderLeftWidth: 0,
-	borderRightWidth: 0,
-	borderTopWidth: 0,
-	borderWidth: 0,
 	bottom: undefined,
 	columnGap: 0,
 	flex: 0,
@@ -209,15 +190,6 @@ const defaultLayoutProps: ExactLayoutProps = {
 	zIndex: undefined,
 }
 
-const defaultDecorativeProps: ExactDecorativeProps = {
-	backgroundColor: 'transparent',
-	borderBottomLeftRadius: 0,
-	borderBottomRightRadius: 0,
-	borderColor: 'transparent',
-	borderTopLeftRadius: 0,
-	borderTopRightRadius: 0,
-}
-
 export function normalizeLayoutProps<
 	T extends LayoutProps,
 	S extends ExactLayoutProps,
@@ -233,31 +205,8 @@ export function normalizeLayoutProps<
 	result.paddingRight =
 		input.paddingRight ?? input.paddingHorizontal ?? input.padding ?? 0
 
-	result.borderBottomWidth = input.borderBottomWidth ?? input.borderWidth ?? 0
-	result.borderTopWidth = input.borderTopWidth ?? input.borderWidth ?? 0
-	result.borderLeftWidth = input.borderLeftWidth ?? input.borderWidth ?? 0
-	result.borderRightWidth = input.borderRightWidth ?? input.borderWidth ?? 0
-
 	result.columnGap = input.columnGap ?? input.gap ?? 0
 	result.rowGap = input.rowGap ?? input.gap ?? 0
-
-	return result as S
-}
-
-export function normalizeDecorativeProps<
-	T extends DecorativeProps,
-	S extends ExactDecorativeProps,
->(input: T): S {
-	const result = { ...defaultDecorativeProps, ...input }
-
-	result.borderTopLeftRadius =
-		input.borderTopLeftRadius ?? input.borderRadius ?? 0
-	result.borderTopRightRadius =
-		input.borderTopRightRadius ?? input.borderRadius ?? 0
-	result.borderBottomLeftRadius =
-		input.borderBottomLeftRadius ?? input.borderRadius ?? 0
-	result.borderBottomRightRadius =
-		input.borderBottomRightRadius ?? input.borderRadius ?? 0
 
 	return result as S
 }

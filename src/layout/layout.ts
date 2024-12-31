@@ -108,11 +108,7 @@ export function layout(root: Node) {
 
 			if ((p._state.clientWidth ?? 0) > 0) {
 				maxWidth =
-					p._state.clientWidth -
-					p._style.paddingLeft -
-					p._style.paddingRight -
-					p._style.borderLeftWidth -
-					p._style.borderRightWidth
+					p._state.clientWidth - p._style.paddingLeft - p._style.paddingRight
 				e._state.textWidthLimit = maxWidth
 			}
 
@@ -160,11 +156,7 @@ export function layout(root: Node) {
 				c = c.next
 			}
 
-			e._state.clientWidth +=
-				e._style.paddingLeft +
-				e._style.paddingRight +
-				e._style.borderLeftWidth +
-				e._style.borderRightWidth
+			e._state.clientWidth += e._style.paddingLeft + e._style.paddingRight
 
 			if (isHorizontal) {
 				e._state.clientWidth += (childrenCount - 1) * e._style.rowGap
@@ -187,11 +179,7 @@ export function layout(root: Node) {
 			}
 
 			// Include padding and gaps.
-			e._state.clientHeight +=
-				e._style.paddingTop +
-				e._style.paddingBottom +
-				e._style.borderTopWidth +
-				e._style.borderBottomWidth
+			e._state.clientHeight += e._style.paddingTop + e._style.paddingBottom
 
 			if (isVertical) {
 				e._state.clientHeight += (childrenCount - 1) * e._style.columnGap
@@ -202,18 +190,10 @@ export function layout(root: Node) {
 		// here we reset the size and build it again, for all rows.
 		if (isWrap) {
 			if (isHorizontal && e._style.height === undefined) {
-				e._state.clientHeight =
-					e._style.paddingTop +
-					e._style.paddingBottom +
-					e._style.borderTopWidth +
-					e._style.borderBottomWidth
+				e._state.clientHeight = e._style.paddingTop + e._style.paddingBottom
 			}
 			if (isVertical && e._style.width === undefined) {
-				e._state.clientWidth =
-					e._style.paddingLeft +
-					e._style.paddingRight +
-					e._style.borderLeftWidth +
-					e._style.borderRightWidth
+				e._state.clientWidth = e._style.paddingLeft + e._style.paddingRight
 			}
 		}
 
@@ -233,16 +213,8 @@ export function layout(root: Node) {
 				? c._state.clientWidth + (isJustifySpace ? 0 : e._style.rowGap)
 				: c._state.clientHeight + (isJustifySpace ? 0 : e._style.columnGap)
 			const parentMain = isHorizontal
-				? e._state.clientWidth -
-					e._style.paddingLeft -
-					e._style.paddingRight -
-					e._style.borderLeftWidth -
-					e._style.borderRightWidth
-				: e._state.clientHeight -
-					e._style.paddingTop -
-					e._style.paddingBottom -
-					e._style.borderTopWidth -
-					e._style.borderBottomWidth
+				? e._state.clientWidth - e._style.paddingLeft - e._style.paddingRight
+				: e._state.clientHeight - e._style.paddingTop - e._style.paddingBottom
 
 			if (isWrap && main + deltaMain > parentMain) {
 				let length = longestChildSize
@@ -364,11 +336,11 @@ export function layout(root: Node) {
 		}
 
 		const resetMain = isHorizontal
-			? e._state.x + e._style.paddingLeft + e._style.borderLeftWidth
-			: e._state.y + e._style.paddingTop + e._style.borderTopWidth
+			? e._state.x + e._style.paddingLeft
+			: e._state.y + e._style.paddingTop
 		const resetCross = isHorizontal
-			? e._state.y + e._style.paddingTop + e._style.borderTopWidth
-			: e._state.x + e._style.paddingLeft + e._style.borderLeftWidth
+			? e._state.y + e._style.paddingTop
+			: e._state.x + e._style.paddingLeft
 		let main = resetMain
 		let cross = resetCross
 		const mainGap = (isHorizontal ? e._style.rowGap : e._style.columnGap) ?? 0
@@ -405,16 +377,8 @@ export function layout(root: Node) {
 
 			// Calculate available space for justify content along the main axis.
 			let availableMain = isHorizontal
-				? e._state.clientWidth -
-					e._style.paddingLeft -
-					e._style.paddingRight -
-					e._style.borderLeftWidth -
-					e._style.borderRightWidth
-				: e._state.clientHeight -
-					e._style.paddingTop -
-					e._style.paddingBottom -
-					e._style.borderTopWidth -
-					e._style.borderBottomWidth
+				? e._state.clientWidth - e._style.paddingLeft - e._style.paddingRight
+				: e._state.clientHeight - e._style.paddingTop - e._style.paddingBottom
 
 			if (!isJustifySpace) {
 				availableMain -= mainGap * (line.length - 1)
@@ -528,14 +492,10 @@ export function layout(root: Node) {
 					lineCrossSize = isHorizontal
 						? e._state.clientHeight -
 							e._style.paddingTop -
-							e._style.paddingBottom -
-							e._style.borderTopWidth -
-							e._style.borderBottomWidth
+							e._style.paddingBottom
 						: e._state.clientWidth -
 							e._style.paddingLeft -
-							e._style.paddingRight -
-							e._style.borderLeftWidth -
-							e._style.borderRightWidth
+							e._style.paddingRight
 				}
 
 				// Apply align items.

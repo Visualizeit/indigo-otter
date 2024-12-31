@@ -1,11 +1,10 @@
 import { type Node } from './Node'
 import {
-	type ExactDecorativeProps,
+	type DecorativeProps,
 	type ExactLayoutProps,
 	type ViewStyleProps,
 	type LayoutNodeState,
 	normalizeLayoutProps,
-	normalizeDecorativeProps,
 	defaultLayoutNodeState,
 } from './styling'
 
@@ -25,7 +24,7 @@ export class View implements Node {
 	/**
 	 * Should always be normalized.
 	 */
-	_style: ExactDecorativeProps & ExactLayoutProps
+	_style: DecorativeProps & ExactLayoutProps
 
 	constructor(
 		readonly props: {
@@ -33,9 +32,7 @@ export class View implements Node {
 			children?: Node[]
 		},
 	) {
-		this._style = normalizeDecorativeProps(
-			normalizeLayoutProps(props.style ?? {}) as ViewStyleProps,
-		)
+		this._style = normalizeLayoutProps(props.style ?? {})
 
 		if (Array.isArray(props.children) && props.children.length > 0) {
 			this.firstChild = props.children[0]
