@@ -41,27 +41,21 @@ export class View implements Node {
 
 		if (Array.isArray(props.children)) {
 			for (const child of props.children) {
-				this.add(child)
+				child.parent = this
+
+				if (this.firstChild === null) {
+					this.firstChild = child
+					this.lastChild = child
+				} else {
+					if (this.lastChild === null) {
+						throw new Error('Last child must be set.')
+					}
+
+					child.prev = this.lastChild
+					this.lastChild.next = child
+					this.lastChild = child
+				}
 			}
 		}
-	}
-
-	add(node: Node): Node {
-		node.parent = this
-
-		if (this.firstChild === null) {
-			this.firstChild = node
-			this.lastChild = node
-		} else {
-			if (this.lastChild === null) {
-				throw new Error('Last child must be set.')
-			}
-
-			node.prev = this.lastChild
-			this.lastChild.next = node
-			this.lastChild = node
-		}
-
-		return node
 	}
 }
