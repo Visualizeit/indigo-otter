@@ -1,3 +1,4 @@
+import * as fontkit from 'fontkit'
 import invariant from 'tiny-invariant'
 import { Vec2, layout, compose, View, Text } from '../src'
 import renderToSVG from './renderToSVG'
@@ -12,7 +13,10 @@ const initialize = async () => {
 
 	const font = await fetch('./LXGWWenKaiMonoLite-Light.ttf')
 		.then((response) => response.arrayBuffer())
-		.then((buffer) => new Uint8Array(buffer))
+		.then(
+			(buffer) =>
+				fontkit.create(new Uint8Array(buffer) as Buffer) as fontkit.Font,
+		)
 
 	const root = new View({
 		style: {

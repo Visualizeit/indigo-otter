@@ -1,8 +1,8 @@
-import stringWidth from 'string-width'
 import { type Node, View, Text } from '../src'
 import breakTextIntoWords from '../src/layout/text/breakTextIntoWords'
 import breakWordsIntoLines from '../src/layout/text/breakWordsIntoLines'
-import measureWord from '../src/layout/text/measureWord'
+import getFontLineHeight from '../src/layout/text/getTextLineHeight'
+import getTextWidth from '../src/layout/text/getTextWidth'
 import textToSVGPath from './textToSVGPath'
 
 const h = (tag: string, props: Record<string, string>, children?: string[]) =>
@@ -31,14 +31,13 @@ const renderToSVG = (node: Node) => {
 			const lines = breakWordsIntoLines(
 				words,
 				node._state.textWidthLimit,
-				(word) => (stringWidth(word) * node._style.fontSize) / 2,
+				(word) => getTextWidth(word, node._style.fontSize),
 			)
 
-			const lineHeight = measureWord(
-				'X',
-				node._style.fontSize,
+			const lineHeight = getFontLineHeight(
 				node.props.font,
-			).y
+				node._style.fontSize,
+			)
 
 			return h('path', {
 				d: lines

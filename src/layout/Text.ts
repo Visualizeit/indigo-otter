@@ -1,3 +1,4 @@
+import type * as fontkit from 'fontkit'
 import { type Node } from './Node'
 import {
 	type ExactLayoutProps,
@@ -26,7 +27,7 @@ export class Text implements Node {
 	constructor(
 		public text: string,
 		readonly props: {
-			font: Uint8Array
+			font: fontkit.Font
 			style: TextStyleProps
 		},
 	) {

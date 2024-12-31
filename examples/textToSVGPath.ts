@@ -1,4 +1,4 @@
-import * as fontkit from 'fontkit'
+import type * as fontkit from 'fontkit'
 
 /**
  * Converts text to SVG path data using specified font and positioning
@@ -10,10 +10,8 @@ const textToSVGPath = (
 	fontSize: number,
 	x: number,
 	y: number,
-	fontBuffer: Uint8Array,
+	font: fontkit.Font,
 ): string => {
-	const font = fontkit.create(fontBuffer as Buffer) as fontkit.Font
-
 	const scale = fontSize / font.unitsPerEm
 
 	const glyphRun = font.layout(text)

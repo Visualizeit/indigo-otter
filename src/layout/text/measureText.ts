@@ -1,27 +1,26 @@
-import stringWidth from 'string-width'
+import type * as fontkit from 'fontkit'
 import { Vec2 } from '../../'
 import breakTextIntoWords from './breakTextIntoWords'
 import breakWordsIntoLines from './breakWordsIntoLines'
-import measureWord from './measureWord'
+import getFontLineHeight from './getTextLineHeight'
+import getTextWidth from './getTextWidth'
 
 const measureText = (
 	text: string,
 	fontSize: number,
 	maxWidth: number,
-	fontBuffer: Uint8Array,
+	font: fontkit.Font,
 ) => {
 	const words = breakTextIntoWords(text)
 
-	const lines = breakWordsIntoLines(
-		words,
-		maxWidth,
-		(word) => (stringWidth(word) * fontSize) / 2,
+	const lines = breakWordsIntoLines(words, maxWidth, (word) =>
+		getTextWidth(word, fontSize),
 	)
 
-	const lineHeight = measureWord('X', fontSize, fontBuffer).y
+	const lineHeight = getFontLineHeight(font, fontSize)
 
 	const width = lines.reduce(
-			(maxWidth, line) => Math.max(maxWidth, (stringWidth(line) * fontSize) / 2),
+			(maxWidth, line) => Math.max(maxWidth, getTextWidth(line, fontSize)),
 			0,
 		),
 		height = lines.length * lineHeight
