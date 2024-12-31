@@ -1,8 +1,21 @@
+import { TexLinebreak } from 'tex-linebreak2'
+
 const breakWordsIntoLines = (
 	words: string[],
 	maxWidth: number,
 	measureWord: (word: string) => number,
 ) => {
+	if (true) {
+		const lineBreak = new TexLinebreak(words.join(''), {
+			lineWidth: maxWidth,
+			measureFn: measureWord,
+			glueStretchFactor: 0,
+			glueShrinkFactor: 0,
+		})
+
+		return lineBreak.plaintextLines
+	}
+
 	const lines: string[] = []
 	let currentLine: string = ''
 	let currentWidth = 0
