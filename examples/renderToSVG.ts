@@ -1,3 +1,4 @@
+import stringWidth from 'string-width'
 import { type Node, View, Text } from '../src'
 import breakTextIntoWords from '../src/layout/text/breakTextIntoWords'
 import breakWordsIntoLines from '../src/layout/text/breakWordsIntoLines'
@@ -43,7 +44,7 @@ const renderToSVG = (node: Node) => {
 			const lines = breakWordsIntoLines(
 				words,
 				node._state.textWidthLimit,
-				(word) => measureWord(word, node._style.fontSize, node.props.font).x,
+				(word) => (stringWidth(word) * node._style.fontSize) / 2,
 			)
 
 			const lineHeight = measureWord(

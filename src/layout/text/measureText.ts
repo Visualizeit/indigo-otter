@@ -1,3 +1,4 @@
+import stringWidth from 'string-width'
 import { Vec2 } from '../../'
 import breakTextIntoWords from './breakTextIntoWords'
 import breakWordsIntoLines from './breakWordsIntoLines'
@@ -18,7 +19,7 @@ const measureText = (
 	const lines = breakWordsIntoLines(
 		words,
 		maxWidth,
-		(word) => measureWord(word, fontSize, fontBuffer).x,
+		(word) => (stringWidth(word) * fontSize) / 2,
 	)
 
 	const lineHeight = measureWord('X', fontSize, fontBuffer).y
