@@ -310,10 +310,6 @@ export function layout(root: Node) {
 			e._style.justifyContent === 'space-between' ||
 			e._style.justifyContent === 'space-around' ||
 			e._style.justifyContent === 'space-evenly'
-		const isContentSpace =
-			e._style.alignContent === 'space-between' ||
-			e._style.alignContent === 'space-around' ||
-			e._style.alignContent === 'space-evenly'
 
 		// If parent had undefined width or height and its size was only calculated once children sizes
 		// were added, then percentage sizing should happen now.
@@ -424,25 +420,6 @@ export function layout(root: Node) {
 				availableMain -= mainGap * (line.length - 1)
 			}
 
-			let availableCross = isHorizontal
-				? e._state.clientHeight -
-					e._style.paddingTop -
-					e._style.paddingBottom -
-					e._style.borderTopWidth -
-					e._style.borderBottomWidth
-				: e._state.clientWidth -
-					e._style.paddingLeft -
-					e._style.paddingRight -
-					e._style.borderLeftWidth -
-					e._style.borderRightWidth
-
-			for (let i = 0; i < maxCrossChildren.length; i++) {
-				availableCross -= maxCrossChildren[i]!
-				if (i !== maxCrossChildren.length - 1 && !isContentSpace) {
-					availableCross -= crossGap
-				}
-			}
-
 			for (const c of line) {
 				if (c._style.position !== 'relative') {
 					continue
@@ -478,38 +455,6 @@ export function layout(root: Node) {
 			}
 			if (e._style.justifyContent === 'space-evenly') {
 				main += availableMain / (childrenCount + 1)
-			}
-
-			// Align content.
-			if (e._style.alignContent === 'center') {
-				// TODO release: availableMain/cross is useful here for skipping own size, but we should
-				// ignore border or padding here (and we don't).
-				if (i === 0) {
-					cross += availableCross / 2
-				}
-			}
-			if (e._style.alignContent === 'end') {
-				if (i === 0) {
-					cross += availableCross
-				}
-			}
-			if (e._style.alignContent === 'space-between') {
-				if (i > 0) {
-					cross += availableCross / (maxCrossChildren.length - 1)
-				}
-			}
-			if (e._style.alignContent === 'space-around') {
-				const gap = availableCross / maxCrossChildren.length
-				cross += i === 0 ? gap / 2 : gap
-			}
-			if (e._style.alignContent === 'space-evenly') {
-				const gap = availableCross / (maxCrossChildren.length + 1)
-				cross += gap
-			}
-			if (e._style.alignContent === 'stretch') {
-				if (i > 0) {
-					cross += availableCross / maxCrossChildren.length
-				}
 			}
 
 			// Iterate over children and apply positions and flex sizes.
@@ -594,50 +539,14 @@ export function layout(root: Node) {
 				}
 
 				// Apply align items.
-				if (c._style.alignSelf === 'auto') {
-					if (e._style.alignItems === 'center') {
-						if (isHorizontal) {
-							c._state.y += (lineCrossSize - c._state.clientHeight) / 2
-						} else {
-							c._state.x += (lineCrossSize - c._state.clientWidth) / 2
-						}
-					}
-					if (e._style.alignItems === 'end') {
-						if (isHorizontal) {
-							c._state.y += lineCrossSize - c._state.clientHeight
-						} else {
-							c._state.x += lineCrossSize - c._state.clientWidth
-						}
-					}
-					if (
-						e._style.alignItems === 'stretch' &&
-						((isHorizontal && c._style.height === undefined) ||
-							(isVertical && c._style.width === undefined))
-					) {
-						if (isHorizontal) {
-							c._state.clientHeight = lineCrossSize
-						} else {
-							c._state.clientWidth = lineCrossSize
-						}
-					}
-				}
-
-				// Apply align self.
-				if (c._style.alignSelf === 'start') {
-					if (isHorizontal) {
-						c._state.y = resetCross
-					} else {
-						c._state.x = resetCross
-					}
-				}
-				if (c._style.alignSelf === 'center') {
+				if (e._style.alignItems === 'center') {
 					if (isHorizontal) {
 						c._state.y += (lineCrossSize - c._state.clientHeight) / 2
 					} else {
 						c._state.x += (lineCrossSize - c._state.clientWidth) / 2
 					}
 				}
-				if (c._style.alignSelf === 'end') {
+				if (e._style.alignItems === 'end') {
 					if (isHorizontal) {
 						c._state.y += lineCrossSize - c._state.clientHeight
 					} else {
@@ -645,15 +554,13 @@ export function layout(root: Node) {
 					}
 				}
 				if (
-					c._style.alignSelf === 'stretch' &&
+					e._style.alignItems === 'stretch' &&
 					((isHorizontal && c._style.height === undefined) ||
 						(isVertical && c._style.width === undefined))
 				) {
 					if (isHorizontal) {
-						c._state.y = resetCross
 						c._state.clientHeight = lineCrossSize
 					} else {
-						c._state.x = resetCross
 						c._state.clientWidth = lineCrossSize
 					}
 				}

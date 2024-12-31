@@ -4,7 +4,7 @@ import { type Node } from './Node'
  * Internal state of the node. Might be useful for debugging or hacking around but it is subject
  * to change at any point without notice.
  */
-export type LayoutNodeState = {
+export interface LayoutNodeState {
 	/**
 	 * Temporary array used by layout.
 	 */
@@ -45,24 +45,9 @@ export const defaultLayoutNodeState: LayoutNodeState = {
  */
 export interface LayoutProps {
 	/**
-	 * Controls positioning of rows (or columns) when wrapping.
-	 */
-	alignContent?:
-		| 'start'
-		| 'end'
-		| 'center'
-		| 'space-between'
-		| 'space-around'
-		| 'space-evenly'
-		| 'stretch'
-	/**
 	 * Controls positioning of children on the cross axis.
 	 */
 	alignItems?: 'start' | 'end' | 'center' | 'stretch'
-	/**
-	 * Controls positioning of the item itself on the cross axis.
-	 */
-	alignSelf?: 'auto' | 'start' | 'end' | 'center' | 'stretch'
 	/**
 	 * Enforces a specific aspect ratio on the size of the element. Uses the specified size
 	 * (either `width` or `height`) for calculating the other dimension. Respects `minWidth` and
@@ -163,7 +148,7 @@ export type ExactLayoutProps = Required<
 	zIndex: LayoutProps['zIndex']
 }
 
-export type DecorativeProps = {
+export interface DecorativeProps {
 	backgroundColor?: string
 	borderBottomLeftRadius?: number
 	borderBottomRightRadius?: number
@@ -189,9 +174,7 @@ export type TextStyleProps = {
 export type ViewStyleProps = LayoutProps & DecorativeProps
 
 const defaultLayoutProps: ExactLayoutProps = {
-	alignContent: 'start',
 	alignItems: 'start',
-	alignSelf: 'auto',
 	aspectRatio: undefined,
 	borderBottomWidth: 0,
 	borderLeftWidth: 0,
