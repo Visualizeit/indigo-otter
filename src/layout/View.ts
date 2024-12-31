@@ -14,9 +14,7 @@ import {
  */
 export class View implements Node {
 	next: Node | null = null
-	prev: Node | null = null
 	firstChild: Node | null = null
-	lastChild: Node | null = null
 	parent: Node | null = null
 
 	/**
@@ -39,22 +37,13 @@ export class View implements Node {
 			normalizeLayoutProps(props.style ?? {}) as ViewStyleProps,
 		)
 
-		if (Array.isArray(props.children)) {
-			for (const child of props.children) {
-				child.parent = this
+		if (Array.isArray(props.children) && props.children.length > 0) {
+			this.firstChild = props.children[0]
+			props.children[0].parent = this
 
-				if (this.firstChild === null) {
-					this.firstChild = child
-					this.lastChild = child
-				} else {
-					if (this.lastChild === null) {
-						throw new Error('Last child must be set.')
-					}
-
-					child.prev = this.lastChild
-					this.lastChild.next = child
-					this.lastChild = child
-				}
+			for (let i = 1; i < props.children.length; i++) {
+				props.children[i - 1].next = props.children[i]
+				props.children[i].parent = this
 			}
 		}
 	}

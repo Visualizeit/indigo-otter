@@ -14,9 +14,7 @@ import {
  */
 export class Text implements Node {
 	next: Node | null = null
-	prev: Node | null = null
 	firstChild: Node | null = null
-	lastChild: Node | null = null
 	parent: Node | null = null
 	/**
 	 * Should always be normalized.
