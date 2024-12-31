@@ -1,6 +1,6 @@
 import * as fontkit from 'fontkit'
 import invariant from 'tiny-invariant'
-import { Vec2, layout, compose, View, Text } from '../src'
+import { Vec2, layout, View, Text } from '../src'
 import renderToSVG from './renderToSVG'
 
 const initialize = async () => {
@@ -55,7 +55,6 @@ const initialize = async () => {
 	})
 
 	layout(root, new Vec2(WIDTH, HEIGHT))
-	compose(root)
 
 	const svg = renderToSVG(root)
 

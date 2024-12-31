@@ -1,4 +1,3 @@
-import { Vec2 } from '../math/Vec2'
 import { type Node } from './Node'
 
 /**
@@ -19,14 +18,6 @@ export type LayoutNodeState = {
 	 */
 	clientWidth: number
 	/**
-	 * Screen-space position.
-	 */
-	clipSize: Vec2
-	/**
-	 * Screen-space position.
-	 */
-	clipStart: Vec2
-	/**
 	 * Maximum width of the text before wrapping.
 	 */
 	textWidthLimit: number
@@ -44,8 +35,6 @@ export const defaultLayoutNodeState: LayoutNodeState = {
 	children: [],
 	clientHeight: 0,
 	clientWidth: 0,
-	clipSize: new Vec2(0, 0),
-	clipStart: new Vec2(0, 0),
 	textWidthLimit: Number.POSITIVE_INFINITY,
 	x: 0,
 	y: 0,

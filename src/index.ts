@@ -1,5 +1,4 @@
 export { layout } from './layout/layout'
-export { compose } from './layout/compose'
 export type { Node } from './layout/Node'
 export { View } from './layout/View'
 export { Text } from './layout/Text'
