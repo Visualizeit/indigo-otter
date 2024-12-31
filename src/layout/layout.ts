@@ -47,10 +47,6 @@ export function layout(root: Node): void {
 			traversalQueue.enqueue(c)
 			c = c.next
 		}
-		e._state.x = 0
-		e._state.y = 0
-		e._state.clientWidth = 0
-		e._state.clientHeight = 0
 
 		// If element has defined width or height, set it.
 		if (typeof e._style.width === 'number') {
