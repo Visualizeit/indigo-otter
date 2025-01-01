@@ -152,7 +152,7 @@ export interface DecorativeProps {
  * Controls how text is rendered. Note that due to a custom text renderer, there might be some
  * differences in how text is rendered compared to a browser.
  */
-export type TextStyleProps = {
+export interface TextStyleProps {
 	color: string
 	fontSize: number
 }
@@ -190,10 +190,12 @@ const defaultLayoutProps: ExactLayoutProps = {
 	zIndex: undefined,
 }
 
-export function normalizeLayoutProps<
+export const normalizeLayoutProps = <
 	T extends LayoutProps,
 	S extends ExactLayoutProps,
->(input: T): S {
+>(
+	input: T,
+) => {
 	const result = { ...defaultLayoutProps, ...input }
 
 	result.paddingTop =

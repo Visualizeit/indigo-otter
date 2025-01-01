@@ -13,7 +13,7 @@ import measureText from './text/measureText'
  * @param root tree of views to layout.
  * @param rootSize size of the root element.
  */
-export function layout(root: Node) {
+export const layout = (root: Node) => {
 	const nodesInLevelOrder: Node[] = []
 
 	{
@@ -564,13 +564,13 @@ export function layout(root: Node) {
 	}
 }
 
-function toPercentage(value: `${string}%`): number {
+const toPercentage = (value: `${string}%`) => {
 	const result = Number(value.replace('%', '')) / 100
 	invariant(Number.isFinite(result), 'Value must be a real fraction.')
 	return result
 }
 
-function applyMinMaxAndAspectRatio(e: Node): void {
+const applyMinMaxAndAspectRatio = (e: Node) => {
 	let minHeight = 0
 	let minWidth = 0
 	let maxHeight = Number.POSITIVE_INFINITY
