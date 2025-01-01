@@ -1,5 +1,4 @@
 import type * as fontkit from 'fontkit'
-import { Vec2 } from '../../'
 import breakTextIntoWords from './breakTextIntoWords'
 import breakWordsIntoLines from './breakWordsIntoLines'
 import getFontLineHeight from './getTextLineHeight'
@@ -25,7 +24,7 @@ const measureText = (
 		),
 		height = lines.length * lineHeight
 
-	return new Vec2(width, height)
+	return { width, height }
 }
 
 export default measureText

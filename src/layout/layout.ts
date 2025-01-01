@@ -119,8 +119,8 @@ export const layout = (root: Node) => {
 				e.props.font,
 			)
 
-			e._state.clientWidth = textSize.x
-			e._state.clientHeight = textSize.y
+			e._state.clientWidth = textSize.width
+			e._state.clientHeight = textSize.height
 		}
 	}
 
