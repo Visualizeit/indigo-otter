@@ -149,6 +149,13 @@ export function layout(root: Node) {
 						// Padding is inside the width.
 						e._state.clientWidth += c._state.clientWidth
 					}
+					if (isVertical && c._style.position === 'relative') {
+						// For column layout only wraps the widest child.
+						e._state.clientWidth = Math.max(
+							e._state.clientWidth,
+							c._state.clientWidth,
+						)
+					}
 				}
 				if (c._style.position === 'relative') {
 					childrenCount += 1
@@ -170,6 +177,12 @@ export function layout(root: Node) {
 				if (c._state.clientHeight) {
 					if (isVertical && c._style.position === 'relative') {
 						e._state.clientHeight += c._state.clientHeight
+					}
+					if (isHorizontal && c._style.position === 'relative') {
+						e._state.clientHeight = Math.max(
+							e._state.clientHeight,
+							c._state.clientHeight,
+						)
 					}
 				}
 				if (c._style.position === 'relative') {
