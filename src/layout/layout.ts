@@ -202,7 +202,7 @@ const layout = (root: Node) => {
 		}
 
 		// Prepare rows.
-		const rows: Array<Array<Node>> = [[]]
+		const rows: Node[][] = [[]]
 		let main = 0
 		let cross = 0
 		let longestChildSize = 0
@@ -245,7 +245,7 @@ const layout = (root: Node) => {
 			rows.at(-1)?.push(c)
 		}
 
-		e.layout.children = rows
+		e.layout.rows = rows
 
 		// The last row.
 		if (isWrap) {
@@ -347,9 +347,9 @@ const layout = (root: Node) => {
 		const mainGap = (isHorizontal ? e.style.rowGap : e.style.columnGap) ?? 0
 		const crossGap = (isHorizontal ? e.style.columnGap : e.style.rowGap) ?? 0
 
-		const maxCrossChildren: Array<number> = []
-		const childrenInLine: Array<number> = []
-		for (const line of e.layout.children) {
+		const maxCrossChildren: number[] = []
+		const childrenInLine: number[] = []
+		for (const line of e.layout.rows) {
 			let maxCrossChild = 0
 			let childrenCount = 0
 
@@ -369,10 +369,10 @@ const layout = (root: Node) => {
 		}
 
 		// Iterate over lines.
-		for (let i = 0; i < e.layout.children.length; i++) {
-			const line = e.layout.children[i]!
-			const maxCrossChild = maxCrossChildren[i]!
-			const childrenCount = childrenInLine[i]!
+		for (let i = 0; i < e.layout.rows.length; i++) {
+			const line = e.layout.rows[i]
+			const maxCrossChild = maxCrossChildren[i]
+			const childrenCount = childrenInLine[i]
 			let totalFlexGrow = 0
 			let totalFlexShrink = 0
 
@@ -425,7 +425,7 @@ const layout = (root: Node) => {
 			// Iterate over children and apply positions and flex sizes.
 			let usedMain = 0
 			for (let j = 0; j < line.length; j++) {
-				const c = line[j]!
+				const c = line[j]
 				if (c.style.position !== 'relative') {
 					continue
 				}
@@ -486,7 +486,7 @@ const layout = (root: Node) => {
 				let lineCrossSize = maxCrossChild
 				// If there's only one line, if the flex container has defined height, use it as the
 				// cross size. For multi lines it's not relevant.
-				if (e.layout.children.length === 1) {
+				if (e.layout.rows.length === 1) {
 					lineCrossSize = isHorizontal
 						? e.layout.clientHeight - e.style.paddingTop - e.style.paddingBottom
 						: e.layout.clientWidth - e.style.paddingLeft - e.style.paddingRight
@@ -536,7 +536,7 @@ const layout = (root: Node) => {
 			cross += maxCrossChild + crossGap
 		}
 
-		e.layout.children = []
+		e.layout.rows = []
 
 		e.layout.x = Math.round(e.layout.x)
 		e.layout.y = Math.round(e.layout.y)

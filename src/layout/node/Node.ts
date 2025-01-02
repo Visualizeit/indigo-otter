@@ -4,7 +4,7 @@ interface NodeLayout {
 	/**
 	 * Temporary array used by layout.
 	 */
-	children: Array<Array<Node>>
+	rows: Node[][]
 	/**
 	 * Height of the element.
 	 */
@@ -25,7 +25,7 @@ interface NodeLayout {
 
 class Node<TStyle = {}> {
 	layout: NodeLayout = {
-		children: [],
+		rows: [],
 		clientHeight: 0,
 		clientWidth: 0,
 		x: 0,
