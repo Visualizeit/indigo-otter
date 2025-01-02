@@ -1,4 +1,3 @@
-import invariant from 'tiny-invariant'
 import { type Node } from './Node'
 import { Text } from './Text'
 import measureText from './text/measureText'
@@ -564,9 +563,13 @@ export const layout = (root: Node) => {
 }
 
 const toPercentage = (value: `${string}%`) => {
-	const result = Number(value.replace('%', '')) / 100
-	invariant(Number.isFinite(result), 'Value must be a real fraction.')
-	return result
+	const percentage = parseInt(value, 10) / 100
+
+	if (!Number.isFinite(percentage)) {
+		throw new Error(`Invalid percentage value: ${value}`)
+	}
+
+	return percentage
 }
 
 const applyMinMaxAndAspectRatio = (e: Node) => {
