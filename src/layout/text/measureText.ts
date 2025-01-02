@@ -24,7 +24,12 @@ const measureText = (
 		),
 		height = lines.length * lineHeight
 
-	return { width, height }
+	return {
+		lines,
+		lineHeight,
+		width,
+		height,
+	}
 }
 
 export default measureText

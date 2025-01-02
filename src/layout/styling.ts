@@ -18,10 +18,6 @@ export interface LayoutNodeState {
 	 */
 	clientWidth: number
 	/**
-	 * Maximum width of the text before wrapping.
-	 */
-	textWidthLimit: number
-	/**
 	 * Screen-space position of element after layout.
 	 */
 	x: number
@@ -35,7 +31,6 @@ export const defaultLayoutNodeState: LayoutNodeState = {
 	children: [],
 	clientHeight: 0,
 	clientWidth: 0,
-	textWidthLimit: Number.POSITIVE_INFINITY,
 	x: 0,
 	y: 0,
 }

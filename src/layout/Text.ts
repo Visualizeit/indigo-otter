@@ -16,11 +16,11 @@ export class Text implements Node {
 	next: Node | null = null
 	firstChild: Node | null = null
 	parent: Node | null = null
-	/**
-	 * Should always be normalized.
-	 */
 	_style: TextStyleProps & ExactLayoutProps
 	_state: LayoutNodeState = { ...defaultLayoutNodeState }
+
+	lines: string[] = []
+	lineHeight: number = 0
 
 	constructor(
 		public text: string,

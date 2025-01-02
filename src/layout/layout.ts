@@ -104,23 +104,22 @@ export const layout = (root: Node) => {
 
 		const p = e.parent
 		if (p && e instanceof Text) {
-			let maxWidth = Number.POSITIVE_INFINITY
+			const maxWidth = p._state.clientWidth
+				? p._state.clientWidth - p._style.paddingLeft - p._style.paddingRight
+				: Number.POSITIVE_INFINITY
 
-			if ((p._state.clientWidth ?? 0) > 0) {
-				maxWidth =
-					p._state.clientWidth - p._style.paddingLeft - p._style.paddingRight
-				e._state.textWidthLimit = maxWidth
-			}
-
-			const textSize = measureText(
+			const measuredText = measureText(
 				e.text,
 				e._style.fontSize,
-				e._state.textWidthLimit,
+				maxWidth,
 				e.props.font,
 			)
 
-			e._state.clientWidth = textSize.width
-			e._state.clientHeight = textSize.height
+			e.lines = measuredText.lines
+			e.lineHeight = measuredText.lineHeight
+
+			e._state.clientWidth = measuredText.width
+			e._state.clientHeight = measuredText.height
 		}
 	}
 

@@ -1,8 +1,4 @@
 import { type Node, View, Text, Image } from '../src'
-import breakTextIntoWords from '../src/layout/text/breakTextIntoWords'
-import breakWordsIntoLines from '../src/layout/text/breakWordsIntoLines'
-import getFontLineHeight from '../src/layout/text/getTextLineHeight'
-import getTextWidth from '../src/layout/text/getTextWidth'
 import textToSVGPath from './textToSVGPath'
 
 const h = (
@@ -31,27 +27,14 @@ const renderToSVG = (node: Node) => {
 
 	const children = list.map((node) => {
 		if (node instanceof Text) {
-			const words = breakTextIntoWords(node.text)
-
-			const lines = breakWordsIntoLines(
-				words,
-				node._state.textWidthLimit,
-				(word) => getTextWidth(word, node._style.fontSize),
-			)
-
-			const lineHeight = getFontLineHeight(
-				node.props.font,
-				node._style.fontSize,
-			)
-
 			return h('path', {
-				d: lines
+				d: node.lines
 					.map((line, index) =>
 						textToSVGPath(
 							line,
 							node._style.fontSize,
 							node._state.x,
-							node._state.y + index * lineHeight,
+							node._state.y + index * node.lineHeight,
 							node.props.font,
 						),
 					)
