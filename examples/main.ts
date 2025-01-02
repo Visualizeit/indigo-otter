@@ -1,13 +1,8 @@
 import * as fontkit from 'fontkit'
-import invariant from 'tiny-invariant'
 import { layout, View, Text, Image } from '../src'
 import renderToSVG from './renderToSVG'
 
 const initialize = async () => {
-	const parent = document.querySelector<HTMLElement>('#app')
-
-	invariant(parent, 'No parent element found.')
-
 	const font = await fetch('./LXGWWenKaiMonoLite-Light.ttf')
 		.then((response) => response.arrayBuffer())
 		.then(
@@ -60,6 +55,12 @@ const initialize = async () => {
 	layout(root)
 
 	const svg = renderToSVG(root)
+
+	const parent = document.querySelector<HTMLElement>('#app')
+
+	if (parent === null) {
+		throw new Error('Parent element not found')
+	}
 
 	parent.innerHTML = svg
 }
