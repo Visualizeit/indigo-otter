@@ -18,30 +18,31 @@ const initialize = async () => {
 			width: 600,
 		},
 		children: [
-			new Text('”', {
+			new Text({
+				text: '”',
 				font,
 				style: {
 					fontSize: 72,
 					color: '#000',
 				},
 			}),
-			new Image('/image.png', {
+			new Image({
+				href: '/image.png',
 				style: {
 					width: 200,
 					height: 200,
 				},
 			}),
-			new Text(
-				'阅读一本书有两个动机：一是你喜欢这本书；二是你可以夸耀这本书。',
-				{
-					font,
-					style: {
-						fontSize: 24,
-						color: '#000',
-					},
+			new Text({
+				text: '阅读一本书有两个动机：一是你喜欢这本书；二是你可以夸耀这本书。',
+				font,
+				style: {
+					fontSize: 24,
+					color: '#000',
 				},
-			),
-			new Text('- 伯特兰·罗素', {
+			}),
+			new Text({
+				text: '- 伯特兰·罗素',
 				font,
 				style: {
 					fontSize: 18,

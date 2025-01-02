@@ -57,7 +57,7 @@ const renderToSVG = (node: Node) => {
 				y: String(node.layout.y),
 				width: String(node.layout.clientWidth),
 				height: String(node.layout.clientHeight),
-				href: node.href,
+				href: node.props.href,
 			})
 		}
 

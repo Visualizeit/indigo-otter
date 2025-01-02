@@ -102,7 +102,7 @@ const layout = (root: Node) => {
 				: Number.POSITIVE_INFINITY
 
 			const measuredText = measureText(
-				e.text,
+				e.props.text,
 				e.style.fontSize,
 				maxWidth,
 				e.props.font,

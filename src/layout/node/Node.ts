@@ -39,9 +39,9 @@ class Node<TStyle = {}> {
 		this.style = props.style
 
 		if (props.children) {
-			props.children.forEach((child) => {
+			for (const child of props.children) {
 				child.parent = this
-			})
+			}
 
 			this.children = props.children
 		}
