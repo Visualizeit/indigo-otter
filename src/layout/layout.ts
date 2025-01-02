@@ -18,15 +18,10 @@ const layout = (root: Node) => {
 	{
 		const queue: Node[] = [root]
 
-		while (queue.length > 0) {
+		while (queue.length) {
 			const e = queue.shift() as Node
 			nodesInLevelOrder.push(e)
-
-			let c = e.firstChild
-			while (c) {
-				queue.push(c)
-				c = c.next
-			}
+			queue.push(...e.children)
 		}
 	}
 
@@ -139,8 +134,7 @@ const layout = (root: Node) => {
 		// Width is at least the sum of children with defined widths.
 		if (e.style.width === undefined) {
 			let childrenCount = 0
-			let c = e.firstChild
-			while (c) {
+			for (const c of e.children) {
 				if (c.layout.clientWidth) {
 					if (isHorizontal && c.style.position === 'relative') {
 						// Padding is inside the width.
@@ -157,7 +151,6 @@ const layout = (root: Node) => {
 				if (c.style.position === 'relative') {
 					childrenCount += 1
 				}
-				c = c.next
 			}
 
 			e.layout.clientWidth += e.style.paddingLeft + e.style.paddingRight
@@ -169,8 +162,7 @@ const layout = (root: Node) => {
 		// Height is at least the sum of children with defined heights.
 		if (e.style.height === undefined) {
 			let childrenCount = 0
-			let c = e.firstChild
-			while (c) {
+			for (const c of e.children) {
 				if (c.layout.clientHeight) {
 					if (isVertical && c.style.position === 'relative') {
 						e.layout.clientHeight += c.layout.clientHeight
@@ -185,7 +177,6 @@ const layout = (root: Node) => {
 				if (c.style.position === 'relative') {
 					childrenCount += 1
 				}
-				c = c.next
 			}
 
 			// Include padding and gaps.
@@ -212,10 +203,8 @@ const layout = (root: Node) => {
 		let main = 0
 		let cross = 0
 		let longestChildSize = 0
-		let c = e.firstChild
-		while (c) {
+		for (const c of e.children) {
 			if (c.style.position !== 'relative') {
-				c = c.next
 				continue
 			}
 
@@ -251,7 +240,6 @@ const layout = (root: Node) => {
 			)
 
 			rows.at(-1)?.push(c)
-			c = c.next
 		}
 
 		e.layout.children = rows

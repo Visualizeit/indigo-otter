@@ -32,12 +32,19 @@ class Node<TStyle = {}> {
 		y: 0,
 	}
 	style: ExactLayoutProps & TStyle
-	firstChild: Node | null = null
-	next: Node | null = null
 	parent: Node | null = null
+	children: Node[] = []
 
-	constructor(props: { style: ExactLayoutProps & TStyle }) {
+	constructor(props: { style: ExactLayoutProps & TStyle; children?: Node[] }) {
 		this.style = props.style
+
+		if (props.children) {
+			props.children.forEach((child) => {
+				child.parent = this
+			})
+
+			this.children = props.children
+		}
 	}
 }
 

@@ -11,17 +11,10 @@ class View extends Node<ViewStyleProps> {
 			children?: Node[]
 		},
 	) {
-		super({ style: normalizeLayoutProps(props.style ?? {}) })
-
-		if (Array.isArray(props.children) && props.children.length > 0) {
-			this.firstChild = props.children[0]
-			props.children[0].parent = this
-
-			for (let i = 1; i < props.children.length; i++) {
-				props.children[i - 1].next = props.children[i]
-				props.children[i].parent = this
-			}
-		}
+		super({
+			style: normalizeLayoutProps(props.style ?? {}),
+			children: props.children,
+		})
 	}
 }
 

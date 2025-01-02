@@ -16,10 +16,8 @@ const renderToSVG = (node: Node) => {
 
 	const traverse = (node: Node) => {
 		list.push(node)
-		let child = node.firstChild
-		while (child) {
+		for (const child of node.children) {
 			traverse(child)
-			child = child.next
 		}
 	}
 
