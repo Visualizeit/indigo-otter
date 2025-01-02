@@ -135,21 +135,21 @@ const layout = (root: Node) => {
 		if (e.style.width === undefined) {
 			let childrenCount = 0
 			for (const c of e.children) {
-				if (c.layout.clientWidth) {
-					if (isHorizontal && c.style.position === 'relative') {
-						// Padding is inside the width.
-						e.layout.clientWidth += c.layout.clientWidth
-					}
-					if (isVertical && c.style.position === 'relative') {
-						// For column layout only wraps the widest child.
-						e.layout.clientWidth = Math.max(
-							e.layout.clientWidth,
-							c.layout.clientWidth,
-						)
-					}
+				if (c.style.position !== 'relative') {
+					continue
 				}
-				if (c.style.position === 'relative') {
-					childrenCount += 1
+
+				childrenCount++
+
+				if (isHorizontal) {
+					e.layout.clientWidth += c.layout.clientWidth
+				}
+
+				if (isVertical) {
+					e.layout.clientWidth = Math.max(
+						e.layout.clientWidth,
+						c.layout.clientWidth,
+					)
 				}
 			}
 
@@ -159,23 +159,26 @@ const layout = (root: Node) => {
 				e.layout.clientWidth += (childrenCount - 1) * e.style.rowGap
 			}
 		}
+
 		// Height is at least the sum of children with defined heights.
 		if (e.style.height === undefined) {
 			let childrenCount = 0
 			for (const c of e.children) {
-				if (c.layout.clientHeight) {
-					if (isVertical && c.style.position === 'relative') {
-						e.layout.clientHeight += c.layout.clientHeight
-					}
-					if (isHorizontal && c.style.position === 'relative') {
-						e.layout.clientHeight = Math.max(
-							e.layout.clientHeight,
-							c.layout.clientHeight,
-						)
-					}
+				if (c.style.position !== 'relative') {
+					continue
 				}
-				if (c.style.position === 'relative') {
-					childrenCount += 1
+
+				childrenCount++
+
+				if (isVertical) {
+					e.layout.clientHeight += c.layout.clientHeight
+				}
+
+				if (isHorizontal) {
+					e.layout.clientHeight = Math.max(
+						e.layout.clientHeight,
+						c.layout.clientHeight,
+					)
 				}
 			}
 
