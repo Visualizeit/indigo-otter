@@ -1,15 +1,34 @@
-import { type ExactLayoutProps, type LayoutNodeState } from './styling'
+import { type ExactLayoutProps } from './styling'
 
-/**
- * Basic node in the layout tree. Containing its state and style information as well as pointers to
- * its children, siblings, and parent.
- */
+interface NodeLayout {
+	/**
+	 * Temporary array used by layout.
+	 */
+	children: Array<Array<Node>>
+	/**
+	 * Height of the element.
+	 */
+	clientHeight: number
+	/**
+	 * Width of the element.
+	 */
+	clientWidth: number
+	/**
+	 * Screen-space position of element after layout.
+	 */
+	x: number
+	/**
+	 * Screen-space position of element after layout.
+	 */
+	y: number
+}
+
 export interface Node {
 	/**
 	 * State of the node updated by the layout engine.
 	 */
-	_state: LayoutNodeState
-	_style: ExactLayoutProps
+	layout: NodeLayout
+	style: ExactLayoutProps
 	firstChild: Node | null
 	next: Node | null
 	parent: Node | null

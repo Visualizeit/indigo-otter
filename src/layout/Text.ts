@@ -2,10 +2,8 @@ import type * as fontkit from 'fontkit'
 import { type Node } from './Node'
 import {
 	type ExactLayoutProps,
-	type LayoutNodeState,
 	type LayoutProps,
 	type TextStyleProps,
-	defaultLayoutNodeState,
 	normalizeLayoutProps,
 } from './styling'
 
@@ -16,8 +14,9 @@ export class Text implements Node {
 	next: Node | null = null
 	firstChild: Node | null = null
 	parent: Node | null = null
-	_style: TextStyleProps & ExactLayoutProps
-	_state: LayoutNodeState = { ...defaultLayoutNodeState }
+
+	layout = { children: [], clientHeight: 0, clientWidth: 0, x: 0, y: 0 }
+	style: TextStyleProps & ExactLayoutProps
 
 	lines: string[] = []
 	lineHeight: number = 0
@@ -29,6 +28,6 @@ export class Text implements Node {
 			style: TextStyleProps
 		},
 	) {
-		this._style = normalizeLayoutProps(props.style as LayoutProps)
+		this.style = normalizeLayoutProps(props.style as LayoutProps)
 	}
 }

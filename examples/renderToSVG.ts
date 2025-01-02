@@ -32,33 +32,33 @@ const renderToSVG = (node: Node) => {
 					.map((line, index) =>
 						textToSVGPath(
 							line,
-							node._style.fontSize,
-							node._state.x,
-							node._state.y + index * node.lineHeight,
+							node.style.fontSize,
+							node.layout.x,
+							node.layout.y + index * node.lineHeight,
 							node.props.font,
 						),
 					)
 					.join(' '),
-				fill: node._style.color,
+				fill: node.style.color,
 			})
 		}
 
 		if (node instanceof View) {
 			return h('rect', {
-				x: String(node._state.x),
-				y: String(node._state.y),
-				width: String(node._state.clientWidth),
-				height: String(node._state.clientHeight),
-				fill: node._style.backgroundColor,
+				x: String(node.layout.x),
+				y: String(node.layout.y),
+				width: String(node.layout.clientWidth),
+				height: String(node.layout.clientHeight),
+				fill: node.style.backgroundColor,
 			})
 		}
 
 		if (node instanceof Image) {
 			return h('image', {
-				x: String(node._state.x),
-				y: String(node._state.y),
-				width: String(node._state.clientWidth),
-				height: String(node._state.clientHeight),
+				x: String(node.layout.x),
+				y: String(node.layout.y),
+				width: String(node.layout.clientWidth),
+				height: String(node.layout.clientHeight),
 				href: node.href,
 			})
 		}
@@ -69,9 +69,9 @@ const renderToSVG = (node: Node) => {
 	return h(
 		'svg',
 		{
-			width: `${node._state.clientWidth}px`,
-			height: `${node._state.clientHeight}px`,
-			viewBox: `0 0 ${node._state.clientWidth} ${node._state.clientHeight}`,
+			width: `${node.layout.clientWidth}px`,
+			height: `${node.layout.clientHeight}px`,
+			viewBox: `0 0 ${node.layout.clientWidth} ${node.layout.clientHeight}`,
 			xmlns: 'http://www.w3.org/2000/svg',
 		},
 		children,

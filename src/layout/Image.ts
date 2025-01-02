@@ -1,9 +1,7 @@
 import { type Node } from './Node'
 import {
 	type ExactLayoutProps,
-	type LayoutNodeState,
 	type LayoutProps,
-	defaultLayoutNodeState,
 	normalizeLayoutProps,
 } from './styling'
 
@@ -14,8 +12,9 @@ export class Image implements Node {
 	next: Node | null = null
 	firstChild: Node | null = null
 	parent: Node | null = null
-	_style: ExactLayoutProps
-	_state: LayoutNodeState = { ...defaultLayoutNodeState }
+
+	layout = { children: [], clientHeight: 0, clientWidth: 0, x: 0, y: 0 }
+	style: ExactLayoutProps
 
 	constructor(
 		public href: string,
@@ -23,6 +22,6 @@ export class Image implements Node {
 			style: LayoutProps
 		},
 	) {
-		this._style = normalizeLayoutProps(props.style as LayoutProps)
+		this.style = normalizeLayoutProps(props.style as LayoutProps)
 	}
 }

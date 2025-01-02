@@ -3,9 +3,7 @@ import {
 	type DecorativeProps,
 	type ExactLayoutProps,
 	type ViewStyleProps,
-	type LayoutNodeState,
 	normalizeLayoutProps,
-	defaultLayoutNodeState,
 } from './styling'
 
 /**
@@ -16,15 +14,8 @@ export class View implements Node {
 	firstChild: Node | null = null
 	parent: Node | null = null
 
-	/**
-	 * Internal state of the node. It's public so that you can use it if you need to, but it's ugly
-	 * so that you don't forget it might break at any time.
-	 */
-	_state: LayoutNodeState = { ...defaultLayoutNodeState }
-	/**
-	 * Should always be normalized.
-	 */
-	_style: DecorativeProps & ExactLayoutProps
+	layout = { children: [], clientHeight: 0, clientWidth: 0, x: 0, y: 0 }
+	style: DecorativeProps & ExactLayoutProps
 
 	constructor(
 		readonly props: {
@@ -32,7 +23,7 @@ export class View implements Node {
 			children?: Node[]
 		},
 	) {
-		this._style = normalizeLayoutProps(props.style ?? {})
+		this.style = normalizeLayoutProps(props.style ?? {})
 
 		if (Array.isArray(props.children) && props.children.length > 0) {
 			this.firstChild = props.children[0]
