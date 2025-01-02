@@ -3,7 +3,7 @@ import textToSVGPath from './textToSVGPath'
 
 const h = (
 	tag: string,
-	props: Record<string, string | undefined>,
+	props: Record<string, string | number | undefined>,
 	children?: string[],
 ) =>
 	`<${tag} ${Object.entries(props)
@@ -43,20 +43,22 @@ const renderToSVG = (node: Node) => {
 
 		if (node instanceof View) {
 			return h('rect', {
-				x: String(node.layout.x),
-				y: String(node.layout.y),
-				width: String(node.layout.clientWidth),
-				height: String(node.layout.clientHeight),
+				x: node.layout.x,
+				y: node.layout.y,
+				width: node.layout.clientWidth,
+				height: node.layout.clientHeight,
+				rx: node.style.borderRadius,
+				ry: node.style.borderRadius,
 				fill: node.style.backgroundColor,
 			})
 		}
 
 		if (node instanceof Image) {
 			return h('image', {
-				x: String(node.layout.x),
-				y: String(node.layout.y),
-				width: String(node.layout.clientWidth),
-				height: String(node.layout.clientHeight),
+				x: node.layout.x,
+				y: node.layout.y,
+				width: node.layout.clientWidth,
+				height: node.layout.clientHeight,
 				href: node.props.href,
 			})
 		}
@@ -67,10 +69,11 @@ const renderToSVG = (node: Node) => {
 	return h(
 		'svg',
 		{
+			xmlns: 'http://www.w3.org/2000/svg',
 			width: `${node.layout.clientWidth}px`,
 			height: `${node.layout.clientHeight}px`,
 			viewBox: `0 0 ${node.layout.clientWidth} ${node.layout.clientHeight}`,
-			xmlns: 'http://www.w3.org/2000/svg',
+			fill: 'transparent',
 		},
 		children,
 	)
