@@ -140,11 +140,7 @@ const defaultLayoutProps: ExactLayoutProps = {
 	zIndex: undefined,
 }
 
-// Normalize layout properties by applying defaults and resolving shorthand properties
-export const normalizeLayoutProps = <
-	T extends LayoutProps,
-	S extends ExactLayoutProps,
->(
+const resolveLayoutProps = <T extends LayoutProps, S extends ExactLayoutProps>(
 	input: T,
 ) => {
 	const result = { ...defaultLayoutProps, ...input }
@@ -163,3 +159,5 @@ export const normalizeLayoutProps = <
 
 	return result as S
 }
+
+export default resolveLayoutProps

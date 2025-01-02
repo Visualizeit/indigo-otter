@@ -1,6 +1,6 @@
 import type * as fontkit from 'fontkit'
 import Node from './Node'
-import { type ViewStyleProps, normalizeLayoutProps } from './styling'
+import resolveLayoutProps, { type ViewStyleProps } from './resolveLayoutProps '
 
 interface TextStyleProps {
 	color: string
@@ -21,7 +21,7 @@ class Text extends Node<TextStyleProps> {
 			style: TextStyleProps
 		},
 	) {
-		super({ style: normalizeLayoutProps(props.style as ViewStyleProps) })
+		super({ style: resolveLayoutProps(props.style as ViewStyleProps) })
 	}
 }
 

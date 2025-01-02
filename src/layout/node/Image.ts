@@ -1,5 +1,5 @@
 import Node from './Node'
-import { type ViewStyleProps, normalizeLayoutProps } from './styling'
+import resolveLayoutProps, { type ViewStyleProps } from './resolveLayoutProps '
 
 /**
  * Basic image node. The only way to create an image. It cannot have children.
@@ -11,7 +11,7 @@ class Image extends Node<ViewStyleProps> {
 			style?: ViewStyleProps
 		},
 	) {
-		super({ style: normalizeLayoutProps(props.style ?? {}) })
+		super({ style: resolveLayoutProps(props.style ?? {}) })
 	}
 }
 

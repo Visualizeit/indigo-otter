@@ -1,4 +1,4 @@
-import { type ExactLayoutProps } from './styling'
+import { type ExactLayoutProps } from './resolveLayoutProps '
 
 interface NodeLayout {
 	/**

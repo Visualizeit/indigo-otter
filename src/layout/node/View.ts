@@ -1,5 +1,5 @@
 import Node from './Node'
-import { type ViewStyleProps, normalizeLayoutProps } from './styling'
+import resolveLayoutProps, { type ViewStyleProps } from './resolveLayoutProps '
 
 /**
  * Basic building block of the UI. A node in a tree which is mutated by the layout algorithm.
@@ -12,7 +12,7 @@ class View extends Node<ViewStyleProps> {
 		},
 	) {
 		super({
-			style: normalizeLayoutProps(props.style ?? {}),
+			style: resolveLayoutProps(props.style ?? {}),
 			children: props.children,
 		})
 	}
