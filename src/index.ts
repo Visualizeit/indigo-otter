@@ -1,12 +1,11 @@
-export { layout } from './layout/layout'
-export type { Node } from './layout/Node'
-export { View } from './layout/View'
-export { Text } from './layout/Text'
-export { Image } from './layout/Image'
+export { default as layout } from './layout/layout'
+export { default as Node } from './layout/node/Node'
+export { default as View } from './layout/node/View'
+export { default as Text } from './layout/node/Text'
+export { default as Image } from './layout/node/Image'
 export type {
 	DecorativeProps,
-	LayoutNodeState,
 	LayoutProps,
 	TextStyleProps,
 	ViewStyleProps,
-} from './layout/styling'
+} from './layout/node/styling'

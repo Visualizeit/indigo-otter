@@ -23,13 +23,22 @@ interface NodeLayout {
 	y: number
 }
 
-export interface Node {
-	/**
-	 * State of the node updated by the layout engine.
-	 */
-	layout: NodeLayout
-	style: ExactLayoutProps
-	firstChild: Node | null
-	next: Node | null
-	parent: Node | null
+class Node<TStyle = {}> {
+	layout: NodeLayout = {
+		children: [],
+		clientHeight: 0,
+		clientWidth: 0,
+		x: 0,
+		y: 0,
+	}
+	style: ExactLayoutProps & TStyle
+	firstChild: Node | null = null
+	next: Node | null = null
+	parent: Node | null = null
+
+	constructor(props: { style: ExactLayoutProps & TStyle }) {
+		this.style = props.style
+	}
 }
+
+export default Node

@@ -1,5 +1,5 @@
-import { type Node } from './Node'
-import { Text } from './Text'
+import type Node from './node/Node'
+import Text from './node/Text'
 import measureText from './text/measureText'
 
 /**
@@ -12,7 +12,7 @@ import measureText from './text/measureText'
  * @param root tree of views to layout.
  * @param rootSize size of the root element.
  */
-export const layout = (root: Node) => {
+const layout = (root: Node) => {
 	const nodesInLevelOrder: Node[] = []
 
 	{
@@ -658,3 +658,5 @@ const applyMinMaxAndAspectRatio = (e: Node) => {
 	e.layout.clientWidth = effectiveWidth
 	e.layout.clientHeight = effectiveHeight
 }
+
+export default layout
