@@ -57,7 +57,8 @@ const layout = (root: Node) => {
 				if (typeof p.style.width === 'string') {
 					accumulatedMultiplier *= toPercentage(p.style.width)
 				} else if (typeof p.style.width === 'number') {
-					definedWidth = p.style.width
+					definedWidth =
+						p.style.width - p.style.paddingLeft - p.style.paddingRight
 				}
 				p = p.parent
 			}
@@ -66,6 +67,11 @@ const layout = (root: Node) => {
 				toPercentage(e.style.width) *
 				accumulatedMultiplier *
 				(definedWidth ?? 0)
+
+			if (e.parent) {
+				e.layout.clientWidth -=
+					e.parent.style.paddingLeft + e.parent.style.paddingRight
+			}
 		}
 		if (typeof e.style.height === 'string') {
 			let definedHeight = undefined
@@ -75,7 +81,8 @@ const layout = (root: Node) => {
 				if (typeof p.style.height === 'string') {
 					accumulatedMultiplier *= toPercentage(p.style.height)
 				} else if (typeof p.style.height === 'number') {
-					definedHeight = p.style.height
+					definedHeight =
+						p.style.height - p.style.paddingTop - p.style.paddingBottom
 				}
 				p = p.parent
 			}
@@ -84,6 +91,11 @@ const layout = (root: Node) => {
 				toPercentage(e.style.height) *
 				accumulatedMultiplier *
 				(definedHeight ?? 0)
+
+			if (e.parent) {
+				e.layout.clientHeight -=
+					e.parent.style.paddingTop + e.parent.style.paddingBottom
+			}
 		}
 		if (typeof e.style.flexBasis === 'string') {
 			if (isHorizontal) {
