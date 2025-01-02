@@ -1,36 +1,24 @@
-/**
- * All layout properties.
- */
-export interface LayoutProps {
-	/**
-	 * Controls positioning of children on the cross axis.
-	 */
-	alignItems?: 'start' | 'end' | 'center' | 'stretch'
-	/**
-	 * Enforces a specific aspect ratio on the size of the element. Uses the specified size
-	 * (either `width` or `height`) for calculating the other dimension. Respects `minWidth` and
-	 * `minHeight`.
-	 */
+// Layout Properties Interface
+interface LayoutProps {
+	// Dimension Properties
+	width?: number | `${number}%`
+	height?: number | `${number}%`
+	minWidth?: number | `${number}%`
+	minHeight?: number | `${number}%`
+	maxWidth?: number | `${number}%`
+	maxHeight?: number | `${number}%`
 	aspectRatio?: number
-	bottom?: number
-	/**
-	 * Overrides `gap` for columns.
-	 */
-	columnGap?: number
+
+	// Flex Properties
 	flex?: number
-	/**
-	 * In row does the same as `width` and in column does the same as `height`.
-	 */
 	flexBasis?: number | `${number}%`
 	flexDirection?: 'row' | 'column'
 	flexGrow?: number
 	flexShrink?: number
 	flexWrap?: 'nowrap' | 'wrap'
-	gap?: number
-	height?: number | `${number}%`
-	/**
-	 * Controls positioning of children on the main axis.
-	 */
+
+	// Alignment Properties
+	alignItems?: 'start' | 'end' | 'center' | 'stretch'
 	justifyContent?:
 		| 'start'
 		| 'end'
@@ -38,116 +26,121 @@ export interface LayoutProps {
 		| 'space-between'
 		| 'space-around'
 		| 'space-evenly'
-	left?: number
-	maxHeight?: number | `${number}%`
-	maxWidth?: number | `${number}%`
-	minHeight?: number | `${number}%`
-	minWidth?: number | `${number}%`
+
+	// Spacing Properties
+	gap?: number
+	rowGap?: number // Overrides gap for rows
+	columnGap?: number // Overrides gap for columns
+
+	// Padding Properties
 	padding?: number
-	paddingBottom?: number
 	paddingHorizontal?: number
-	paddingLeft?: number
-	paddingRight?: number
-	paddingTop?: number
 	paddingVertical?: number
+	paddingTop?: number
+	paddingRight?: number
+	paddingBottom?: number
+	paddingLeft?: number
+
+	// Position Properties
 	position?: 'relative' | 'absolute'
-	right?: number
-	/**
-	 * Overrides `gap` for rows.
-	 */
-	rowGap?: number
 	top?: number
-	width?: number | `${number}%`
+	right?: number
+	bottom?: number
+	left?: number
 	zIndex?: number
 }
 
-/**
- * All shorthand properties are expanded. All properties with defaults are required. Some properties
- * might rename undefined if that is recognized as a valid value by the layout.
- */
-export type ExactLayoutProps = Required<
-	Omit<
-		LayoutProps,
-		| 'aspectRatio'
-		| 'bottom'
-		| 'flexBasis'
-		| 'height'
-		| 'left'
-		| 'maxHeight'
-		| 'maxWidth'
-		| 'minHeight'
-		| 'minWidth'
-		| 'padding'
-		| 'paddingHorizontal'
-		| 'paddingVertical'
-		| 'right'
-		| 'top'
-		| 'width'
-		| 'zIndex'
-	>
-> & {
-	aspectRatio: LayoutProps['aspectRatio']
-	bottom: LayoutProps['bottom']
-	flexBasis: LayoutProps['flexBasis']
-	height: LayoutProps['height']
-	left: LayoutProps['left']
-	maxHeight: LayoutProps['maxHeight']
-	maxWidth: LayoutProps['maxWidth']
-	minHeight: LayoutProps['minHeight']
-	minWidth: LayoutProps['minWidth']
-	right: LayoutProps['right']
-	top: LayoutProps['top']
-	width: LayoutProps['width']
-	zIndex: LayoutProps['zIndex']
-}
-
-export interface DecorativeProps {
+// Decorative Properties Interface
+interface DecorativeProps {
 	backgroundColor?: string
 	borderRadius?: number
 }
 
-/**
- * Controls how text is rendered. Note that due to a custom text renderer, there might be some
- * differences in how text is rendered compared to a browser.
- */
-export interface TextStyleProps {
-	color: string
-	fontSize: number
-}
-
+// Combined View Style Properties
 export type ViewStyleProps = LayoutProps & DecorativeProps
 
+// Exact Layout Properties Type
+// All shorthand properties are expanded and properties with defaults are required
+export type ExactLayoutProps = Required<
+	Omit<
+		LayoutProps,
+		| 'width'
+		| 'height'
+		| 'minWidth'
+		| 'minHeight'
+		| 'maxWidth'
+		| 'maxHeight'
+		| 'aspectRatio'
+		| 'flexBasis'
+		| 'padding'
+		| 'paddingHorizontal'
+		| 'paddingVertical'
+		| 'top'
+		| 'right'
+		| 'bottom'
+		| 'left'
+		| 'zIndex'
+	>
+> & {
+	width: LayoutProps['width']
+	height: LayoutProps['height']
+	minWidth: LayoutProps['minWidth']
+	minHeight: LayoutProps['minHeight']
+	maxWidth: LayoutProps['maxWidth']
+	maxHeight: LayoutProps['maxHeight']
+	aspectRatio: LayoutProps['aspectRatio']
+	flexBasis: LayoutProps['flexBasis']
+	top: LayoutProps['top']
+	right: LayoutProps['right']
+	bottom: LayoutProps['bottom']
+	left: LayoutProps['left']
+	zIndex: LayoutProps['zIndex']
+}
+
+// Default layout properties configuration
 const defaultLayoutProps: ExactLayoutProps = {
-	alignItems: 'start',
+	// Dimension defaults
+	width: undefined,
+	height: undefined,
+	minWidth: undefined,
+	minHeight: undefined,
+	maxWidth: undefined,
+	maxHeight: undefined,
 	aspectRatio: undefined,
-	bottom: undefined,
-	columnGap: 0,
+
+	// Flex defaults
 	flex: 0,
 	flexBasis: undefined,
 	flexDirection: 'column',
 	flexGrow: 0,
 	flexShrink: 0,
 	flexWrap: 'nowrap',
-	gap: 0,
-	height: undefined,
+
+	// Alignment defaults
+	alignItems: 'start',
 	justifyContent: 'start',
-	left: undefined,
-	maxHeight: undefined,
-	maxWidth: undefined,
-	minHeight: undefined,
-	minWidth: undefined,
+
+	// Spacing defaults
+	gap: 0,
+	rowGap: 0,
+	columnGap: 0,
+
+	// Padding defaults
+	paddingTop: 0,
+	paddingRight: 0,
 	paddingBottom: 0,
 	paddingLeft: 0,
-	paddingRight: 0,
-	paddingTop: 0,
+
+	// Position defaults
 	position: 'relative',
-	right: undefined,
-	rowGap: 0,
 	top: undefined,
-	width: undefined,
+	right: undefined,
+	bottom: undefined,
+	left: undefined,
 	zIndex: undefined,
 }
 
+// Normalize layout properties by applying defaults and resolving shorthand properties
 export const normalizeLayoutProps = <
 	T extends LayoutProps,
 	S extends ExactLayoutProps,

@@ -1,14 +1,10 @@
 import Node from './Node'
-import {
-	type DecorativeProps,
-	type ViewStyleProps,
-	normalizeLayoutProps,
-} from './styling'
+import { type ViewStyleProps, normalizeLayoutProps } from './styling'
 
 /**
  * Basic building block of the UI. A node in a tree which is mutated by the layout algorithm.
  */
-class View extends Node<DecorativeProps> {
+class View extends Node<ViewStyleProps> {
 	constructor(
 		readonly props: {
 			style?: ViewStyleProps

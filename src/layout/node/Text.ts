@@ -1,10 +1,11 @@
 import type * as fontkit from 'fontkit'
 import Node from './Node'
-import {
-	type LayoutProps,
-	type TextStyleProps,
-	normalizeLayoutProps,
-} from './styling'
+import { type ViewStyleProps, normalizeLayoutProps } from './styling'
+
+interface TextStyleProps {
+	color: string
+	fontSize: number
+}
 
 /**
  * Basic text node. The only way to create text. It cannot have children.
@@ -20,7 +21,7 @@ class Text extends Node<TextStyleProps> {
 			style: TextStyleProps
 		},
 	) {
-		super({ style: normalizeLayoutProps(props.style as LayoutProps) })
+		super({ style: normalizeLayoutProps(props.style as ViewStyleProps) })
 	}
 }
 
