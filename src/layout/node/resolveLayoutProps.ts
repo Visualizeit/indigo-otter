@@ -140,7 +140,10 @@ const defaultLayoutProps: ExactLayoutProps = {
 	zIndex: undefined,
 }
 
-const resolveLayoutProps = <T extends LayoutProps, S extends ExactLayoutProps>(
+const resolveLayoutProps = <
+	T extends ViewStyleProps,
+	S extends ExactLayoutProps,
+>(
 	input: T,
 ) => {
 	const result = { ...defaultLayoutProps, ...input }

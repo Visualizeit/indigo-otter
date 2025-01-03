@@ -1,6 +1,5 @@
 import type * as fontkit from 'fontkit'
 import Node from './Node'
-import resolveLayoutProps, { type ViewStyleProps } from './resolveLayoutProps '
 
 interface TextStyleProps {
 	color: string
@@ -21,7 +20,7 @@ class Text extends Node<TextStyleProps> {
 	lineHeight: number = 0
 
 	constructor(readonly props: TextProps) {
-		super({ style: resolveLayoutProps(props.style as ViewStyleProps) })
+		super({ style: props.style })
 	}
 }
 

@@ -1,5 +1,5 @@
 import Node from './Node'
-import resolveLayoutProps, { type ViewStyleProps } from './resolveLayoutProps '
+import { type ViewStyleProps } from './resolveLayoutProps'
 
 interface ImageProps {
 	href: string
@@ -11,7 +11,7 @@ interface ImageProps {
  */
 class Image extends Node<ViewStyleProps> {
 	constructor(readonly props: ImageProps) {
-		super({ style: resolveLayoutProps(props.style ?? {}) })
+		super({ style: props.style })
 	}
 }
 

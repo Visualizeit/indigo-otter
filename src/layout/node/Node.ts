@@ -1,4 +1,7 @@
-import { type ExactLayoutProps } from './resolveLayoutProps '
+import resolveLayoutProps, {
+	type ViewStyleProps,
+	type ExactLayoutProps,
+} from './resolveLayoutProps'
 
 interface NodeLayout {
 	/**
@@ -35,8 +38,8 @@ class Node<TStyle = {}> {
 	parent: Node | null = null
 	children: Node[] = []
 
-	constructor(props: { style: ExactLayoutProps & TStyle; children?: Node[] }) {
-		this.style = props.style
+	constructor(props: { style?: ViewStyleProps & TStyle; children?: Node[] }) {
+		this.style = resolveLayoutProps(props.style ?? {})
 
 		if (props.children) {
 			for (const child of props.children) {

@@ -1,5 +1,5 @@
 import Node from './Node'
-import resolveLayoutProps, { type ViewStyleProps } from './resolveLayoutProps '
+import { type ViewStyleProps } from './resolveLayoutProps'
 
 interface ViewProps {
 	style?: ViewStyleProps
@@ -12,7 +12,7 @@ interface ViewProps {
 class View extends Node<ViewStyleProps> {
 	constructor(readonly props: ViewProps) {
 		super({
-			style: resolveLayoutProps(props.style ?? {}),
+			style: props.style,
 			children: props.children,
 		})
 	}
