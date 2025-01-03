@@ -13,13 +13,14 @@ const measureText = (
 	const words = breakTextIntoWords(text)
 
 	const lines = breakWordsIntoLines(words, maxWidth, (word) =>
-		getTextWidth(word, fontSize),
+		getTextWidth(font, word, fontSize),
 	)
 
 	const lineHeight = getFontLineHeight(font, fontSize)
 
 	const width = lines.reduce(
-			(maxWidth, line) => Math.max(maxWidth, getTextWidth(line, fontSize)),
+			(maxWidth, line) =>
+				Math.max(maxWidth, getTextWidth(font, line, fontSize)),
 			0,
 		),
 		height = lines.length * lineHeight
