@@ -1,17 +1,11 @@
-import { type Node, View, Text, Image } from '../src'
+import { type Node, layout, View, Text, Image } from '../../src'
+import h from './h'
+import RoundedClip from './RoundedClip'
 import textToSVGPath from './textToSVGPath'
 
-const h = (
-	tag: string,
-	props: Record<string, string | number | undefined>,
-	children?: string[],
-) =>
-	`<${tag} ${Object.entries(props)
-		.filter(([, value]) => value !== undefined)
-		.map(([key, value]) => `${key}="${value}"`)
-		.join(' ')}${children ? `>${children.join('')}</${tag}>` : '/>'}`
+const renderToSVG = (root: Node) => {
+	layout(root)
 
-const renderToSVG = (node: Node) => {
 	const list: Array<Node> = []
 
 	const traverse = (node: Node) => {
@@ -21,7 +15,10 @@ const renderToSVG = (node: Node) => {
 		}
 	}
 
-	traverse(node)
+	traverse(root)
+
+	let id = 0
+	const defs: string[] = []
 
 	const children = list.map((node) => {
 		if (node instanceof Text) {
@@ -42,24 +39,36 @@ const renderToSVG = (node: Node) => {
 		}
 
 		if (node instanceof View) {
+			let filterId = id++
+
+			if (node.style.borderRadius) {
+				defs.push(RoundedClip(filterId, node, node.style.borderRadius))
+			}
+
 			return h('rect', {
 				x: node.layout.x,
 				y: node.layout.y,
 				width: node.layout.clientWidth,
 				height: node.layout.clientHeight,
-				rx: node.style.borderRadius,
-				ry: node.style.borderRadius,
 				fill: node.style.backgroundColor,
+				'clip-path': node.style.borderRadius ? `url(#${filterId})` : undefined,
 			})
 		}
 
 		if (node instanceof Image) {
+			let filterId = id++
+
+			if (node.style.borderRadius) {
+				defs.push(RoundedClip(filterId, node, node.style.borderRadius))
+			}
+
 			return h('image', {
+				href: node.props.href,
 				x: node.layout.x,
 				y: node.layout.y,
 				width: node.layout.clientWidth,
 				height: node.layout.clientHeight,
-				href: node.props.href,
+				'clip-path': node.style.borderRadius ? `url(#${filterId})` : undefined,
 			})
 		}
 
@@ -70,12 +79,12 @@ const renderToSVG = (node: Node) => {
 		'svg',
 		{
 			xmlns: 'http://www.w3.org/2000/svg',
-			width: `${node.layout.clientWidth}px`,
-			height: `${node.layout.clientHeight}px`,
-			viewBox: `0 0 ${node.layout.clientWidth} ${node.layout.clientHeight}`,
+			width: `${root.layout.clientWidth}px`,
+			height: `${root.layout.clientHeight}px`,
+			viewBox: `0 0 ${root.layout.clientWidth} ${root.layout.clientHeight}`,
 			fill: 'transparent',
 		},
-		children,
+		[h('defs', {}, defs), ...children],
 	)
 }
 
