@@ -3,7 +3,7 @@ import { View, Image, Text } from '../src'
 
 const TheStarryNight = async () => {
 	const noto = await fetch(
-		'https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-sc@latest/chinese-simplified-400-normal.ttf',
+		'https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-sc@latest/chinese-simplified-400-normal.woff2',
 	)
 		.then((response) => response.arrayBuffer())
 		.then(
