@@ -17,7 +17,6 @@ const renderToSVG = (root: Node) => {
 
 	traverse(root)
 
-	let id = 0
 	const defs: string[] = []
 
 	const children = list.map((node) => {
@@ -39,10 +38,10 @@ const renderToSVG = (root: Node) => {
 		}
 
 		if (node instanceof View) {
-			let filterId = id++
+			const clipPath = defs.length
 
 			if (node.style.borderRadius) {
-				defs.push(RoundedClip(filterId, node, node.style.borderRadius))
+				defs.push(RoundedClip(clipPath, node, node.style.borderRadius))
 			}
 
 			return h('rect', {
@@ -51,15 +50,15 @@ const renderToSVG = (root: Node) => {
 				width: node.layout.clientWidth,
 				height: node.layout.clientHeight,
 				fill: node.style.backgroundColor,
-				'clip-path': node.style.borderRadius ? `url(#${filterId})` : undefined,
+				'clip-path': node.style.borderRadius ? `url(#${clipPath})` : undefined,
 			})
 		}
 
 		if (node instanceof Image) {
-			let filterId = id++
+			const clipPath = defs.length
 
 			if (node.style.borderRadius) {
-				defs.push(RoundedClip(filterId, node, node.style.borderRadius))
+				defs.push(RoundedClip(clipPath, node, node.style.borderRadius))
 			}
 
 			return h('image', {
@@ -68,7 +67,7 @@ const renderToSVG = (root: Node) => {
 				y: node.layout.y,
 				width: node.layout.clientWidth,
 				height: node.layout.clientHeight,
-				'clip-path': node.style.borderRadius ? `url(#${filterId})` : undefined,
+				'clip-path': node.style.borderRadius ? `url(#${clipPath})` : undefined,
 			})
 		}
 
