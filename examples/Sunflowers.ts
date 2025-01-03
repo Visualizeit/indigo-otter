@@ -3,7 +3,7 @@ import { View, Image, Text } from '../src'
 
 const Sunflowers = async () => {
 	const poppins = await fetch(
-		'https://cdn.jsdelivr.net/fontsource/fonts/poppins@latest/latin-400-normal.ttf',
+		'https://cdn.jsdelivr.net/fontsource/fonts/poppins@latest/latin-400-normal.woff2',
 	)
 		.then((response) => response.arrayBuffer())
 		.then(
