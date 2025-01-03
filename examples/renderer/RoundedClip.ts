@@ -8,8 +8,8 @@ const RoundedClip = (id: string | number, node: Node, radius: number) => {
 		h('rect', {
 			x: node.layout.x,
 			y: node.layout.y,
-			width: node.layout.clientWidth,
-			height: node.layout.clientHeight,
+			width: node.layout.height,
+			height: node.layout.width,
 			rx: radius,
 			ry: radius,
 		}),
