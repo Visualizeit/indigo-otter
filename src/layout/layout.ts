@@ -67,11 +67,6 @@ const layout = (root: Node) => {
 				toPercentage(e.style.width) *
 				accumulatedMultiplier *
 				(definedWidth ?? 0)
-
-			if (e.parent) {
-				e.layout.width -=
-					e.parent.style.paddingLeft + e.parent.style.paddingRight
-			}
 		}
 		if (typeof e.style.height === 'string') {
 			let definedHeight = undefined
@@ -91,11 +86,6 @@ const layout = (root: Node) => {
 				toPercentage(e.style.height) *
 				accumulatedMultiplier *
 				(definedHeight ?? 0)
-
-			if (e.parent) {
-				e.layout.height -=
-					e.parent.style.paddingTop + e.parent.style.paddingBottom
-			}
 		}
 		if (typeof e.style.flexBasis === 'string') {
 			if (isHorizontal) {
@@ -135,6 +125,8 @@ const layout = (root: Node) => {
 	for (let i = nodesInLevelOrder.length - 1; i >= 0; i--) {
 		const e = nodesInLevelOrder[i]
 
+		applyMinMaxAndAspectRatio(e)
+
 		const isWrap = e.style.flexWrap === 'wrap'
 		const isHorizontal = e.style.flexDirection === 'row'
 		const isVertical = e.style.flexDirection === 'column'
@@ -158,10 +150,7 @@ const layout = (root: Node) => {
 				}
 
 				if (isVertical) {
-					e.layout.width = Math.max(
-						e.layout.width,
-						c.layout.width,
-					)
+					e.layout.width = Math.max(e.layout.width, c.layout.width)
 				}
 			}
 
@@ -187,10 +176,7 @@ const layout = (root: Node) => {
 				}
 
 				if (isHorizontal) {
-					e.layout.height = Math.max(
-						e.layout.height,
-						c.layout.height,
-					)
+					e.layout.height = Math.max(e.layout.height, c.layout.height)
 				}
 			}
 
@@ -402,9 +388,7 @@ const layout = (root: Node) => {
 					continue
 				}
 
-				availableMain -= isHorizontal
-					? c.layout.width
-					: c.layout.height
+				availableMain -= isHorizontal ? c.layout.width : c.layout.height
 
 				if (c.style.flex > 0 || c.style.flexGrow > 0) {
 					if (c.style.flex > 0) {
@@ -470,8 +454,6 @@ const layout = (root: Node) => {
 						}
 					}
 				}
-
-				applyMinMaxAndAspectRatio(c)
 
 				if (isJustifySpace) {
 					c.layout.x += isHorizontal ? main : cross
@@ -602,10 +584,7 @@ const applyMinMaxAndAspectRatio = (e: Node) => {
 		maxWidth = value
 	}
 
-	let effectiveWidth = Math.min(
-		Math.max(e.layout.width, minWidth),
-		maxWidth,
-	)
+	let effectiveWidth = Math.min(Math.max(e.layout.width, minWidth), maxWidth)
 	let effectiveHeight = Math.min(
 		Math.max(e.layout.height, minHeight),
 		maxHeight,
