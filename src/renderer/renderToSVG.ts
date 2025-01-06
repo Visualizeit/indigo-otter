@@ -1,4 +1,4 @@
-import { type Node, layout, View, Text, Image } from '../../src'
+import { type Node, layout, View, Text, Image } from '../'
 import h from './h'
 import RoundedClip from './RoundedClip'
 import textToSVGPath from './textToSVGPath'
@@ -74,7 +74,7 @@ const renderToSVG = (root: Node) => {
 		throw new Error('Unknown node type.')
 	})
 
-	return h(
+	const svg = h(
 		'svg',
 		{
 			xmlns: 'http://www.w3.org/2000/svg',
@@ -85,6 +85,12 @@ const renderToSVG = (root: Node) => {
 		},
 		[h('defs', {}, defs), ...children],
 	)
+
+	return {
+		svg,
+		width: root.layout.width,
+		height: root.layout.height,
+	}
 }
 
 export default renderToSVG

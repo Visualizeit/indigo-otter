@@ -1,11 +1,11 @@
-import renderToSVG from './renderer/renderToSVG'
+import { renderToSVG } from '../src'
 import Sunflowers from './Sunflowers'
 import TheStarryNight from './TheStarryNight'
 
 const initialize = async () => {
 	const root = true ? await TheStarryNight() : await Sunflowers()
 
-	const svg = renderToSVG(root)
+	const { svg } = renderToSVG(root)
 
 	const parent = document.querySelector<HTMLElement>('#app')
 

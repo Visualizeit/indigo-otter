@@ -1,4 +1,4 @@
-import { type Node } from '../../src'
+import { type Node } from '../'
 import h from './h'
 
 const RoundedClip = (id: string | number, node: Node, radius: number) => {

@@ -1,3 +1,4 @@
+export { default as renderToSVG } from './renderer/renderToSVG'
 export { default as layout } from './layout/layout'
 export { default as Node } from './layout/node/Node'
 export { default as View } from './layout/node/View'
