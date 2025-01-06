@@ -9,13 +9,13 @@ interface NodeLayout {
 	 */
 	rows: Node[][]
 	/**
-	 * Height of the element.
-	 */
-	clientHeight: number
-	/**
 	 * Width of the element.
 	 */
-	clientWidth: number
+	width: number
+	/**
+	 * Height of the element.
+	 */
+	height: number
 	/**
 	 * Screen-space position of element after layout.
 	 */
@@ -29,8 +29,8 @@ interface NodeLayout {
 class Node<TStyle = {}> {
 	layout: NodeLayout = {
 		rows: [],
-		clientHeight: 0,
-		clientWidth: 0,
+		height: 0,
+		width: 0,
 		x: 0,
 		y: 0,
 	}

@@ -47,8 +47,8 @@ const renderToSVG = (root: Node) => {
 			return h('rect', {
 				x: node.layout.x,
 				y: node.layout.y,
-				width: node.layout.clientWidth,
-				height: node.layout.clientHeight,
+				width: node.layout.width,
+				height: node.layout.height,
 				fill: node.style.backgroundColor,
 				'clip-path': node.style.borderRadius ? `url(#${clipPath})` : undefined,
 			})
@@ -65,8 +65,8 @@ const renderToSVG = (root: Node) => {
 				href: node.props.href,
 				x: node.layout.x,
 				y: node.layout.y,
-				width: node.layout.clientWidth,
-				height: node.layout.clientHeight,
+				width: node.layout.width,
+				height: node.layout.height,
 				'clip-path': node.style.borderRadius ? `url(#${clipPath})` : undefined,
 			})
 		}
@@ -78,9 +78,9 @@ const renderToSVG = (root: Node) => {
 		'svg',
 		{
 			xmlns: 'http://www.w3.org/2000/svg',
-			width: `${root.layout.clientWidth}px`,
-			height: `${root.layout.clientHeight}px`,
-			viewBox: `0 0 ${root.layout.clientWidth} ${root.layout.clientHeight}`,
+			width: `${root.layout.width}px`,
+			height: `${root.layout.height}px`,
+			viewBox: `0 0 ${root.layout.width} ${root.layout.height}`,
 			fill: 'transparent',
 		},
 		[h('defs', {}, defs), ...children],
